@@ -46,7 +46,7 @@ module.exports = "<router-outlet></router-outlet>\n"
 /***/ 151:
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  home works, yo!\n</p>\n"
+module.exports = "<p>\n  home works, yo yo yooooo!\n</p>\n"
 
 /***/ }),
 
