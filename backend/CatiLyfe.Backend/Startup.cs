@@ -49,7 +49,7 @@ namespace CatiLyfe.Backend
                                                          TermsOfService = "Copywrite forever",
                                                          Contact = new Contact { Name = "Cati Lyfe"}
                                                      });
-                        options.IncludeXmlComments(this.GetDocumentationPath());
+                        //options.IncludeXmlComments(this.GetDocumentationPath());
                     });
 
         }
@@ -63,6 +63,7 @@ namespace CatiLyfe.Backend
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUi(baseRoute: "docs");
+            app.UseDeveloperExceptionPage();
         }
 
         private string GetDocumentationPath()
