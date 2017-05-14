@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CatiLyfe.Backend.Models
+﻿namespace CatiLyfe.Backend.Models
 {
+    using System;
+
     public class Post
     {
         public string Slug { get; set; }
