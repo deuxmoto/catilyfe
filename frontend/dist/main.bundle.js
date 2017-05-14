@@ -26,7 +26,7 @@ exports = module.exports = __webpack_require__(27)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".catilyfe {\n  font-size: 100em;\n}\n", ""]);
 
 // exports
 
@@ -46,7 +46,7 @@ module.exports = "<router-outlet></router-outlet>\n"
 /***/ 151:
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  home works, yo yo yooooo!\n  \n  <h1 style=\"font-size:1vh\">\n\tCATI LYFE YO\n  </h1>\n</p>\n"
+module.exports = "<h1>\n  DIS BE\n</h1>\n<h1 class=\"catilyfe\">#CatiLyfe</h1>\n"
 
 /***/ }),
 
