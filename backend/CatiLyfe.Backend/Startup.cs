@@ -55,8 +55,13 @@ namespace CatiLyfe.Backend
                 options =>
                     {
                         options.AddPolicy(
-                            "AllowCatiLyfe",
-                            builder => { builder.WithOrigins("*"); });
+                            "AllowAll",
+                            policy =>
+                                {
+                                    policy.AllowAnyHeader();
+                                    policy.AllowAnyMethod();
+                                    policy.AllowAnyOrigin();
+                                });
                     });
         }
 
@@ -67,7 +72,7 @@ namespace CatiLyfe.Backend
             loggerFactory.AddDebug();
 
             // Must live here.
-            app.UseCors("AllowCatiLyfe");
+            app.UseCors("AllowAll");
 
             app.UseMvc();
             app.UseSwagger();
