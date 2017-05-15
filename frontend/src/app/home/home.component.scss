@@ -1,3 +1,35 @@
-.catilyfe {
-  font-size: 100em;
+.home-hero {
+    height: calc(100% - 30px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url("../../assets/catilyfe-hero-image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.title-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 4.5em;
+    text-align: right;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+    & > * {
+        color: rgb(250, 250, 250);
+        text-shadow: 0px 1px rgba(0, 0, 0, 0.8);
+    }
+
+    .title {
+        position: relative;
+        font-size: 5.5em;
+        margin-bottom: 0;
+        font-family: 'Lobster', cursive;
+    }
+
+    .subtitle {
+        margin-top: 0.5em;
+        font-size: 1.5em;
+        font-family: 'Cormorant Infant', serif;
+    }
 }
