@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatiLyfe.Backend", "CatiLyf
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CatiLyfe.Database", "CatiLyfe.Database\CatiLyfe.Database.sqlproj", "{15401C53-BE29-41A4-B260-D033F94AA1E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "catilyfe.datalayer", "catilyfe.datalayer\catilyfe.datalayer.csproj", "{F2F644F6-52F9-4D33-8A9E-B05E25240E32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{15401C53-BE29-41A4-B260-D033F94AA1E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15401C53-BE29-41A4-B260-D033F94AA1E3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15401C53-BE29-41A4-B260-D033F94AA1E3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F2F644F6-52F9-4D33-8A9E-B05E25240E32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2F644F6-52F9-4D33-8A9E-B05E25240E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2F644F6-52F9-4D33-8A9E-B05E25240E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2F644F6-52F9-4D33-8A9E-B05E25240E32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

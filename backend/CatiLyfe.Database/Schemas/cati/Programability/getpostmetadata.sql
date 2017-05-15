@@ -1,11 +1,11 @@
 ﻿-- Gets post metadata
 
 CREATE PROCEDURE cati.getpostmetadata
-    @error_messsage NVARCHAR(2048) OUTPUT
-   ,@top            INT
-   ,@skip           INT
-   ,@startdate      DATETIME2
-   ,@enddate        DATETIME2
+    @error_message NVARCHAR(2048) OUTPUT
+   ,@top            INT = NULL
+   ,@skip           INT = NULL
+   ,@startdate      DATETIME2 = NULL
+   ,@enddate        DATETIME2 = NULL
 AS
     SET NOCOUNT ON
     -- Run as snapshot
@@ -22,6 +22,7 @@ AS
        ,p.title
        ,p.goeslive
        ,p.description
+       ,p.created
     FROM cati.postmeta p
     WHERE p.goeslive BETWEEN @startdate AND @enddate
     ORDER BY p.goeslive

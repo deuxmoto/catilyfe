@@ -5,7 +5,7 @@
    ,@title         NVARCHAR(256)
    ,@description   NVARCHAR(256)
    ,@goeslive      DATETIME2
-   ,@content       cati.postcontent READONLY
+   ,@content       cati.postcontentlist READONLY
 AS
     SET NOCOUNT ON
 
@@ -30,6 +30,7 @@ AS
            ,title
            ,description
            ,goeslive
+           ,created
         )
         VALUES
         (
@@ -37,6 +38,7 @@ AS
            ,src.title
            ,src.description
            ,src.goeslive
+           ,GETUTCDATE()
         );
 
     SET @id = ISNULL(@id, SCOPE_IDENTITY())
@@ -52,12 +54,14 @@ AS
         INSERT
         (
             id
+           ,postid
            ,type
            ,content
         )
         VALUES
         (
             src.id
+           ,@id
            ,src.type
            ,src.content
         )

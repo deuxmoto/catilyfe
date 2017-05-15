@@ -2,8 +2,19 @@
 {
     using System;
 
+    using catilyfe.datalayer.Models;
+
     public class PostMetaData
     {
+        public PostMetaData(PostMeta meta)
+        {
+            this.Id = meta.Id;
+            this.Slug = meta.Slug;
+            this.Title = meta.Title;
+            this.Description = meta.Description;
+            this.WhenPublished = meta.GoesLive;
+        }
+
         public int Id { get; set; }
         public string Slug { get; set; }
 

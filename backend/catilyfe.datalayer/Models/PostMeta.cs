@@ -9,10 +9,11 @@ namespace catilyfe.datalayer.Models
     /// </summary>
     public sealed class PostMeta
     {
-        public PostMeta(int id, string slug, string description, DateTime whencreated, DateTime goeslive)
+        public PostMeta(int id, string slug, string title, string description, DateTime whencreated, DateTime goeslive)
         {
             this.Id = id;
             this.Slug = slug;
+            this.Title = title;
             this.Description = description;
             this.WhenCreated = whencreated;
             this.GoesLive = goeslive;
@@ -21,6 +22,8 @@ namespace catilyfe.datalayer.Models
         public int Id { get; }
 
         public string Slug { get; }
+
+        public string Title { get; }
 
         public string Description { get; }
 

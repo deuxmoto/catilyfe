@@ -1,9 +1,9 @@
 ﻿-- This gets a single post
 
 CREATE PROCEDURE cati.getsinglepost
-    @error_messsage NVARCHAR(2048) OUTPUT
-   ,@id             INT
-   ,@slug           NVARCHAR(256)
+    @error_message NVARCHAR(2048) OUTPUT
+   ,@id             INT = NULL
+   ,@slug           NVARCHAR(256) = NULL
 AS
     SET NOCOUNT ON
     SET TRANSACTION ISOLATION LEVEL SNAPSHOT
@@ -17,14 +17,14 @@ AS
         IF(@@ROWCOUNT = 0)
         BEGIN
             SET @error = 50001
-            SET @error_messsage = N'The post was not found with slug ''' + ISNULL(@slug, 'NULL') + ''''
+            SET @error_message = N'The post was not found with slug ''' + ISNULL(@slug, 'NULL') + ''''
             GOTO ErrorHandler
         END
     END
 
     IF(NOT EXISTS(SELECT TOP 1 1 FROM cati.postmeta WHERE id = @id))
     BEGIN
-        SET @error_messsage = N'The post was not found with id = ''' + ISNULL(@id, 'NULL') + ''''
+        SET @error_message = N'The post was not found with id = ''' + ISNULL(@id, 'NULL') + ''''
         SET @error = 50001
         GOTO ErrorHandler
     END

@@ -8,30 +8,17 @@ using CatiLyfe.Backend.Models;
 
 namespace CatiLyfe.Backend.Controllers
 {
+    using CatiLyfe.Backend.App_Code;
+
     [Produces("application/json")]
     [Route("post")]
     public class PostController : Controller
     {
         [HttpGet]
-        public IEnumerable<PostMetaData> GetPosts()
+        public async Task<IEnumerable<Post>> GetPosts()
         {
-            var temp1 = new PostMetaData
-                            {
-                                Id = 0,
-                                Title = "Cati test post 1 yo",
-                                WhenPublished = new DateTime(2017, 5, 13),
-                                Slug = "cati-test-post-1-yo"
-                            };
-
-            var temp2 = new PostMetaData
-            {
-                Id = 2,
-                Title = "Cati test post TWO yo",
-                WhenPublished = new DateTime(2017, 5, 13),
-                Slug = "cati-test-post-two-yo"
-            };
-
-            return new[] { temp1, temp2 };
+            throw new NotImplementedException();
         }
+
     }
 }
