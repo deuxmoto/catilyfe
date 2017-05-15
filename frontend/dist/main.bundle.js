@@ -26,7 +26,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, ".home-hero {\n  height: calc(100% - 30px);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-image: url(" + __webpack_require__(185) + ");\n  background-repeat: no-repeat;\n  background-size: cover; }\n\n.title-container {\n  background-color: rgba(0, 0, 0, 0.6);\n  padding: 4.5em;\n  text-align: right;\n  border: 1px solid rgba(255, 255, 255, 0.8); }\n  .title-container > * {\n    color: #fafafa;\n    text-shadow: 0px 1px rgba(0, 0, 0, 0.8); }\n  .title-container .title {\n    position: relative;\n    font-size: 5.5em;\n    margin-bottom: 0;\n    font-family: 'Lobster', cursive; }\n  .title-container .subtitle {\n    margin-top: 0.5em;\n    font-size: 1.5em;\n    font-family: 'Cormorant Infant', serif; }\n", ""]);
+exports.push([module.i, ".home-hero {\n  height: calc(100% - 30px);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  max-width: 100%;\n  background-image: url(" + __webpack_require__(185) + ");\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover; }\n\n.title-container {\n  background-color: rgba(0, 0, 0, 0.6);\n  padding: 2em;\n  text-align: right;\n  border: 1px solid rgba(255, 255, 255, 0.8); }\n  .title-container > * {\n    color: #fafafa;\n    text-shadow: 0px 1px rgba(0, 0, 0, 0.8); }\n\n.hero-title {\n  position: relative;\n  font-size: 3em;\n  margin-bottom: 0;\n  font-family: 'Lobster', cursive; }\n\n.hero-subtitle {\n  margin-top: -0.5em;\n  font-family: 'Cormorant Infant', serif; }\n\n@media (min-width: 960px) {\n  .title-container {\n    padding: 4em; }\n  .hero-title {\n    font-size: 5.5em; }\n  .hero-subtitle {\n    font-size: 1.5em; } }\n", ""]);
 
 // exports
 
@@ -46,7 +46,7 @@ module.exports = "<div class=\"main\">\n    <router-outlet></router-outlet>\n</d
 /***/ 155:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"home-hero\">\n    <div class=\"title-container\">\n        <h1 class=\"title is-1\">\n            #Cati Lyfe\n        </h1>\n        <h3 class=\"subtitle\">A lyfestyle blog by Justin and Peter</h3>\n    </div>\n</div>\n\n<div>\n    <ul>\n        <li *ngFor=\"let post of recentPosts | async\">{{post}}</li>\n    </ul>\n</div>\n"
+module.exports = "<div class=\"home-hero\">\n    <div class=\"title-container\">\n        <h1 class=\"hero-title\">\n            #Cati Lyfe\n        </h1>\n        <h3 class=\"hero-subtitle\">A lyfestyle blog by Justin and Peter</h3>\n    </div>\n</div>\n\n<div>\n    <ul>\n        <li *ngFor=\"let post of recentPosts | async\">{{post}}</li>\n    </ul>\n</div>\n"
 
 /***/ }),
 
