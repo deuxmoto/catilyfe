@@ -178,7 +178,7 @@
                 await function();
 
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 throw;
             }
