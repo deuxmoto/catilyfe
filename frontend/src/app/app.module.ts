@@ -5,6 +5,7 @@ import { HttpModule } from "@angular/http";
 import { Route, RouterModule } from "@angular/router";
 
 import { AppComponent } from "./app.component";
+import { CoreModule } from "./core/core.module";
 import { HomeComponent } from "./home/home.component";
 
 const routes: Route[] = [
@@ -21,6 +22,7 @@ const routes: Route[] = [
   ],
   imports: [
     RouterModule.forRoot(routes),
+    CoreModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule

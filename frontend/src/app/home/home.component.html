@@ -1,3 +1,5 @@
 <div>
-
+    <ul>
+        <li *ngFor="let post of recentPosts | async">{{post}}</li>
+    </ul>
 </div>
