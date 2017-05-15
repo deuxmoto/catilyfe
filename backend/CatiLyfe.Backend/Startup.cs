@@ -56,7 +56,7 @@ namespace CatiLyfe.Backend
                     {
                         options.AddPolicy(
                             "AllowCatiLyfe",
-                            builder => { builder.WithOrigins("https://catilyfe.azurewebsites.net"); });
+                            builder => { builder.WithOrigins("*"); });
                     });
         }
 
@@ -66,12 +66,15 @@ namespace CatiLyfe.Backend
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            // Must live here.
+            app.UseCors("AllowCatiLyfe");
+
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUi(baseRoute: "docs");
             app.UseDeveloperExceptionPage();
 
-            app.UseCors("AllowCatiLyfe");
+            
         }
 
         private string GetDocumentationPath()
