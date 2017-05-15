@@ -18,6 +18,8 @@ namespace CatiLyfe.Backend
     using Microsoft.Extensions.PlatformAbstractions;
     using System.IO;
 
+    using CatiLyfe.Backend.App_Code;
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -27,7 +29,9 @@ namespace CatiLyfe.Backend
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            this.Configuration = builder.Build();
+
+            CatiData.InitializeDataLayer(this.Configuration.GetConnectionString("catilyfe"));
         }
 
         public IConfigurationRoot Configuration { get; }
