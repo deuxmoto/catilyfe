@@ -25,7 +25,7 @@ AS
        ,p.created
     FROM cati.postmeta p
     WHERE p.goeslive BETWEEN @startdate AND @enddate
-    ORDER BY p.goeslive
+    ORDER BY p.goeslive DESC
     OFFSET (@skip) ROWS 
     FETCH NEXT (@top) ROWS ONLY
 

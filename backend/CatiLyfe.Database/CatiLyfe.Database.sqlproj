@@ -78,6 +78,7 @@
     <Build Include="Schemas\cati\Programability\getsinglepost.sql" />
     <Build Include="Schemas\cati\Programability\setpost.sql" />
     <Build Include="Schemas\cati\Programability\Types\postcontentlist.sql" />
+    <Build Include="Schemas\cati\Programability\getposts.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />

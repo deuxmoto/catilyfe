@@ -15,10 +15,27 @@ namespace CatiLyfe.Backend.Controllers
     public class PostController : Controller
     {
         [HttpGet]
-        public async Task<IEnumerable<Post>> GetPosts()
+        public async Task<IEnumerable<Post>> GetPosts([FromQuery] int? top, [FromQuery] int? skip, [FromQuery] DateTime? startdate, [FromQuery] DateTime? enddate)
         {
-            throw new NotImplementedException();
+            var posts = await CatiData.Datalayer.GetPost(top: top, skip: skip, startdate: startdate, enddate: enddate);
+
+            return posts.Select(p => new Post(p));
         }
 
+        [HttpGet("{slug}")]
+        public async Task<Post> GetPost(string slug)
+        {
+            catilyfe.datalayer.Models.Post post;
+            if (int.TryParse(slug, out int postId))
+            {
+                post = await CatiData.Datalayer.GetPost(postId);
+            }
+            else
+            {
+                post = await CatiData.Datalayer.GetPost(slug);
+            }
+
+            return new Post(post);
+        }
     }
 }

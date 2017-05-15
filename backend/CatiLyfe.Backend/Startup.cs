@@ -20,6 +20,9 @@ namespace CatiLyfe.Backend
 
     using CatiLyfe.Backend.App_Code;
 
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Cors.Internal;
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -55,18 +58,6 @@ namespace CatiLyfe.Backend
                                                      });
                         //options.IncludeXmlComments(this.GetDocumentationPath());
                     });
-            services.AddCors(
-                options =>
-                    {
-                        options.AddPolicy(
-                            "AllowAll",
-                            policy =>
-                                {
-                                    policy.AllowAnyHeader();
-                                    policy.AllowAnyMethod();
-                                    policy.AllowAnyOrigin();
-                                });
-                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,9 +67,11 @@ namespace CatiLyfe.Backend
             loggerFactory.AddDebug();
 
             // Must live here.
-            app.UseCors("AllowAll");
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
 
             app.UseMvc();
+
+
             app.UseSwagger();
             app.UseSwaggerUi(baseRoute: "docs");
             app.UseDeveloperExceptionPage();
