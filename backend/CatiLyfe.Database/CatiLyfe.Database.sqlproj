@@ -63,6 +63,7 @@
     <Folder Include="Schemas\cati\Tables" />
     <Folder Include="Schemas\cati\Programability" />
     <Folder Include="Schemas\cati\Index" />
+    <Folder Include="Schemas\cati\Programability\Types" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\cati\cati.sql" />
@@ -75,8 +76,11 @@
     <Build Include="Schemas\cati\Index\pk_contenttype.sql" />
     <Build Include="Schemas\cati\Index\ncl_postmetaslug.sql" />
     <Build Include="Schemas\cati\Programability\getsinglepost.sql" />
+    <Build Include="Schemas\cati\Programability\setpost.sql" />
+    <Build Include="Schemas\cati\Programability\Types\postcontent.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />
+    <None Include="error.sql" />
   </ItemGroup>
 </Project>

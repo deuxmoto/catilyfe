@@ -7,6 +7,7 @@ CREATE PROCEDURE cati.getpostmetadata
    ,@startdate      DATETIME2
    ,@enddate        DATETIME2
 AS
+    SET NOCOUNT ON
     -- Run as snapshot
     SET TRANSACTION ISOLATION LEVEL SNAPSHOT
 
