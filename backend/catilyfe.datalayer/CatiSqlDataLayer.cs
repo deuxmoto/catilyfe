@@ -98,20 +98,17 @@
 
                 var results = new List<T>();
 
-                try
-                {
-                    using (var reader = await command.ExecuteReaderAsync())
-                    {
-                        while (await reader.ReadAsync())
+                await CatiSqlDataLayer.ExecuteSqlReader(
+                    async () =>
                         {
-                            results.Add(readerset(reader));
-                        }
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    throw ex;
-                }
+                            using (var reader = await command.ExecuteReaderAsync())
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    results.Add(readerset(reader));
+                                }
+                            }
+                        });
 
                 return results;
             }
@@ -130,26 +127,23 @@
                 var results1 = new List<T1>();
                 var results2 = new List<T2>();
 
-                try
-                {
-                    using (var reader = await command.ExecuteReaderAsync())
-                    {
-                        while (await reader.ReadAsync())
+                await CatiSqlDataLayer.ExecuteSqlReader(
+                    async () =>
                         {
-                            results1.Add(readerset1(reader));
-                        }
-                        await reader.NextResultAsync();
+                            using (var reader = await command.ExecuteReaderAsync())
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    results1.Add(readerset1(reader));
+                                }
+                                await reader.NextResultAsync();
 
-                        while (await reader.ReadAsync())
-                        {
-                            results2.Add(readerset2(reader));
-                        }
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    throw ex;
-                }
+                                while (await reader.ReadAsync())
+                                {
+                                    results2.Add(readerset2(reader));
+                                }
+                            }
+                        });
 
                 return (results1, results2);
             }
@@ -175,6 +169,19 @@
             command.Parameters.Add(retVal);
             parameters(command.Parameters);
             return command;
+        }
+
+        private static async Task ExecuteSqlReader(Func<Task> function)
+        {
+            try
+            {
+                await function();
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
