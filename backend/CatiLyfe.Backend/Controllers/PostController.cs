@@ -13,21 +13,21 @@ namespace CatiLyfe.Backend.Controllers
     public class PostController : Controller
     {
         [HttpGet]
-        public IEnumerable<Post> GetPosts()
+        public IEnumerable<PostMetaData> GetPosts()
         {
-            var temp1 = new Post
+            var temp1 = new PostMetaData
                             {
+                                Id = 0,
                                 Title = "Cati test post 1 yo",
-                                LiveTime = new DateTime(2017, 5, 13),
-                                Content = "This is the first test post yo.",
+                                WhenPublished = new DateTime(2017, 5, 13),
                                 Slug = "cati-test-post-1-yo"
                             };
 
-            var temp2 = new Post
+            var temp2 = new PostMetaData
             {
+                Id = 2,
                 Title = "Cati test post TWO yo",
-                LiveTime = new DateTime(2017, 5, 13),
-                Content = "This is the SECOND YO test post yo.",
+                WhenPublished = new DateTime(2017, 5, 13),
                 Slug = "cati-test-post-two-yo"
             };
 

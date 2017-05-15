@@ -78,8 +78,6 @@ namespace CatiLyfe.Backend
             app.UseSwagger();
             app.UseSwaggerUi(baseRoute: "docs");
             app.UseDeveloperExceptionPage();
-
-            
         }
 
         private string GetDocumentationPath()
