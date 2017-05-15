@@ -51,7 +51,13 @@ namespace CatiLyfe.Backend
                                                      });
                         //options.IncludeXmlComments(this.GetDocumentationPath());
                     });
-
+            services.AddCors(
+                options =>
+                    {
+                        options.AddPolicy(
+                            "AllowCatiLyfe",
+                            builder => { builder.WithOrigins("https://catilyfe.azurewebsites.net"); });
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +70,8 @@ namespace CatiLyfe.Backend
             app.UseSwagger();
             app.UseSwaggerUi(baseRoute: "docs");
             app.UseDeveloperExceptionPage();
+
+            app.UseCors("AllowCatiLyfe");
         }
 
         private string GetDocumentationPath()
