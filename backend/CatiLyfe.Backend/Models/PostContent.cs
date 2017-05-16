@@ -7,7 +7,7 @@ namespace CatiLyfe.Backend.Models
 {
     public class PostContent
     {
-        public PostContent(catilyfe.datalayer.Models.PostContent content)
+        public PostContent(DataLayer.Models.PostContent content)
         {
             this.Index = content.Index;
             this.ContentType = content.ContentType;

@@ -33,7 +33,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\catilyfe.datalayer\catilyfe.datalayer.csproj" />
+    <ProjectReference Include="..\catilyfe.datalayer\CatiLyfe.DataLayer.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 {
     using System;
 
-    using catilyfe.datalayer.Models;
+    using CatiLyfe.DataLayer.Models;
 
     public class PostMetaData
     {

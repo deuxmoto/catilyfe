@@ -1,4 +1,4 @@
-﻿namespace catilyfe.datalayer.Models
+﻿namespace CatiLyfe.DataLayer.Models
 {
     using System.Collections.Generic;
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CatiLyfe.Backend.App_Code
 {
-    using catilyfe.datalayer;
+    using CatiLyfe.DataLayer;
 
     public static class CatiData
     {

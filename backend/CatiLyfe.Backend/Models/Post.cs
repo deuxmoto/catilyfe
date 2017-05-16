@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace CatiLyfe.Backend.Models
 {
-    using catilyfe.datalayer.Models;
-
     public class Post
     {
-        public Post(catilyfe.datalayer.Models.Post post)
+        public Post(DataLayer.Models.Post post)
         {
             this.Metadata = new PostMetaData(post.MetaData);
             this.Content = post.PostContent.Select(c => new PostContent(c));

@@ -1,4 +1,4 @@
-﻿namespace catilyfe.datalayer.Models
+﻿namespace CatiLyfe.DataLayer.Models
 {
     public sealed class PostContent
     {

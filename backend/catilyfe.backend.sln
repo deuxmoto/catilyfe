@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatiLyfe.Backend", "CatiLyf
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CatiLyfe.Database", "CatiLyfe.Database\CatiLyfe.Database.sqlproj", "{15401C53-BE29-41A4-B260-D033F94AA1E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "catilyfe.datalayer", "catilyfe.datalayer\catilyfe.datalayer.csproj", "{F2F644F6-52F9-4D33-8A9E-B05E25240E32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatiLyfe.DataLayer", "catilyfe.datalayer\CatiLyfe.DataLayer.csproj", "{F2F644F6-52F9-4D33-8A9E-B05E25240E32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

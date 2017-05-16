@@ -1,4 +1,4 @@
-﻿namespace catilyfe.datalayer
+﻿namespace CatiLyfe.DataLayer
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using catilyfe.datalayer.Models;
+    using CatiLyfe.DataLayer.Models;
 
     internal sealed class CatiSqlDataLayer : ICatiDataLayer
     {

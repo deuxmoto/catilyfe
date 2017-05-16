@@ -25,7 +25,7 @@ namespace CatiLyfe.Backend.Controllers
         [HttpGet("{slug}")]
         public async Task<Post> GetPost(string slug)
         {
-            catilyfe.datalayer.Models.Post post;
+            DataLayer.Models.Post post;
             if (int.TryParse(slug, out int postId))
             {
                 post = await CatiData.Datalayer.GetPost(postId);

@@ -1,10 +1,10 @@
-﻿namespace catilyfe.datalayer
+﻿namespace CatiLyfe.DataLayer
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using catilyfe.datalayer.Models;
+    using CatiLyfe.DataLayer.Models;
 
     /// <summary>
     /// The CatiDataLayer interface.
