@@ -9,6 +9,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CatiLyfe.Database", "CatiLy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatiLyfe.DataLayer", "catilyfe.datalayer\CatiLyfe.DataLayer.csproj", "{F2F644F6-52F9-4D33-8A9E-B05E25240E32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatiLyfe.Common", "CatiLyfe.Common\CatiLyfe.Common.csproj", "{C77A7916-ED53-498F-ADDC-72E28DC4459F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{F2F644F6-52F9-4D33-8A9E-B05E25240E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2F644F6-52F9-4D33-8A9E-B05E25240E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2F644F6-52F9-4D33-8A9E-B05E25240E32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C77A7916-ED53-498F-ADDC-72E28DC4459F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C77A7916-ED53-498F-ADDC-72E28DC4459F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C77A7916-ED53-498F-ADDC-72E28DC4459F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C77A7916-ED53-498F-ADDC-72E28DC4459F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
