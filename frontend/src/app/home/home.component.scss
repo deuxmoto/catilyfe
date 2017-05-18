@@ -1,11 +1,26 @@
 @import "../styles/helpers";
 
+@mixin title-styles() {
+    font-family: 'Lobster', cursive;
+    font-size: 2rem;
+}
+
+@mixin subtitle-styles() {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+/*
+ * Hero
+ */
 .home-hero {
-    height: calc(100% - 30px);
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     max-width: 100%;
+    margin-bottom: 40px;
 
     background-image: url("../../assets/catilyfe-hero-image.jpg");
     background-repeat: no-repeat;
@@ -49,4 +64,43 @@
     .hero-subtitle {
         font-size: 1.5em;
     }
+}
+
+/*
+ * Post preview
+ */
+.recent-posts {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.post-preview {
+    width: 80%;
+    padding: 30px;
+    margin-bottom: 30px;
+    cursor: pointer;
+
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 150ms;
+
+    &:hover, &:active {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    }
+}
+
+.post-preview-header {
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.post-preview-title {
+    @include title-styles();
+}
+
+.post-preview-subtitle {
+    @include subtitle-styles();
 }

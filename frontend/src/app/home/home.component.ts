@@ -11,15 +11,11 @@ import { BackendApiService, PostMetadata } from "../core/backend-api.service";
     styleUrls: [ "./home.component.scss" ]
 })
 export class HomeComponent implements OnInit {
-    private recentPosts: Observable<string[]>;
+    private recentPosts: Observable<PostMetadata[]>;
 
     constructor(private backend: BackendApiService) { }
 
     ngOnInit() {
-        this.recentPosts = this.backend.getPostMetadata()
-            .map((postMetadata): string[] => {
-                return postMetadata.map((pm) => JSON.stringify(pm));
-            });
+        this.recentPosts = this.backend.getRecentPostMetadata(10);
     }
-
 }

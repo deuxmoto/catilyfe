@@ -7,8 +7,14 @@
     </div>
 </div>
 
-<div>
-    <ul>
-        <li *ngFor="let post of recentPosts | async">{{post}}</li>
-    </ul>
-</div>
+<ul class="recent-posts">
+    <li class="post-preview" *ngFor="let post of recentPosts | async">
+        <div class="post-preview-header">
+            <h2 class="post-preview-title">{{post.title}}</h2>
+            <h3 class="post-preview-subtitle">{{post.whenPublished | date:"MMMM d, y - h:mma"}}</h3>
+        </div>
+        <div class="post-preview-body">
+            <p class="post-preview-description">{{post.description}}</p>
+        </div>
+    </li>
+</ul>
