@@ -21,11 +21,11 @@
         /// <summary>
         /// Gets the current server time in UTC.
         /// </summary>
-        public DateTime Timestamp { get; private set; }
+        public DateTime Timestamp { get; }
 
         /// <summary>
         /// Yea, IDK. Just a string whatever.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; }
     }
 }
