@@ -40,8 +40,8 @@
                 (string)reader["slug"],
                 (string)reader["title"],
                 (string)reader["description"],
-                (DateTime)reader["created"],
-                (DateTime)reader["goeslive"]);
+                new DateTimeOffset((DateTime)reader["created"]),
+                new DateTimeOffset((DateTime)reader["goeslive"]));
         }
 
         private static PostContent ParsePostContent(SqlDataReader reader)

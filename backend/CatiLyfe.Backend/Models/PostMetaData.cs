@@ -20,7 +20,7 @@
 
         public string Title { get; }
 
-        public DateTime WhenPublished { get; }
+        public DateTimeOffset WhenPublished { get; }
 
         public string Description { get; }
     }

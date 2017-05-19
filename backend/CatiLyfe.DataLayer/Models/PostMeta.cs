@@ -7,7 +7,7 @@
     /// </summary>
     public sealed class PostMeta
     {
-        public PostMeta(int id, string slug, string title, string description, DateTime whencreated, DateTime goeslive)
+        public PostMeta(int id, string slug, string title, string description, DateTimeOffset whencreated, DateTimeOffset goeslive)
         {
             this.Id = id;
             this.Slug = slug;
@@ -25,8 +25,8 @@
 
         public string Description { get; }
 
-        public DateTime WhenCreated { get; }
+        public DateTimeOffset WhenCreated { get; }
 
-        public DateTime GoesLive { get; }
+        public DateTimeOffset GoesLive { get; }
     }
 }
