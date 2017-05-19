@@ -14,7 +14,7 @@ AS
     BEGIN
         SET @id = (SELECT id FROM cati.postmeta WHERE slug = @slug)
 
-        IF(@@ROWCOUNT = 0)
+        IF(@id IS NULL)
         BEGIN
             SET @error = 50001
             SET @error_message = N'The post was not found with slug ''' + ISNULL(@slug, 'NULL') + ''''
@@ -24,7 +24,7 @@ AS
 
     IF(NOT EXISTS(SELECT TOP 1 1 FROM cati.postmeta WHERE id = @id))
     BEGIN
-        SET @error_message = N'The post was not found with id = ''' + ISNULL(@id, 'NULL') + ''''
+        SET @error_message = N'The post was not found with id = ''' + ISNULL(CAST(@id AS NVARCHAR), 'NULL') + ''''
         SET @error = 50001
         GOTO ErrorHandler
     END

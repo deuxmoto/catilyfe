@@ -17,9 +17,13 @@ namespace CatiLyfe.Backend
 {
     using Microsoft.Extensions.PlatformAbstractions;
     using System.IO;
+    using System.Net;
 
     using CatiLyfe.Backend.App_Code;
+    using CatiLyfe.Common.Exceptions;
 
+    using Microsoft.AspNetCore.Diagnostics;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
@@ -43,7 +47,7 @@ namespace CatiLyfe.Backend
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            var mvcBuilder = services.AddMvc();
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(
                 options =>
@@ -58,6 +62,8 @@ namespace CatiLyfe.Backend
                                                      });
                         //options.IncludeXmlComments(this.GetDocumentationPath());
                     });
+
+            mvcBuilder.AddMvcOptions(options => options.Filters.Add(new ExceptionFilter()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,11 +72,11 @@ namespace CatiLyfe.Backend
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+
             // Must live here.
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
 
             app.UseMvc();
-
 
             app.UseSwagger();
             app.UseSwaggerUi(baseRoute: "docs");
