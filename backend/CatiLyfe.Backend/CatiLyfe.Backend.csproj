@@ -13,15 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Properties\PublishProfiles\caticake - Web Deploy.pubxml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\Root\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Markdown" Version="2.2.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
@@ -38,7 +34,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\catilyfe.datalayer\CatiLyfe.DataLayer.csproj" />
+    <ProjectReference Include="..\CatiLyfe.Common\CatiLyfe.Common.csproj" />
+    <ProjectReference Include="..\CatiLyfe.DataLayer\CatiLyfe.DataLayer.csproj" />
   </ItemGroup>
 
 </Project>
