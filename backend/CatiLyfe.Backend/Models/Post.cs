@@ -3,6 +3,8 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
+    using CatiLyfe.Backend.App_Code;
+
     /// <summary>
     /// The post.
     /// </summary>
@@ -16,7 +18,7 @@
         {
             this.Metadata = new PostMetaData(post.MetaData);
 
-            this.Content = post.PostContent.Select(c => new PostContent(c));
+            this.Content = PostContentFactory.Build(post.PostContent);
         }
 
         /// <summary>
