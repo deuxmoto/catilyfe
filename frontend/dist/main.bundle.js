@@ -39,7 +39,7 @@ module.exports = module.exports.toString();
 /***/ 153:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main\">\n    <router-outlet></router-outlet>\n    <footer class=\"footer\">\n        <p class=\"is-pulled-left\">© 2017 - Justin Niles and Peter Sulucz</p>\n        <p class=\"is-pulled-right\">Made in <a href=\"https://seattlesbest.com/\">Seattle</a>, WA</p>\n    </footer>\n</div>\n"
+module.exports = "<div class=\"main\">\n    <router-outlet></router-outlet>\n    <footer class=\"footer\">\n        <p class=\"is-pulled-left\">© 2017 - <span style='font-size: 6px;'>Justin Niles</span> and <span style='font-size: 3em;'>Peter Sulucz</span></p>\n        <p class=\"is-pulled-right\">Made in <a href=\"https://seattlesbest.com/\">Seattle</a>, WA</p>\n    </footer>\n</div>\n"
 
 /***/ }),
 
