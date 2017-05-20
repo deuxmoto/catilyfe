@@ -1,39 +1,25 @@
 ﻿namespace CatiLyfe.Backend.Models
 {
-    using HeyRed.MarkdownSharp;
+    using System.ComponentModel.DataAnnotations;
 
+    /// <summary>
+    /// The post content.
+    /// </summary>
     public class PostContent
     {
-        public PostContent(DataLayer.Models.PostContent content)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PostContent"/> class.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        internal PostContent(string content)
         {
-            this.Index = content.Index;
-            this.ContentType = content.ContentType;
-            this.Content = content.Content;
-
-            if (this.ContentType == "markdown")
-            {
-                var options = new MarkdownOptions
-                                  {
-                                      AutoHyperlink = true,
-                                      AutoNewLines = true,
-                                      LinkEmails = true,
-                                      QuoteSingleLine = true,
-                                      StrictBoldItalic = true
-                                  };
-
-                var markdown = new Markdown(options);
-                this.Content = markdown.Transform(this.Content);
-            }
-            else
-            {
-                // do nothing
-            }
+            this.Content = content;
         }
 
-        public int Index { get; }
-
+        /// <summary>
+        /// The full resolved body of the post.
+        /// </summary>
+        [Required]
         public string Content { get; }
-
-        public string ContentType { get; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace CatiLyfe.Backend.Models
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
@@ -16,6 +15,7 @@
         public Post(DataLayer.Models.Post post)
         {
             this.Metadata = new PostMetaData(post.MetaData);
+
             this.Content = post.PostContent.Select(c => new PostContent(c));
         }
 
@@ -29,6 +29,6 @@
         /// The content for the post.
         /// </summary>
         [Required]
-        public IEnumerable<PostContent> Content { get; }
+        public PostContent Content { get; }
     }
 }
