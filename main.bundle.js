@@ -26,7 +26,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, "/*\n * Hero\n */\n.home-hero {\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  max-width: 100%;\n  margin-bottom: 40px;\n  background-image: url(" + __webpack_require__(185) + ");\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover; }\n\n.title-container {\n  background-color: rgba(0, 0, 0, 0.6);\n  padding: 2em;\n  text-align: right;\n  border: 1px solid rgba(255, 255, 255, 0.8); }\n  .title-container > * {\n    color: #fafafa;\n    text-shadow: 0px 1px rgba(0, 0, 0, 0.8); }\n\n.hero-title {\n  position: relative;\n  font-size: 3em;\n  margin-bottom: 0;\n  font-family: 'Lobster', cursive; }\n\n.hero-subtitle {\n  margin-top: -0.5em;\n  font-family: 'Cormorant Infant', serif; }\n\n@media (min-width: 960px) {\n  .title-container {\n    padding: 4em; }\n  .hero-title {\n    font-size: 5.5em; }\n  .hero-subtitle {\n    font-size: 1.5em; } }\n\n/*\n * Post preview\n */\n.recent-posts {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  width: 100%; }\n\n.post-preview {\n  width: 80%;\n  padding: 30px;\n  margin-bottom: 30px;\n  cursor: pointer;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);\n  transition: box-shadow 150ms; }\n  .post-preview:hover, .post-preview:active {\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); }\n\n.post-preview-header {\n  padding-bottom: 10px;\n  margin-bottom: 15px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.2); }\n\n.post-preview-title {\n  font-family: 'Lobster', cursive;\n  font-size: 2rem; }\n\n.post-preview-subtitle {\n  text-transform: uppercase;\n  font-weight: bold;\n  font-size: 0.8rem; }\n", ""]);
+exports.push([module.i, "/*\n * Hero\n */\n.home-hero {\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  max-width: 100%;\n  margin-bottom: 40px;\n  background-image: url(" + __webpack_require__(184) + ");\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover; }\n\n.title-container {\n  background-color: rgba(0, 0, 0, 0.6);\n  padding: 2em;\n  text-align: right;\n  border: 1px solid rgba(255, 255, 255, 0.8); }\n  .title-container > * {\n    color: #fafafa;\n    text-shadow: 0px 1px rgba(0, 0, 0, 0.8); }\n\n.hero-title {\n  position: relative;\n  font-size: 3em;\n  margin-bottom: 0;\n  font-family: 'Lobster', cursive; }\n\n.hero-subtitle {\n  margin-top: -0.5em;\n  font-family: 'Cormorant Infant', serif; }\n\n@media (min-width: 960px) {\n  .title-container {\n    padding: 4em; }\n  .hero-title {\n    font-size: 5.5em; }\n  .hero-subtitle {\n    font-size: 1.5em; } }\n\n/*\n * Post preview\n */\n.recent-posts {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  width: 100%; }\n\n.post-preview {\n  width: 80%;\n  padding: 30px;\n  margin-bottom: 30px;\n  cursor: pointer;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);\n  transition: box-shadow 150ms; }\n  .post-preview:hover, .post-preview:active {\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); }\n\n.post-preview-header {\n  padding-bottom: 10px;\n  margin-bottom: 15px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.2); }\n\n.post-preview-title {\n  font-family: 'Lobster', cursive;\n  font-size: 2rem; }\n\n.post-preview-subtitle {\n  text-transform: uppercase;\n  font-weight: bold;\n  font-size: 0.8rem; }\n", ""]);
 
 // exports
 
@@ -36,28 +36,28 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 154:
+/***/ 153:
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"main\">\n    <router-outlet></router-outlet>\n    <footer class=\"footer\">\n        <p class=\"is-pulled-left\">© 2017 - Justin Niles and Peter Sulucz</p>\n        <p class=\"is-pulled-right\">Made in <a href=\"http://downtownbellevue.com/2007/08/16/5-reasons-bellevue-is-better-than-seattle/\">Bellevue</a>, WA</p>\n    </footer>\n</div>\n"
 
 /***/ }),
 
-/***/ 155:
+/***/ 154:
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"home-hero\">\n    <div class=\"title-container\">\n        <h1 class=\"hero-title\">\n            #Cati Lyfe\n        </h1>\n        <h3 class=\"hero-subtitle\">A lyfestyle blog by Justin and Peter</h3>\n    </div>\n</div>\n\n<ul class=\"recent-posts\">\n    <li class=\"post-preview\" *ngFor=\"let post of recentPosts | async\">\n        <div class=\"post-preview-header\">\n            <h2 class=\"post-preview-title\">{{post.title}}</h2>\n            <h3 class=\"post-preview-subtitle\">{{post.whenPublished | date:\"MMMM d, y - h:mma\"}}</h3>\n        </div>\n        <div class=\"post-preview-body\">\n            <p class=\"post-preview-description\">{{post.description}}</p>\n        </div>\n    </li>\n</ul>\n"
 
 /***/ }),
 
-/***/ 185:
+/***/ 184:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "catilyfe-hero-image.31624ca9750258d85f47.jpg";
 
 /***/ }),
 
-/***/ 187:
+/***/ 186:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(85);
@@ -169,9 +169,9 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 AppComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: "app-root",
-        template: __webpack_require__(154),
+        template: __webpack_require__(153),
         styles: [__webpack_require__(151)]
     })
 ], AppComponent);
@@ -284,7 +284,7 @@ CoreModule = CoreModule_1 = __decorate([
         imports: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* CommonModule */]],
         providers: [__WEBPACK_IMPORTED_MODULE_2__backend_api_service__["a" /* BackendApiService */]]
     }),
-    __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Optional */])()), __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* SkipSelf */])()),
+    __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Optional */])()), __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* SkipSelf */])()),
     __metadata("design:paramtypes", [CoreModule])
 ], CoreModule);
 
@@ -324,9 +324,9 @@ var HomeComponent = (function () {
     return HomeComponent;
 }());
 HomeComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: "app-home",
-        template: __webpack_require__(155),
+        template: __webpack_require__(154),
         styles: [__webpack_require__(152)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__core_backend_api_service__["a" /* BackendApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__core_backend_api_service__["a" /* BackendApiService */]) === "function" && _a || Object])
@@ -354,5 +354,5 @@ var environment = {
 
 /***/ })
 
-},[187]);
+},[186]);
 //# sourceMappingURL=main.bundle.js.map
