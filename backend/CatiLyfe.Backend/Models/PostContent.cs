@@ -3,23 +3,23 @@
     using System.ComponentModel.DataAnnotations;
 
     /// <summary>
-    /// The post content.
+    /// The post rawHtmlThenIGuess.
     /// </summary>
     public class PostContent
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PostContent"/> class.
         /// </summary>
-        /// <param name="content">The content.</param>
+        /// <param name="content">The rawHtmlThenIGuess.</param>
         internal PostContent(string content)
         {
-            this.Content = content;
+            this.RawHtmlThenIGuess = content;
         }
 
         /// <summary>
         /// The full resolved body of the post.
         /// </summary>
         [Required]
-        public string Content { get; }
+        public string RawHtmlThenIGuess { get; }
     }
 }
