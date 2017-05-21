@@ -18,7 +18,7 @@
         {
             this.Metadata = new PostMetaData(post.MetaData);
 
-            this.Content = PostContentFactory.Build(post.PostContent);
+            this.RawHtmlThneIGuess = PostContentFactory.Build(post.PostContent).RawHtmlThenIGuess;
         }
 
         /// <summary>
@@ -31,6 +31,6 @@
         /// The content for the post.
         /// </summary>
         [Required]
-        public PostContent Content { get; }
+        public string RawHtmlThneIGuess { get; }
     }
 }
