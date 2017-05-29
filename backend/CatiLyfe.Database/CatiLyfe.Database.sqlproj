@@ -64,6 +64,7 @@
     <Folder Include="Schemas\cati\Programability" />
     <Folder Include="Schemas\cati\Index" />
     <Folder Include="Schemas\cati\Programability\Types" />
+    <Folder Include="Schemas\stat" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\cati\cati.sql" />
