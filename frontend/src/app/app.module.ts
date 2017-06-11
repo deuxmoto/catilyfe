@@ -7,18 +7,24 @@ import { Route, RouterModule } from "@angular/router";
 import { AppComponent } from "./app.component";
 import { CoreModule } from "./core/core.module";
 import { HomeComponent } from "./home/home.component";
+import { PostComponent } from "./post/post.component";
 
 const routes: Route[] = [
     {
         path: "",
         component: HomeComponent
+    },
+    {
+        path: "posts/:slug",
+        component: PostComponent
     }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    PostComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

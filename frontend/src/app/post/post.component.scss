@@ -1,0 +1,21 @@
+@import "../styles/helpers";
+
+.post-section {
+    min-height: 100%;
+    width: 100%;
+    padding: 20px 0;
+
+    display: flex;
+    justify-content: center;
+}
+
+.post-container {
+    margin: 0 20px;
+    min-width: 100%;
+
+    @include if-larger-than($bp-sm) {
+        $large-screen-post-width: 960px;
+        min-width: $large-screen-post-width;
+        max-width: $large-screen-post-width;
+    }
+}

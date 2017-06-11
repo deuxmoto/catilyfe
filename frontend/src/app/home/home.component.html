@@ -8,7 +8,7 @@
 </div>
 
 <ul class="recent-posts">
-    <li class="post-preview" *ngFor="let post of recentPosts | async">
+    <li class="post-preview" *ngFor="let post of recentPosts | async" (click)="navigateToPost(post.slug)">
         <div class="post-preview-header">
             <h2 class="post-preview-title">{{post.title}}</h2>
             <h3 class="post-preview-subtitle">{{post.whenPublished | date:"MMMM d, y - h:mma"}}</h3>
