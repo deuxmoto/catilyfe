@@ -1,6 +1,6 @@
 webpackJsonp([2,4],{
 
-/***/ 15:
+/***/ 14:
 /***/ (function(module, exports) {
 
 /*
@@ -83,10 +83,10 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 152:
+/***/ 154:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(15)(false);
+exports = module.exports = __webpack_require__(14)(false);
 // imports
 
 
@@ -98,12 +98,12 @@ exports.push([module.i, "/*! bulma.io v0.4.1 | MIT License | github.com/jgthms/b
 
 /***/ }),
 
-/***/ 153:
+/***/ 155:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(15)(false);
+exports = module.exports = __webpack_require__(14)(false);
 // imports
-exports.i(__webpack_require__(152), "");
+exports.i(__webpack_require__(154), "");
 
 // module
 exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\nhtml, body {\n  height: 100%; }\n", ""]);
@@ -113,7 +113,7 @@ exports.push([module.i, "/* You can add global styles to this file, and also imp
 
 /***/ }),
 
-/***/ 190:
+/***/ 194:
 /***/ (function(module, exports) {
 
 /*
@@ -366,7 +366,7 @@ function updateLink(linkElement, obj) {
 
 /***/ }),
 
-/***/ 195:
+/***/ 199:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(90);
@@ -380,10 +380,10 @@ module.exports = __webpack_require__(90);
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(153);
+var content = __webpack_require__(155);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(190)(content, {});
+var update = __webpack_require__(194)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -401,5 +401,5 @@ if(false) {
 
 /***/ })
 
-},[195]);
+},[199]);
 //# sourceMappingURL=styles.bundle.js.map
