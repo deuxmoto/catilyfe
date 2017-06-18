@@ -8,6 +8,7 @@ import { AppComponent } from "./app.component";
 import { CoreModule } from "./core/core.module";
 import { HomeComponent } from "./home/home.component";
 import { PostComponent } from "./post/post.component";
+import { SharedModule } from "./shared/shared.module";
 
 const routes: Route[] = [
     {
@@ -30,8 +31,8 @@ const routes: Route[] = [
     RouterModule.forRoot(routes),
     CoreModule.forRoot(),
     BrowserModule,
-    FormsModule,
-    HttpModule
+    HttpModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

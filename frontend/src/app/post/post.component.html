@@ -1,4 +1,17 @@
-<div class="post-section">
-    <div class="post-container content" [innerHtml]="postHtml">
+<div class="post-section" [ngSwitch]="state">
+    <div class="post-container content" [innerHtml]="postHtml" *ngSwitchCase="StateEnum.Normal"></div>
+    <div class="post-loading" *ngSwitchCase="StateEnum.Loading">
+        <span class="post-loading-text">Loading post...</span>
+    </div>
+    <div class="post-invalid content" *ngSwitchCase="StateEnum.InvalidPost">
+        <div>
+            <h1>Oh no! Post not found!</h1>
+            <p>Looks like you may have lost your way.
+                <br>
+                How about we go <a routerLink="/">home?</a>
+            </p>
+        </div>
     </div>
 </div>
+
+<footer></footer>

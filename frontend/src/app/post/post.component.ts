@@ -7,14 +7,21 @@ import "rxjs/add/operator/catch";
 
 import { BackendApiService, PostMetadata, PostNotFoundError } from "../core/backend-api.service";
 
+enum State {
+    Loading,
+    InvalidPost,
+    Normal
+}
+
 @Component({
     selector: "app-post",
     templateUrl: "./post.component.html",
     styleUrls: [ "./post.component.scss" ]
 })
 export class PostComponent implements OnInit {
+    private StateEnum = State;
+    private state = State.Loading;
     private postHtml: string;
-    private validPost = true;
 
     constructor(
         private backend: BackendApiService,
@@ -27,11 +34,11 @@ export class PostComponent implements OnInit {
         this.backend.getPost(slug).subscribe(
             (post) => {
                 this.postHtml = post.rawHtmlThenIGuess;
-                this.validPost = true;
+                this.state = State.Normal;
             },
             (error) => {
+                this.state = State.InvalidPost;
                 if (error instanceof PostNotFoundError) {
-                    this.validPost = false;
                     console.error("invalid post");
                 }
                 return null;

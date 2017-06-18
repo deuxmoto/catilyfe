@@ -1,7 +1,14 @@
 @import "../styles/helpers";
 
-.post-section {
+:host {
     min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.post-section {
+    flex: 1 1 0%;
     width: 100%;
     padding: 20px 0;
 
@@ -18,4 +25,21 @@
         min-width: $large-screen-post-width;
         max-width: $large-screen-post-width;
     }
+}
+
+.post-loading {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-invalid {
+    width: 100%;
+    font-size: 20px;
+
+    display: flex;
+    justify-content: center;
 }
