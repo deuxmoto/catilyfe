@@ -1,4 +1,4 @@
-ng build
+ng build --base-href="catilyfe.azurewebsites.net"
 git add dist
 git commit -m "DEPLOY: Update dist folder"
 cd ..
