@@ -1,4 +1,5 @@
 ng build
+cp ./web.config ./dist/
 git add dist
 git commit -m "DEPLOY: Update dist folder"
 cd ..
