@@ -80,6 +80,11 @@
     <Build Include="Schemas\cati\Programability\setpost.sql" />
     <Build Include="Schemas\cati\Programability\Types\postcontentlist.sql" />
     <Build Include="Schemas\cati\Programability\getposts.sql" />
+    <Build Include="Schemas\cati\Tables\tags.sql" />
+    <Build Include="Schemas\cati\Index\pk_tags.sql" />
+    <Build Include="Schemas\cati\Index\ncl_tagtopost.sql" />
+    <Build Include="Schemas\cati\Tables\posttags.sql" />
+    <Build Include="Schemas\cati\Index\pk_posttags.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />

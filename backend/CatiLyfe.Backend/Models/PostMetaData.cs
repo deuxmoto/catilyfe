@@ -1,6 +1,7 @@
 ﻿namespace CatiLyfe.Backend.Models
 {
     using System;
+    using System.Collections.Generic;
 
     using CatiLyfe.DataLayer.Models;
 
@@ -13,6 +14,7 @@
             this.Title = meta.Title;
             this.Description = meta.Description;
             this.WhenPublished = meta.GoesLive;
+            this.Tags = meta.Tags;
         }
 
         public int Id { get; }
@@ -23,5 +25,7 @@
         public DateTimeOffset WhenPublished { get; }
 
         public string Description { get; }
+
+        public IEnumerable<string> Tags { get; }
     }
 }

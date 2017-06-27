@@ -16,6 +16,23 @@ AS
     SET @startdate =    ISNULL(@startdate, '1900-1-1')
     SET @enddate =      ISNULL(@enddate, '2400-12-20') -- TODO: Fix this in the year 2400
 
+    DECLARE @selectedIds TABLE
+    (
+        id INT NOT NULL
+    )
+
+    INSERT INTO @selectedIds
+    (
+        id
+    )
+    SELECT
+        p.id
+    FROM cati.postmeta p
+    WHERE p.goeslive BETWEEN @startdate AND @enddate
+    ORDER BY p.goeslive DESC
+    OFFSET (@skip) ROWS 
+    FETCH NEXT (@top) ROWS ONLY
+
     SELECT
         p.id
        ,p.slug
@@ -24,9 +41,17 @@ AS
        ,p.description
        ,p.created
     FROM cati.postmeta p
-    WHERE p.goeslive BETWEEN @startdate AND @enddate
-    ORDER BY p.goeslive DESC
-    OFFSET (@skip) ROWS 
-    FETCH NEXT (@top) ROWS ONLY
+    JOIN @selectedIds id
+      ON id.id = p.id
+
+    -- Find the tags
+    SELECT
+       s.id AS post
+      ,t.tag
+    FROM cati.posttags pt
+    JOIN cati.tags t
+      ON t.id = pt.tag
+    JOIN @selectedIds s
+      ON s.id = pt.post
 
 RETURN 0

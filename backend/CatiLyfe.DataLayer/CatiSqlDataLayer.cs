@@ -44,6 +44,21 @@
                 new DateTimeOffset((DateTime)reader["goeslive"]));
         }
 
+        /// <summary>
+        /// Parses a post to tag mapping.
+        /// </summary>
+        /// <param name="reader">The sql data reader.</param>
+        /// <returns>A post to tag mapping object.</returns>
+        private static (int post, string tag) ParsePostTag(SqlDataReader reader)
+        {
+            return (post: (int)reader["post"], tag: (string)reader["tag"]);
+        }
+
+        /// <summary>
+        /// Parses a row of post content from the the reader.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>A peice of post content.</returns>
         private static PostContent ParsePostContent(SqlDataReader reader)
         {
             return new PostContent((int)reader["id"], (int)reader["postid"], (string)reader["type"], (string)reader["content"]);
@@ -57,7 +72,12 @@
                 {
                     parmeters.AddWithValue("id", id);
                 },
-                ParsePostMeta, ParsePostContent);
+                ParsePostMeta, ParsePostContent, ParsePostTag);
+
+            var metadata = results.Item1.First();
+            var tags = results.Item3;
+            metadata.Tags = tags.Select(t => t.Item2).ToArray();
+
             return new Post(results.Item1.First(), results.Item2);
         }
 
@@ -69,7 +89,12 @@
                 {
                     parmeters.AddWithValue("slug", slug);
                 },
-                ParsePostMeta, ParsePostContent);
+                ParsePostMeta, ParsePostContent, ParsePostTag);
+
+            var metadata = results.Item1.First();
+            var tags = results.Item3;
+            metadata.Tags = tags.Select(t => t.Item2).ToArray();
+
             return new Post(results.Item1.First(), results.Item2);
         }
 
@@ -84,17 +109,26 @@
                     parmeters.AddWithValue("startdate", startdate);
                     parmeters.AddWithValue("enddate", enddate);
                 },
-                ParsePostMeta, ParsePostContent);
+                ParsePostMeta, ParsePostContent, ParsePostTag);
 
             var postContentlookup = results.Item2.ToLookup(c => c.PostId);
+            var tagsLookup = results.Item3.ToLookup(t => t.Item1);
+
+            // Get the tag mapping.
+            foreach (var metadata in results.Item1)
+            {
+                if (tagsLookup.Contains(metadata.Id))
+                {
+                    metadata.Tags = tagsLookup[metadata.Id].Select(t => t.Item2).ToList();
+                }
+            }
 
             return results.Item1.Select(meta => new Post(meta, postContentlookup.First(m => m.Key == meta.Id))).ToList();
         }
 
         private async Task<IEnumerable<T1>> ExecuteReader<T1>(string sproc, Action<SqlParameterCollection> parameters, Func<SqlDataReader, T1> readerset1)
-            where T1 : class
         {
-            var results = await this.ExecuteReader(sproc, parameters, new Func<SqlDataReader, object>[] { readerset1 });
+            var results = await this.ExecuteReader(sproc, parameters, (new object[] { readerset1 }).Cast<Func<SqlDataReader, object>>().ToArray());
 
             return results[0].Cast<T1>();
         }
@@ -103,13 +137,35 @@
             string sproc,
             Action<SqlParameterCollection> parameters,
             Func<SqlDataReader, T1> readerset1,
-            Func<SqlDataReader, T2> readerset2) where T1: class where T2: class
+            Func<SqlDataReader, T2> readerset2)
         {
-            var results = await this.ExecuteReader(sproc, parameters, new Func<SqlDataReader, object>[] {readerset1, readerset2});
+            var results = await this.ExecuteReader(sproc, parameters, (new object [] {readerset1, readerset2}).Cast<Func<SqlDataReader, object>>().ToArray());
 
             return (results[0].Cast<T1>(), results[1].Cast<T2>());
         }
 
+        private async Task<(IEnumerable<T1>, IEnumerable<T2>, IEnumerable<T3>)> ExecuteReader<T1, T2, T3>(
+            string sproc,
+            Action<SqlParameterCollection> parameters,
+            Func<SqlDataReader, T1> readerset1,
+            Func<SqlDataReader, T2> readerset2,
+            Func<SqlDataReader, T3> readerset3)
+        {
+            var results = await this.ExecuteReader(
+                              sproc,
+                              parameters,
+                              (new object[] { readerset1, readerset2, readerset3 }).Cast<Func<SqlDataReader, object>>().ToArray());
+
+            return (results[0].Cast<T1>(), results[1].Cast<T2>(), results[2].Cast<T3>());
+        }
+
+        /// <summary>
+        /// A genius function which allows for the parsing of SQL result sets.
+        /// </summary>
+        /// <param name="sproc">The stored procedure name.</param>
+        /// <param name="parameters">The parameters modifier.</param>
+        /// <param name="readersets">The reader functions.</param>
+        /// <returns>All of the data.</returns>
         private async Task<List<object>[]> ExecuteReader(
             string sproc,
             Action<SqlParameterCollection> parameters,

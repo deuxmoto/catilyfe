@@ -48,5 +48,14 @@ AS
     FROM cati.postcontent p
     WHERE p.postid = @id
 
+    -- Find the tags
+    SELECT
+       @id AS post
+      ,t.tag
+    FROM cati.posttags pt
+    JOIN cati.tags t
+      ON t.id = pt.tag
+    WHERE pt.post = @id
+
 ErrorHandler:
     RETURN @error
