@@ -1,40 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Swashbuckle.Swagger.Application;
-using Swashbuckle.SwaggerGen.Application;
-using Swashbuckle.Swagger;
-using Swashbuckle.SwaggerGen;
-using Swashbuckle.Swagger.Model;
-
-namespace CatiLyfe.Backend
+﻿namespace CatiLyfe.Backend
 {
-    using Microsoft.Extensions.PlatformAbstractions;
     using System.IO;
-    using System.Net;
 
     using CatiLyfe.Backend.App_Code;
-    using CatiLyfe.Common.Exceptions;
 
-    using Microsoft.AspNetCore.Diagnostics;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Cors.Internal;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.PlatformAbstractions;
 
+    using Swashbuckle.Swagger.Model;
+
+    /// <summary>
+    /// The startup.
+    /// </summary>
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="environment">
+        /// The environment.
+        /// </param>
+        public Startup(IHostingEnvironment environment)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
+                .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             this.Configuration = builder.Build();
 
@@ -43,7 +38,6 @@ namespace CatiLyfe.Backend
 
         public IConfigurationRoot Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
@@ -66,7 +60,6 @@ namespace CatiLyfe.Backend
             mvcBuilder.AddMvcOptions(options => options.Filters.Add(new ExceptionFilter()));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
