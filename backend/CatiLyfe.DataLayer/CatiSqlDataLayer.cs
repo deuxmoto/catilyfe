@@ -18,9 +18,9 @@
             this.connectionString = connectionString;
         }
 
-        public Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate)
+        public async Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate)
         {
-            return this.ExecuteReader(
+            var results =  await this.ExecuteReader(
                 "cati.getpostmetadata",
                 parmeters =>
                     {
@@ -29,8 +29,21 @@
                         parmeters.AddWithValue("startdate", startdate);
                         parmeters.AddWithValue("enddate", enddate);
                     },
-                reader =>
-                    ParsePostMeta(reader));
+                ParsePostMeta,
+                ParsePostTag);
+
+            var tagsLookup = results.Item2.ToLookup(t => t.PostId);
+
+            // Get the tag mapping.
+            foreach (var metadata in results.Item1)
+            {
+                if (tagsLookup.Contains(metadata.Id))
+                {
+                    metadata.Tags = tagsLookup[metadata.Id].Select(t => t.Tag);
+                }
+            }
+
+            return results.Item1;
         }
 
         private static PostMeta ParsePostMeta(SqlDataReader reader)
@@ -49,9 +62,9 @@
         /// </summary>
         /// <param name="reader">The sql data reader.</param>
         /// <returns>A post to tag mapping object.</returns>
-        private static (int post, string tag) ParsePostTag(SqlDataReader reader)
+        private static PostToTagMapping ParsePostTag(SqlDataReader reader)
         {
-            return (post: (int)reader["post"], tag: (string)reader["tag"]);
+            return new PostToTagMapping((int)reader["post"], (string)reader["tag"]);
         }
 
         /// <summary>
@@ -76,7 +89,7 @@
 
             var metadata = results.Item1.First();
             var tags = results.Item3;
-            metadata.Tags = tags.Select(t => t.Item2).ToArray();
+            metadata.Tags = tags.Select(t => t.Tag);
 
             return new Post(results.Item1.First(), results.Item2);
         }
@@ -93,7 +106,7 @@
 
             var metadata = results.Item1.First();
             var tags = results.Item3;
-            metadata.Tags = tags.Select(t => t.Item2).ToArray();
+            metadata.Tags = tags.Select(t => t.Tag);
 
             return new Post(results.Item1.First(), results.Item2);
         }
@@ -112,14 +125,14 @@
                 ParsePostMeta, ParsePostContent, ParsePostTag);
 
             var postContentlookup = results.Item2.ToLookup(c => c.PostId);
-            var tagsLookup = results.Item3.ToLookup(t => t.Item1);
+            var tagsLookup = results.Item3.ToLookup(t => t.PostId);
 
             // Get the tag mapping.
             foreach (var metadata in results.Item1)
             {
                 if (tagsLookup.Contains(metadata.Id))
                 {
-                    metadata.Tags = tagsLookup[metadata.Id].Select(t => t.Item2).ToList();
+                    metadata.Tags = tagsLookup[metadata.Id].Select(t => t.Tag);
                 }
             }
 
@@ -127,8 +140,9 @@
         }
 
         private async Task<IEnumerable<T1>> ExecuteReader<T1>(string sproc, Action<SqlParameterCollection> parameters, Func<SqlDataReader, T1> readerset1)
+            where T1 : class
         {
-            var results = await this.ExecuteReader(sproc, parameters, (new object[] { readerset1 }).Cast<Func<SqlDataReader, object>>().ToArray());
+            var results = await this.ExecuteReader(sproc, parameters, new Func<SqlDataReader, object>[] { readerset1 });
 
             return results[0].Cast<T1>();
         }
@@ -137,9 +151,9 @@
             string sproc,
             Action<SqlParameterCollection> parameters,
             Func<SqlDataReader, T1> readerset1,
-            Func<SqlDataReader, T2> readerset2)
+            Func<SqlDataReader, T2> readerset2) where T1 : class where T2 : class
         {
-            var results = await this.ExecuteReader(sproc, parameters, (new object [] {readerset1, readerset2}).Cast<Func<SqlDataReader, object>>().ToArray());
+            var results = await this.ExecuteReader(sproc, parameters, new Func<SqlDataReader, object>[] { readerset1, readerset2 });
 
             return (results[0].Cast<T1>(), results[1].Cast<T2>());
         }
@@ -149,12 +163,12 @@
             Action<SqlParameterCollection> parameters,
             Func<SqlDataReader, T1> readerset1,
             Func<SqlDataReader, T2> readerset2,
-            Func<SqlDataReader, T3> readerset3)
+            Func<SqlDataReader, T3> readerset3) where T1 : class where T2 : class where T3 : class
         {
             var results = await this.ExecuteReader(
                               sproc,
                               parameters,
-                              (new object[] { readerset1, readerset2, readerset3 }).Cast<Func<SqlDataReader, object>>().ToArray());
+                              new Func<SqlDataReader,object>[] { readerset1, readerset2, readerset3 });
 
             return (results[0].Cast<T1>(), results[1].Cast<T2>(), results[2].Cast<T3>());
         }
@@ -169,13 +183,13 @@
         private async Task<List<object>[]> ExecuteReader(
             string sproc,
             Action<SqlParameterCollection> parameters,
-            Func<SqlDataReader, object>[] readersets)
+            IList<Func<SqlDataReader, object>> readersets)
         {
             using (var connection = await this.GetConnection())
             {
                 var command = SetupCommand(sproc, parameters, connection);
 
-                var results = new List<object>[readersets.Length];
+                var results = new List<object>[readersets.Count];
 
                 await CatiSqlDataLayer.ExecuteSqlReader(
                     async () =>
@@ -185,7 +199,7 @@
                             // If we returned an error, exit immediatly.
                             this.HandleSoftError(command);
 
-                            for (var i = 0; i < readersets.Length; i++)
+                            for (var i = 0; i < readersets.Count; i++)
                             {
                                 results[i] = new List<object>();
 
@@ -194,7 +208,7 @@
                                     results[i].Add(readersets[i](reader));
                                 }
 
-                                if (i < readersets.Length - 1)
+                                if (i < readersets.Count - 1)
                                 {
                                     if (false == await reader.NextResultAsync())
                                     {
@@ -202,7 +216,7 @@
                                         this.HandleSoftError(command);
 
                                         // Otherwise throw normally
-                                        throw new InvalidOperationException($"Expecting another result set in sproc {sproc}. Current {i+1} out of {readersets.Length}.");
+                                        throw new InvalidOperationException($"Expecting another result set in sproc {sproc}. Current {i+1} out of {readersets.Count}.");
                                     }
                                 }
                             }

@@ -14,6 +14,10 @@
         /// <summary>
         /// Gets all post metadata.
         /// </summary>
+        /// <param name="top">The number of items to get.</param>
+        /// <param name="skip">The skip.</param>
+        /// <param name="startdate">The start date.</param>
+        /// <param name="enddate">The end date.</param>
         /// <returns>The post metadata</returns>
         Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate);
 
