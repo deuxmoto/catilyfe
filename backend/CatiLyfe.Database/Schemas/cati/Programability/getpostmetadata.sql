@@ -6,6 +6,7 @@ CREATE PROCEDURE cati.getpostmetadata
    ,@skip           INT = NULL
    ,@startdate      DATETIME2 = NULL
    ,@enddate        DATETIME2 = NULL
+   ,@tags           cati.tagslist READONLY
 AS
     SET NOCOUNT ON
     -- Run as snapshot
@@ -21,6 +22,28 @@ AS
         id INT NOT NULL
     )
 
+    DECLARE @tagids TABLE
+    (
+        id INT PRIMARY KEY
+    )
+
+    IF(EXISTS (SELECT TOP 1 1 FROM @tags))
+    BEGIN
+        INSERT @tagids
+        SELECT
+            t.id
+        FROM @tags tn
+        JOIN cati.tags t
+          ON t.tag = tn.tag
+    END
+    ELSE
+    BEGIN
+        INSERT @tagids
+        SELECT
+           id
+        FROM cati.tags
+    END
+
     INSERT INTO @selectedIds
     (
         id
@@ -29,6 +52,12 @@ AS
         p.id
     FROM cati.postmeta p
     WHERE p.goeslive BETWEEN @startdate AND @enddate
+      AND EXISTS (SELECT TOP 1 1 
+                  FROM cati.posttags pt
+                  JOIN @tagids id
+                    ON pt.tag = id.id
+                  WHERE p.id = pt.post
+                 )
     ORDER BY p.goeslive DESC
     OFFSET (@skip) ROWS 
     FETCH NEXT (@top) ROWS ONLY

@@ -10,6 +10,8 @@
     using CatiLyfe.DataLayer.Models;
     using CatiLyfe.Common.Exceptions;
 
+    using Microsoft.SqlServer.Server;
+
     internal sealed class CatiSqlDataLayer : ICatiDataLayer
     {
         private readonly string connectionString;
@@ -18,7 +20,7 @@
             this.connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate)
+        public async Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags)
         {
             var results =  await this.ExecuteReader(
                 "cati.getpostmetadata",
@@ -28,6 +30,9 @@
                         parmeters.AddWithValue("skip", skip);
                         parmeters.AddWithValue("startdate", startdate);
                         parmeters.AddWithValue("enddate", enddate);
+                        var tagslist = parmeters.AddWithValue("tags", CatiSqlDataLayer.GetPostTagRecords(tags));
+                        tagslist.SqlDbType = SqlDbType.Structured;
+                        tagslist.TypeName = "cati.tagslist";
                     },
                 ParsePostMeta,
                 ParsePostTag);
@@ -137,6 +142,15 @@
             }
 
             return results.Item1.Select(meta => new Post(meta, postContentlookup.First(m => m.Key == meta.Id))).ToList();
+        }
+
+        /// <summary>
+        /// Gets all of the tags.
+        /// </summary>
+        /// <returns>The tags.</returns>
+        public Task<IEnumerable<PostTag>> GetTags()
+        {
+            throw new NotImplementedException();
         }
 
         private async Task<IEnumerable<T1>> ExecuteReader<T1>(string sproc, Action<SqlParameterCollection> parameters, Func<SqlDataReader, T1> readerset1)
@@ -285,6 +299,21 @@
             {
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets records for post tags.
+        /// </summary>
+        /// <param name="tags">The tags.</param>
+        /// <returns>The enumerable.</returns>
+        private static IEnumerable<SqlDataRecord> GetPostTagRecords(IEnumerable<string> tags)
+        {
+            return tags.ToDataTable(
+                () => new SqlMetaData[1] { new SqlMetaData("tag", SqlDbType.NVarChar, 64) },
+                (record, tag) =>
+                    {
+                        record.SetValue(0, tag);
+                    });
         }
     }
 }

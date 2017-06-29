@@ -85,9 +85,16 @@
     <Build Include="Schemas\cati\Index\ncl_tagtopost.sql" />
     <Build Include="Schemas\cati\Tables\posttags.sql" />
     <Build Include="Schemas\cati\Index\pk_posttags.sql" />
+    <Build Include="Schemas\cati\Programability\gettags.sql" />
+    <Build Include="Schemas\cati\Programability\Types\tagslist.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />
     <None Include="error.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 </Project>
