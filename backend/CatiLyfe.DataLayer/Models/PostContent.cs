@@ -2,7 +2,7 @@
 {
     public sealed class PostContent
     {
-        internal PostContent(int index, int postId, string contentType, string content)
+        public PostContent(int index, int postId, string contentType, string content)
         {
             this.Index = index;
             this.PostId = postId;

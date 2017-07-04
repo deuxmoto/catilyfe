@@ -153,6 +153,44 @@
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Set a post.
+        /// </summary>
+        /// <param name="post">The post.</param>
+        /// <returns>An async task.</returns>
+        public async Task<Post> SetPost(Post post)
+        {
+            var results = await this.ExecuteReader(
+                              "cati.setpost",
+                              parmeters =>
+                                  {
+                                      parmeters.AddWithValue("id", post.MetaData.Id);
+                                      parmeters.AddWithValue("slug", post.MetaData.Slug);
+                                      parmeters.AddWithValue("title", post.MetaData.Title);
+                                      parmeters.AddWithValue("description", post.MetaData.Description);
+                                      parmeters.AddWithValue("goeslive", post.MetaData.GoesLive);
+                                      var contentList = parmeters.AddWithValue(
+                                          "content",
+                                          CatiSqlDataLayer.GetPostContentRecord(post.PostContent));
+                                      contentList.SqlDbType = SqlDbType.Structured;
+                                      contentList.TypeName = "cati.postcontentlist";
+                                      var tagslist = parmeters.AddWithValue(
+                                          "tags",
+                                          CatiSqlDataLayer.GetPostTagRecords(post.MetaData.Tags));
+                                      tagslist.SqlDbType = SqlDbType.Structured;
+                                      tagslist.TypeName = "cati.tagslist";
+                                  },
+                              ParsePostMeta,
+                              ParsePostContent,
+                              ParsePostTag);
+
+            var metadata = results.Item1.First();
+            var tags = results.Item3;
+            metadata.Tags = tags.Select(t => t.Tag);
+
+            return new Post(results.Item1.First(), results.Item2);
+        }
+
         private async Task<IEnumerable<T1>> ExecuteReader<T1>(string sproc, Action<SqlParameterCollection> parameters, Func<SqlDataReader, T1> readerset1)
             where T1 : class
         {
@@ -309,10 +347,32 @@
         private static IEnumerable<SqlDataRecord> GetPostTagRecords(IEnumerable<string> tags)
         {
             return tags.ToDataTable(
-                () => new SqlMetaData[1] { new SqlMetaData("tag", SqlDbType.NVarChar, 64) },
+                () => new[] { new SqlMetaData("tag", SqlDbType.NVarChar, 64) },
                 (record, tag) =>
                     {
                         record.SetValue(0, tag);
+                    });
+        }
+
+        /// <summary>
+        /// Gets records for post content.
+        /// </summary>
+        /// <param name="content">The content of the post.</param>
+        /// <returns>The post content.</returns>
+        private static IEnumerable<SqlDataRecord> GetPostContentRecord(IEnumerable<PostContent> content)
+        {
+            return content.ToDataTable(
+                () => new[]
+                          {
+                              new SqlMetaData("id", SqlDbType.Int),
+                              new SqlMetaData("type", SqlDbType.NVarChar, 64),
+                              new SqlMetaData("content", SqlDbType.NVarChar, 4000),
+                          },
+                (record, tag) =>
+                    {
+                        record.SetValue(0, tag.Index);
+                        record.SetValue(1, tag.ContentType);
+                        record.SetValue(2, tag.Content);
                     });
         }
     }

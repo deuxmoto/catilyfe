@@ -18,7 +18,8 @@
         /// <param name="description">the posts description</param>
         /// <param name="whencreated">When the post was created.</param>
         /// <param name="goeslive">When the post goes live.</param>
-        public PostMeta(int id, string slug, string title, string description, DateTimeOffset whencreated, DateTimeOffset goeslive)
+        /// <param name="tags">The tags.</param>
+        public PostMeta(int id, string slug, string title, string description, DateTimeOffset whencreated, DateTimeOffset goeslive, IEnumerable<string> tags = null)
         {
             this.Id = id;
             this.Slug = slug;
@@ -26,7 +27,7 @@
             this.Description = description;
             this.WhenCreated = whencreated;
             this.GoesLive = goeslive;
-            this.Tags = Enumerable.Empty<string>();
+            this.Tags = tags ?? Enumerable.Empty<string>();
         }
 
         /// <summary>

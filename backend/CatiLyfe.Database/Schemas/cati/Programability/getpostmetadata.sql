@@ -16,6 +16,7 @@ AS
     SET @skip =         ISNULL(@skip, 0)
     SET @startdate =    ISNULL(@startdate, '1900-1-1')
     SET @enddate =      ISNULL(@enddate, '2400-12-20') -- TODO: Fix this in the year 2400
+    DECLARE @emptyTags  BIT = 0
 
     DECLARE @selectedIds TABLE
     (
@@ -38,10 +39,7 @@ AS
     END
     ELSE
     BEGIN
-        INSERT @tagids
-        SELECT
-           id
-        FROM cati.tags
+        SET @emptyTags = 1
     END
 
     INSERT INTO @selectedIds
@@ -52,12 +50,12 @@ AS
         p.id
     FROM cati.postmeta p
     WHERE p.goeslive BETWEEN @startdate AND @enddate
-      AND EXISTS (SELECT TOP 1 1 
+      AND (EXISTS (SELECT TOP 1 1 
                   FROM cati.posttags pt
                   JOIN @tagids id
                     ON pt.tag = id.id
                   WHERE p.id = pt.post
-                 )
+                 ) OR @emptyTags = 1)
     ORDER BY p.goeslive DESC
     OFFSET (@skip) ROWS 
     FETCH NEXT (@top) ROWS ONLY

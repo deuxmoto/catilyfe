@@ -51,5 +51,12 @@
         /// </summary>
         /// <returns>The tags.</returns>
         Task<IEnumerable<PostTag>> GetTags();
+
+        /// <summary>
+        /// Set a post.
+        /// </summary>
+        /// <param name="post">The post.</param>
+        /// <returns>An async task.</returns>
+        Task<Post> SetPost(Post post);
     }
 }
