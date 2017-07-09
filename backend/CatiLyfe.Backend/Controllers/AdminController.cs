@@ -29,19 +29,25 @@ namespace CatiLyfe.Backend.Controllers
         {
             var metas = await CatiData.Datalayer.GetPostMetadata(top: top, skip: skip, startdate: startdate, enddate: enddate, tags: Enumerable.Empty<string>());
 
-            return metas.Select(m => new AdminMetaData(m.Title, m.GoesLive, m.WhenCreated, m.Slug, m.Description, m.Tags));
+            return metas.Select(m => new AdminMetaData(m.Id, m.Title, m.GoesLive, m.WhenCreated, m.Slug, m.Description, m.Tags));
+        }
+
+        [HttpGet("edit/{slug}")]
+        public async Task<AdminPost> GetPost(string slug)
+        {
+            var admin = await CatiData.Datalayer.GetPost(slug);
+            return new AdminPost(new AdminMetaData(admin.MetaData.Id, admin.MetaData.Title, admin.MetaData.GoesLive, admin.MetaData.WhenCreated, admin.MetaData.Slug, admin.MetaData.Description, admin.MetaData.Tags), new AdminPostContent(admin.PostContent.First().Content));
         }
 
         [HttpPost("edit")]
         public async Task<AdminPost> SetPost([FromBody]AdminPost post)
         {
             var content = new DataLayer.Models.PostContent(0, 0, "markdown", post.PostContent.MarkdownContent);
-            var metaData = new DataLayer.Models.PostMeta(0, post.MetaData.Slug, post.MetaData.Title, post.MetaData.Description, post.MetaData.WhenCreated, post.MetaData.LiveTime, post.MetaData.Tags);
+            var metaData = new DataLayer.Models.PostMeta(post.MetaData.Id ?? -1, post.MetaData.Slug, post.MetaData.Title, post.MetaData.Description, post.MetaData.WhenCreated, post.MetaData.LiveTime, post.MetaData.Tags);
             var fullPost = new DataLayer.Models.Post(metaData, new [] {content});
 
             var admin =  await CatiData.Datalayer.SetPost(fullPost);
-
-            return new AdminPost(new AdminMetaData(admin.MetaData.Title, admin.MetaData.GoesLive, admin.MetaData.WhenCreated, admin.MetaData.Slug, admin.MetaData.Description, admin.MetaData.Tags), new AdminPostContent(admin.PostContent.First().Content));
+            return new AdminPost(new AdminMetaData(admin.MetaData.Id, admin.MetaData.Title, admin.MetaData.GoesLive, admin.MetaData.WhenCreated, admin.MetaData.Slug, admin.MetaData.Description, admin.MetaData.Tags), new AdminPostContent(admin.PostContent.First().Content));
         }
     }
 }

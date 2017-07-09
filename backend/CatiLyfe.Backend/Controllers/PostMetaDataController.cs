@@ -15,9 +15,9 @@ namespace CatiLyfe.Backend.Controllers
     public class PostMetaDataController : Controller
     {
         [HttpGet()]
-        public async Task<IEnumerable<PostMetaData>> GetPostMeta([FromQuery] int? top, [FromQuery] int? skip, [FromQuery] DateTime? startdate, [FromQuery] DateTime? enddate)
+        public async Task<IEnumerable<PostMetaData>> GetPostMeta([FromQuery] int? top, [FromQuery] int? skip, [FromQuery] DateTime? startdate, [FromQuery] DateTime? enddate, [FromQuery]IEnumerable<string> tag)
         {
-            var metas = await CatiData.Datalayer.GetPostMetadata(top: top, skip: skip, startdate: startdate, enddate: enddate, tags: Enumerable.Empty<string>());
+            var metas = await CatiData.Datalayer.GetPostMetadata(top: top, skip: skip, startdate: startdate, enddate: enddate, tags: tag);
 
             return metas.Select(m => new PostMetaData(m));
         }

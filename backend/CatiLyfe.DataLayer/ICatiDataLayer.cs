@@ -29,8 +29,9 @@
         /// <param name="skip">The skip.</param>
         /// <param name="startdate">The start date.</param>
         /// <param name="enddate">The end date.</param>
+        /// <param name="tags">The list of tags to search.</param>
         /// <returns>The list of posts.</returns>
-        Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate);
+        Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags);
 
         /// <summary>
         /// Get a single post
@@ -58,5 +59,19 @@
         /// <param name="post">The post.</param>
         /// <returns>An async task.</returns>
         Task<Post> SetPost(Post post);
+
+        /// <summary>
+        /// Delete a single post
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>A task</returns>
+        Task DeletePost(int id);
+
+        /// <summary>
+        /// Delete a single post
+        /// </summary>
+        /// <param name="slug">The slug</param>
+        /// <returns>A task.</returns>
+        Task DeletePost(string slug);
     }
 }

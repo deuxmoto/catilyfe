@@ -116,7 +116,7 @@
             return new Post(results.Item1.First(), results.Item2);
         }
 
-        public async Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate)
+        public async Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags)
         {
             var results = await this.ExecuteReader(
                 "cati.getposts",
@@ -126,6 +126,9 @@
                     parmeters.AddWithValue("skip", skip);
                     parmeters.AddWithValue("startdate", startdate);
                     parmeters.AddWithValue("enddate", enddate);
+                    var tagslist = parmeters.AddWithValue("tags", CatiSqlDataLayer.GetPostTagRecords(tags));
+                    tagslist.SqlDbType = SqlDbType.Structured;
+                    tagslist.TypeName = "cati.tagslist";
                 },
                 ParsePostMeta, ParsePostContent, ParsePostTag);
 
@@ -164,7 +167,7 @@
                               "cati.setpost",
                               parmeters =>
                                   {
-                                      parmeters.AddWithValue("id", post.MetaData.Id);
+                                      parmeters.AddWithValue("id", post.MetaData.Id <= 0 ? null : (int?)post.MetaData.Id);
                                       parmeters.AddWithValue("slug", post.MetaData.Slug);
                                       parmeters.AddWithValue("title", post.MetaData.Title);
                                       parmeters.AddWithValue("description", post.MetaData.Description);
@@ -279,6 +282,23 @@
             }
         }
 
+        private async Task ExecuteNonQuery(
+            string sproc,
+            Action<SqlParameterCollection> parameters)
+        {
+            using (var connection = await this.GetConnection())
+            {
+                var command = SetupCommand(sproc, parameters, connection);
+
+                await CatiSqlDataLayer.ExecuteSqlReader(
+                    async () =>
+                        {
+                            await command.ExecuteNonQueryAsync();
+                            this.HandleSoftError(command);
+                    });
+            }
+        }
+
         private void HandleSoftError(SqlCommand command)
         {
             var retvalue = command.Parameters["ReturnValue"]?.Value as int? ?? 0;
@@ -374,6 +394,26 @@
                         record.SetValue(1, tag.ContentType);
                         record.SetValue(2, tag.Content);
                     });
+        }
+
+        public Task DeletePost(int id)
+        {
+            return this.ExecuteNonQuery(
+                "cati.deletepost",
+                parrameters =>
+                    {
+                        parrameters.AddWithValue("id", id);
+                    });
+        }
+
+        public Task DeletePost(string slug)
+        {
+            return this.ExecuteNonQuery(
+                "cati.deletepost",
+                parrameters =>
+                {
+                    parrameters.AddWithValue("slug", slug);
+                });
         }
     }
 }

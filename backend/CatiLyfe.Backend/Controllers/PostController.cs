@@ -15,9 +15,9 @@ namespace CatiLyfe.Backend.Controllers
     public class PostController : Controller
     {
         [HttpGet]
-        public async Task<IEnumerable<Post>> GetPosts([FromQuery] int? top, [FromQuery] int? skip, [FromQuery] DateTime? startdate, [FromQuery] DateTime? enddate)
+        public async Task<IEnumerable<Post>> GetPosts([FromQuery] int? top, [FromQuery] int? skip, [FromQuery] DateTime? startdate, [FromQuery] DateTime? enddate, [FromQuery]IEnumerable<string> tag)
         {
-            var posts = await CatiData.Datalayer.GetPost(top: top, skip: skip, startdate: startdate, enddate: enddate);
+            var posts = await CatiData.Datalayer.GetPost(top: top, skip: skip, startdate: startdate, enddate: enddate, tags: tag);
 
             return posts.Select(p => new Post(p));
         }
@@ -36,6 +36,12 @@ namespace CatiLyfe.Backend.Controllers
             }
 
             return new Post(post);
+        }
+
+        [HttpDelete("{slug}")]
+        public async Task DeletePost(string slug)
+        {
+            await CatiData.Datalayer.DeletePost(slug);
         }
     }
 }

@@ -87,6 +87,7 @@
     <Build Include="Schemas\cati\Index\pk_posttags.sql" />
     <Build Include="Schemas\cati\Programability\gettags.sql" />
     <Build Include="Schemas\cati\Programability\Types\tagslist.sql" />
+    <Build Include="Schemas\cati\Programability\deletepost.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />

@@ -18,14 +18,16 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminMetaData"/> class.
         /// </summary>
+        /// <param name="id">The id of the post to change</param>
         /// <param name="title">The post title.</param>
         /// <param name="liveTime">The live time.</param>
         /// <param name="whenCreated">When created.</param>
         /// <param name="slug">The post slug.</param>
         /// <param name="description">The post description.</param>
         /// <param name="tags">The tags.</param>
-        public AdminMetaData(string title, DateTimeOffset liveTime, DateTimeOffset whenCreated, string slug, string description, IEnumerable<string> tags)
+        public AdminMetaData(int? id, string title, DateTimeOffset liveTime, DateTimeOffset whenCreated, string slug, string description, IEnumerable<string> tags)
         {
+            this.Id = id;
             this.Title = title;
             this.LiveTime = liveTime;
             this.WhenCreated = whenCreated;
@@ -33,6 +35,11 @@
             this.Description = description;
             this.Tags = tags;
         }
+
+        /// <summary>
+        /// The posts id.
+        /// </summary>
+        public int? Id { get; set; }
 
         /// <summary>
         /// The post title.

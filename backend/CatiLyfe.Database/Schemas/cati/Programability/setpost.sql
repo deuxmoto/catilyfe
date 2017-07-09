@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE cati.setpost
     @error_message NVARCHAR(2048) OUTPUT
-   ,@id            INT
+   ,@id            INT = NULL
    ,@slug          NVARCHAR(256)
    ,@title         NVARCHAR(256)
    ,@description   NVARCHAR(256)
@@ -17,7 +17,7 @@ AS
     SET TRANSACTION ISOLATION LEVEL READ COMMITTED
     BEGIN TRANSACTION
 
-    IF(EXISTS (SELECT TOP 1 1 FROM cati.postmeta WHERE slug = @slug) OR @slug IS NULL)
+    IF(EXISTS (SELECT TOP 1 1 FROM cati.postmeta WHERE slug = @slug AND (@id IS NOT NULL AND @id <> id)) OR @slug IS NULL)
     BEGIN
         SET @error = @invalidArgs
         SET @error_message = N'The slug ''' + ISNULL(@slug, 'NULL') + ''' is not available.'
