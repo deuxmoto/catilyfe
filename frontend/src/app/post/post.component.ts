@@ -9,7 +9,6 @@ import { BackendApiService, PostMetadata, PostNotFoundError } from "../core/back
 
 enum State {
     Loading,
-    InvalidPost,
     Normal
 }
 
@@ -37,11 +36,15 @@ export class PostComponent implements OnInit {
                 this.state = State.Normal;
             },
             (error) => {
-                this.state = State.InvalidPost;
                 if (error instanceof PostNotFoundError) {
-                    console.error("invalid post");
+                    this.router.navigateByUrl("notfound", { skipLocationChange: true });
                 }
-                return null;
+                else {
+                    console.error(
+                        `Unrecognized error:\n`
+                        + JSON.stringify(error)
+                    );
+                }
             }
         );
     }

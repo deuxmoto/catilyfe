@@ -1,0 +1,20 @@
+<div [ngClass]="{'title-bar-dark-theme': menuIsOpen}">
+    <div class="title-bar-container">
+        <div class="title-bar-center">
+            <a class="title-bar-item branding" (click)="gotoHome()">#Cati Lyfe</a>
+        </div>
+        <div class="title-bar-right">
+            <a class="title-bar-item" (click)="toggleMenu()">
+            <span class="fa fa-bars" *ngIf="!menuIsOpen"></span>
+            <span class="fa fa-times" *ngIf="menuIsOpen"></span>
+        </a>
+        </div>
+    </div>
+    <div class="title-bar-menu" *ngIf="menuIsOpen" [@menuEnterAnimation]>
+        <ul class="title-bar-menu-items">
+            <li *ngFor="let menuItem of menuItems" >
+                <a routerLink="{{menuItem.linkUrl}}" class="title-bar-menu-item">{{menuItem.text}}</a>
+            </li>
+        </ul>
+    </div>
+</div>

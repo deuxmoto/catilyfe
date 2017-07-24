@@ -1,0 +1,117 @@
+@import "../../styles/helpers";
+
+$light-foreground: rgb(10, 10, 10);
+$light-background: white;
+
+$dark-foreground: white;
+$dark-background: rgb(10, 10, 10);
+$dark-foreground-translucent: rgba(255, 255, 255, 0.9);
+$dark-background-translucent: rgba(10, 10, 10, 0.9);
+
+$transition-animation: 200ms ease;
+
+/*
+ * Title bar top component
+ *
+ * Defaults to light theme, has dark theme for when menu is showing
+ */
+.title-bar-container {
+    background-color: $light-background;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: $title-bar-height;
+    top: 0px;
+    left: 0px;
+    transition: $transition-animation;
+}
+.title-bar-dark-theme .title-bar-container {
+    background-color: $dark-background-translucent;
+    box-shadow: none;
+    border-bottom: none;
+}
+
+.title-bar-center {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.title-bar-right {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.title-bar-item {
+    height: calc(#{$title-bar-height} - 1px); //account for title-bar-container's bottom border
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: $light-foreground;
+
+    transition: $transition-animation;
+
+    &:hover {
+        cursor: pointer;
+        background-color: darken($light-background, 10%);
+    }
+}
+.title-bar-dark-theme .title-bar-item {
+    color: $dark-foreground;
+
+    &:hover {
+        background-color: $dark-foreground-translucent;
+        color: $dark-background;
+    }
+}
+
+.branding {
+    @include title-styles();
+}
+
+/*
+ * Menu pop over component
+ *
+ * Always in dark theme
+ */
+.title-bar-menu {
+    position: fixed;
+    width: 100%;
+    height: calc(100% - #{$title-bar-height});
+    top: $title-bar-height;
+    background-color: $dark-background-translucent;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-bar-menu-items {
+    width: 100%;
+    padding-bottom: 2rem;
+
+    li {
+        width: 100%;
+    }
+}
+
+.title-bar-menu-item {
+    width: 100%;
+    height: 6rem;
+    color: $dark-foreground;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: $transition-animation;
+    @include title-styles();
+
+    &:hover {
+        background-color: $dark-foreground-translucent;
+        color: $dark-background;
+    }
+}

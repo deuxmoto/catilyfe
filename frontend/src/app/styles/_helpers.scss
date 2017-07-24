@@ -7,3 +7,21 @@ $bp-lg: 1344px;
         @content;
     }
 }
+
+// Colors
+$primary: #8BC34A;
+
+// Font styles
+@mixin title-styles() {
+    font-family: 'Lobster', cursive;
+    font-size: 2rem;
+}
+
+@mixin subtitle-styles() {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+// Shared sizes
+$title-bar-height: 4rem;

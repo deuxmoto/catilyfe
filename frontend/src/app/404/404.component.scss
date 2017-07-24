@@ -1,0 +1,21 @@
+@import "../styles/helpers";
+
+:host {
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.not-found {
+    margin-top: $title-bar-height;
+    flex: 1 1 0%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found-content {
+    padding-bottom: 1rem;
+}
