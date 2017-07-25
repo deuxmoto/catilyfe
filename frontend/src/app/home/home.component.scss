@@ -93,3 +93,19 @@
 .post-preview-subtitle {
     @include subtitle-styles();
 }
+
+.post-preview-tags{
+    ul{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        li{
+            text-decoration: none;
+            display: inline;
+            border-style: none;
+            border-radius: 0.1em;
+            padding: 0.3em;
+            margin: 0.1em;
+        }
+    }   
+}
