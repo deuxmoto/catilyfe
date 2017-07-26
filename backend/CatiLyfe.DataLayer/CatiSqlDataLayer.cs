@@ -73,6 +73,16 @@
         }
 
         /// <summary>
+        /// Parse a post tags object from the reader.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>The post tag.</returns>
+        private static PostTag ParseTag(SqlDataReader reader)
+        {
+            return new PostTag((string)reader["tag"], (int)reader["posts"]);
+        }
+
+        /// <summary>
         /// Parses a row of post content from the the reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
@@ -151,9 +161,16 @@
         /// Gets all of the tags.
         /// </summary>
         /// <returns>The tags.</returns>
-        public Task<IEnumerable<PostTag>> GetTags()
+        public async Task<IEnumerable<PostTag>> GetTags()
         {
-            throw new NotImplementedException();
+            var result = await this.ExecuteReader(
+                "cati.gettags",
+                parmeters =>
+                {
+                },
+                ParseTag);
+
+            return result;
         }
 
         /// <summary>

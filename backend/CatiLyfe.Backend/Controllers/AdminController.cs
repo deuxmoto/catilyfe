@@ -32,10 +32,10 @@ namespace CatiLyfe.Backend.Controllers
             return metas.Select(m => new AdminMetaData(m.Id, m.Title, m.GoesLive, m.WhenCreated, m.Slug, m.Description, m.Tags));
         }
 
-        [HttpGet("edit/{slug}")]
-        public async Task<AdminPost> GetPost(string slug)
+        [HttpGet("edit/{id}")]
+        public async Task<AdminPost> GetPost(int id)
         {
-            var admin = await CatiData.Datalayer.GetPost(slug);
+            var admin = await CatiData.Datalayer.GetPost(id);
             return new AdminPost(new AdminMetaData(admin.MetaData.Id, admin.MetaData.Title, admin.MetaData.GoesLive, admin.MetaData.WhenCreated, admin.MetaData.Slug, admin.MetaData.Description, admin.MetaData.Tags), new AdminPostContent(admin.PostContent.First().Content));
         }
 
