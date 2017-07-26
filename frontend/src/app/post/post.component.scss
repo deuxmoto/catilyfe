@@ -47,3 +47,12 @@
     justify-content: center;
     align-items: center;
 }
+
+.post-section-tags{
+    @extend .post-container;
+    a{
+        display: inline-block;
+        word-wrap: none;
+        margin: 0.1em;
+    }
+}

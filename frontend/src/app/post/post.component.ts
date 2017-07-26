@@ -21,6 +21,7 @@ export class PostComponent implements OnInit {
     private StateEnum = State;
     private state = State.Loading;
     private postHtml: string;
+    private tags: Array<string>;
 
     constructor(
         private backend: BackendApiService,
@@ -33,6 +34,7 @@ export class PostComponent implements OnInit {
         this.backend.getPost(slug).subscribe(
             (post) => {
                 this.postHtml = post.rawHtmlThenIGuess;
+                this.tags = post.metadata.tags;
                 this.state = State.Normal;
             },
             (error) => {

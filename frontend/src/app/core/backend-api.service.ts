@@ -12,6 +12,7 @@ export interface PostMetadata {
     id: number;
     slug: string;
     whenPublished: Date;
+    tags: Array<string>;
 }
 
 export interface Post {
