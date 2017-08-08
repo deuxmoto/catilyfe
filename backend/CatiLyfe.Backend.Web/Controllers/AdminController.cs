@@ -12,7 +12,7 @@
     /// <summary>
     /// Controller for admin operations.
     /// </summary>
-    [RoutePrefix("api/admin")]
+    [RoutePrefix("admin")]
     public class AdminController : ApiController
     {
         /// <summary>

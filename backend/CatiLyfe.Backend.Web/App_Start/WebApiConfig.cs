@@ -5,6 +5,8 @@ using System.Web.Http;
 
 namespace CatiLyfe.Backend.Web
 {
+    using System.Web.Http.Cors;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -12,7 +14,7 @@ namespace CatiLyfe.Backend.Web
             // Web API configuration and services
 
             // Enable cors.
-            config.EnableCors();
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             // Web API routes
             config.MapHttpAttributeRoutes();

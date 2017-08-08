@@ -12,7 +12,7 @@
     /// <summary>
     /// Retrieves metadata about a post.
     /// </summary>
-    [RoutePrefix("api/postmetadata")]
+    [RoutePrefix("postmetadata")]
     public class PostMetaDataController : ApiController
     {
         /// <summary>

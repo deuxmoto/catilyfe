@@ -12,7 +12,7 @@
     /// <summary>
     /// The post controller.
     /// </summary>
-    [RoutePrefix("api/post")]
+    [RoutePrefix("post")]
     public class PostController : ApiController
     {
         /// <summary>
