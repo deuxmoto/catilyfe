@@ -640,7 +640,7 @@ var BackendApiService = (function () {
     }
     BackendApiService.prototype.getRecentPostMetadata = function (count) {
         var _this = this;
-        return this.http.get(BackendEndpoint + "/postmetadata?$top=" + count)
+        return this.http.get(BackendEndpoint + "/postmetadata?top=" + count)
             .map(function (response) {
             var responseArray = response.json();
             return responseArray.map(function (postMetadata) { return _this.parseServerPostMetadata(postMetadata); });
