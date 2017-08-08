@@ -34,7 +34,7 @@ export class BackendApiService {
     constructor(private http: Http) { }
 
     public getRecentPostMetadata(count: number): Observable<PostMetadata[]> {
-        return this.http.get(`${BackendEndpoint}/postmetadata?$top=${count}`)
+        return this.http.get(`${BackendEndpoint}/postmetadata?top=${count}`)
             .map<Response, PostMetadata[]>((response) => {
                 const responseArray: PostMetadata[] = response.json();
                 return responseArray.map((postMetadata) => this.parseServerPostMetadata(postMetadata));

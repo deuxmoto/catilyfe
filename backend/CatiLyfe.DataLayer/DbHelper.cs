@@ -26,6 +26,11 @@
             Func<SqlMetaData[]> getAttibutes,
             Action<SqlDataRecord, T> alterRecord)
         {
+            if (null == input)
+            {
+                return null;
+            }
+
             var enumerator = input.GetEnumerator();
             if (false == enumerator.MoveNext())
             {

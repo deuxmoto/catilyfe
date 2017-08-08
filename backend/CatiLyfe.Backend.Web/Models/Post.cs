@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using CatiLyfe.Backend.Web.Code;
+
     /// <summary>
     /// The post.
     /// </summary>
@@ -14,7 +16,6 @@
         public Post(DataLayer.Models.Post post)
         {
             this.Metadata = new PostMetaData(post.MetaData);
-
             this.RawHtmlThenIGuess = PostContentFactory.Build(post.PostContent).RawHtmlThenIGuess;
         }
 

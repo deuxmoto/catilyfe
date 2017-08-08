@@ -11,6 +11,9 @@ namespace CatiLyfe.Backend.Web
         {
             // Web API configuration and services
 
+            // Enable cors.
+            config.EnableCors();
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 

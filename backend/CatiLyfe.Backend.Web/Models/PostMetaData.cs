@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using CatiLyfe.DataLayer.Models;
+
     public class PostMetaData
     {
         public PostMetaData(PostMeta meta)
