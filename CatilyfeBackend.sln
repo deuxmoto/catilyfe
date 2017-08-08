@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatiLyfe.Backend", "backend\CatiLyfe.Backend\CatiLyfe.Backend.csproj", "{C920C62B-33D4-4B5F-9ADD-8FB37E115187}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatiLyfe.Common", "backend\CatiLyfe.Common\CatiLyfe.Common.csproj", "{C1C8C62F-35B8-49BB-B3F4-9C077B4C9A21}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CatiLyfe.Database", "backend\CatiLyfe.Database\CatiLyfe.Database.sqlproj", "{15401C53-BE29-41A4-B260-D033F94AA1E3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatiLyfe.DataLayer", "backend\CatiLyfe.DataLayer\CatiLyfe.DataLayer.csproj", "{F1A16E53-C00F-4C53-A755-0497039DF704}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatiLyfe.Backend.Web", "backend\CatiLyfe.Backend.Web\CatiLyfe.Backend.Web.csproj", "{F9CDA42F-D604-4FF4-B6BD-D62AFF75CD86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C920C62B-33D4-4B5F-9ADD-8FB37E115187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C920C62B-33D4-4B5F-9ADD-8FB37E115187}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C920C62B-33D4-4B5F-9ADD-8FB37E115187}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C920C62B-33D4-4B5F-9ADD-8FB37E115187}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C1C8C62F-35B8-49BB-B3F4-9C077B4C9A21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C1C8C62F-35B8-49BB-B3F4-9C077B4C9A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1C8C62F-35B8-49BB-B3F4-9C077B4C9A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +31,10 @@ Global
 		{F1A16E53-C00F-4C53-A755-0497039DF704}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1A16E53-C00F-4C53-A755-0497039DF704}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1A16E53-C00F-4C53-A755-0497039DF704}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9CDA42F-D604-4FF4-B6BD-D62AFF75CD86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9CDA42F-D604-4FF4-B6BD-D62AFF75CD86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9CDA42F-D604-4FF4-B6BD-D62AFF75CD86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9CDA42F-D604-4FF4-B6BD-D62AFF75CD86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
