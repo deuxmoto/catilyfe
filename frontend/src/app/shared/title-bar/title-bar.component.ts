@@ -31,8 +31,8 @@ interface MenuItem {
     ]
 })
 export class TitleBarComponent implements OnInit {
-    private menuItems: MenuItem[];
-    private menuIsOpen = false;
+    public menuItems: MenuItem[];
+    public menuIsOpen = false;
 
     constructor(private router: Router) {}
 

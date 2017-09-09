@@ -10,6 +10,7 @@ import { NotFoundComponent } from "./404/404.component";
 import { CoreModule } from "./core/core.module";
 import { HomeComponent } from "./home/home.component";
 import { PostComponent } from "./post/post.component";
+import { TestPageComponent } from "./testpage/testpage.component";
 import { SharedModule } from "./shared/shared.module";
 
 const routes: Route[] = [
@@ -30,6 +31,10 @@ const routes: Route[] = [
         component: NotFoundComponent
     },
     {
+        path: "testpage",
+        component: TestPageComponent
+    },
+    {
         path: "**",
         component: NotFoundComponent
     }
@@ -40,7 +45,8 @@ const routes: Route[] = [
         AppComponent,
         HomeComponent,
         PostComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        TestPageComponent
     ],
     imports: [
         RouterModule.forRoot(routes),
