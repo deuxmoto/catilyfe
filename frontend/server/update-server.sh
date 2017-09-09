@@ -1,8 +1,8 @@
 cd ..
 git pull
-echo "Running 'ng build'..."
+printf "\nRunning 'ng build'...\n"
 ng build
-echo "Copying dist to server folder..."
+printf "\nCopying dist to server folder...\n"
 mkdir -p ./server/public
 cp -r ./dist/* ./server/public
-echo "Static files updated!"
+printf "Static files updated!\n"
