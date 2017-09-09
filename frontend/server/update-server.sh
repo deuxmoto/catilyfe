@@ -1,4 +1,5 @@
 cd ..
+git pull
 echo "Running 'ng build'..."
 ng build
 echo "Copying dist to server folder..."
