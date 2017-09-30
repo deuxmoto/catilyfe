@@ -1,5 +1,21 @@
-# TODO: git commit to check if there are any uncommitted or unsynced changes
-# echo "Ensure that all changes are committed and pushed to remote"
+distRepo="./catilyfe-frontend"
+supplementalDist="./supplemental-dist-files"
 
-echo "Remoting into server, run ./update-server.sh to update..."
-ssh -t justin@52.191.141.202 "cd ~/catilyfe/frontend/server; bash;"
+if [ ! -d "$distRepo" ]; then
+    (>&2 echo "The dist repo '$distRepo' doesn't exist! You're probably Peter trying to deploy the frontend. You can't.")
+    exit
+fi
+
+# Remove all existing dist files
+cd "$distRepo"
+git rm -r ./*
+cd ..
+echo "Done removing dist"
+
+# Build n copy janx
+if ! ng build; then
+    exit
+fi
+cp -r ./dist/* "$distRepo"
+cp -r "$supplementalDist"/* "$distRepo"
+echo "Done building n copying janx"
