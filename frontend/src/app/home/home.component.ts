@@ -12,7 +12,7 @@ import { BackendApiService, PostMetadata } from "../core/backend-api.service";
     styleUrls: [ "./home.component.scss" ]
 })
 export class HomeComponent implements OnInit {
-    private recentPosts: Observable<PostMetadata[]>;
+    public recentPosts: Observable<PostMetadata[]>;
 
     constructor(
         private backend: BackendApiService,
@@ -25,5 +25,9 @@ export class HomeComponent implements OnInit {
 
     navigateToPost(postSlug: string): void {
         this.router.navigate(["posts", postSlug]);
+    }
+
+    navigateToTag(tag: string): void {
+        this.router.navigate(["/"]);
     }
 }

@@ -12,11 +12,11 @@
         <div class="post-preview-header">
             <h2 class="post-preview-title">{{post.title}}</h2>
             <h3 class="post-preview-subtitle">{{post.whenPublished | date:"MMMM d, y - h:mma"}}</h3>
-        <div class="post-preview-tags">
-            <ul>
-                <li *ngFor="let tag of post.tags"><a href="#" >#{{tag}}</a></li>
+            <ul class="post-preview-tags">
+                <li *ngFor="let tag of post.tags">
+                    <a href="" (click)="navigateToTag(tag)">#{{tag}}</a>
+                </li>
             </ul>
-        </div>
         </div>
         <div class="post-preview-body">
             <p class="post-preview-description">{{post.description}}</p>

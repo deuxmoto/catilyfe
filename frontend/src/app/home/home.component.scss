@@ -94,18 +94,16 @@
     @include subtitle-styles();
 }
 
-.post-preview-tags{
-    ul{
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        li{
-            text-decoration: none;
-            display: inline;
-            border-style: none;
-            border-radius: 0.1em;
-            padding: 0.3em;
-            margin: 0.1em;
-        }
-    }   
+.post-preview-tags {
+    list-style-type: none;
+    padding-bottom: 5px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+
+    li {
+        text-decoration: none;
+        margin-right: 0.5rem;
+        flex: none;
+    }
 }
