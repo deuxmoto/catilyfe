@@ -19,8 +19,9 @@
         /// <param name="startdate">The start date.</param>
         /// <param name="enddate">The end date.</param>
         /// <param name="tags">The post tags.</param>
+        /// <param name="isAdmin">Is the user an admin.</param>
         /// <returns>The post metadata</returns>
-        Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags);
+        Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags, bool isAdmin = false);
 
         /// <summary>
         /// The get post.
@@ -30,22 +31,25 @@
         /// <param name="startdate">The start date.</param>
         /// <param name="enddate">The end date.</param>
         /// <param name="tags">The list of tags to search.</param>
+        /// <param name="isAdmin">Is the user an admin.</param>
         /// <returns>The list of posts.</returns>
-        Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags);
+        Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags, bool isAdmin = false);
 
         /// <summary>
         /// Get a single post
         /// </summary>
         /// <param name="id">The id</param>
+        /// <param name="isAdmin">Is the user an admin.</param>
         /// <returns>A post</returns>
-        Task<Post> GetPost(int id);
+        Task<Post> GetPost(int id, bool isAdmin = false);
 
         /// <summary>
         /// Get a single post
         /// </summary>
         /// <param name="slug">The slug</param>
+        /// <param name="isAdmin">Is the user an admin.</param>
         /// <returns>A post.</returns>
-        Task<Post> GetPost(string slug);
+        Task<Post> GetPost(string slug, bool isAdmin = false);
 
         /// <summary>
         /// Gets all of the tags.

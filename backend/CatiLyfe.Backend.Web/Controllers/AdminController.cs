@@ -12,7 +12,7 @@
     /// <summary>
     /// Controller for admin operations.
     /// </summary>
-    [RoutePrefix("admin")]
+    [RoutePrefix("admin/post")]
     public class AdminController : ApiController
     {
         /// <summary>
@@ -36,6 +36,7 @@
                             skip: skip,
                             startdate: startdate,
                             enddate: enddate,
+                            isAdmin: true,
                             tags: Enumerable.Empty<string>());
 
             return
@@ -52,7 +53,7 @@
         [Route("{id}")]
         public async Task<AdminPost> GetPost(int id)
         {
-            var admin = await CatiDataLayer.Datalayer.GetPost(id);
+            var admin = await CatiDataLayer.Datalayer.GetPost(id, isAdmin: true);
             return
                 new AdminPost(
                     new AdminMetaData(
@@ -75,15 +76,15 @@
         [Route("")]
         public async Task<AdminPost> SetPost([FromBody] AdminPost post)
         {
-            var content = new DataLayer.Models.PostContent(0, 0, "markdown", post.PostContent.MarkdownContent);
+            var content = new DataLayer.Models.PostContent(0, 0, "markdown", post.MarkdownContent);
             var metaData = new DataLayer.Models.PostMeta(
-                post.MetaData.Id ?? -1,
-                post.MetaData.Slug,
-                post.MetaData.Title,
-                post.MetaData.Description,
-                post.MetaData.WhenCreated,
-                post.MetaData.LiveTime,
-                post.MetaData.Tags);
+                post.Metadata.Id ?? -1,
+                post.Metadata.Slug,
+                post.Metadata.Title,
+                post.Metadata.Description,
+                post.Metadata.WhenCreated,
+                post.Metadata.WhenPublished,
+                post.Metadata.Tags);
             var fullPost = new DataLayer.Models.Post(metaData, new[] { content });
 
             var admin = await CatiDataLayer.Datalayer.SetPost(fullPost);
@@ -98,6 +99,18 @@
                         admin.MetaData.Description,
                         admin.MetaData.Tags),
                     new AdminPostContent(admin.PostContent.First().Content));
+        }
+
+        /// <summary>
+        /// Delete a post.
+        /// </summary>
+        /// <param name="id">The id of the post.</param>
+        /// <returns>No content</returns>
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task DeletePost(int id)
+        {
+            await CatiDataLayer.Datalayer.DeletePost(id);
         }
     }
 }

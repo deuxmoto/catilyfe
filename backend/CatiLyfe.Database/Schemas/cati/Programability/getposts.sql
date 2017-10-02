@@ -6,6 +6,7 @@ CREATE PROCEDURE cati.getposts
    ,@skip       INT = NULL
    ,@startdate  DATETIME2 = NULL
    ,@enddate    DATETIME2 = NULL
+   ,@isadmin    BIT = 0
    ,@tags       cati.tagslist READONLY
 AS
     SET NOCOUNT ON
@@ -57,6 +58,9 @@ AS
        ,m.description
     FROM cati.postmeta m
     WHERE m.goeslive BETWEEN @startdate AND @enddate
+      AND isdeleted = 0
+      AND (ispublished = 1 OR @isadmin = 1)
+      AND isreserved = 0
       AND (EXISTS (SELECT TOP 1 1 
                   FROM cati.posttags pt
                   JOIN @tagids ids

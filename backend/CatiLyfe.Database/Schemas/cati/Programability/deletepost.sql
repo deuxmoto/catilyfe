@@ -32,14 +32,9 @@ AS
         GOTO ErrorHandler
     END
 
-    DELETE FROM cati.postmeta
-    WHERE @id = id
-
-    DELETE FROM cati.postcontent
-    WHERE postid= @id
-
-    DELETE FROM cati.posttags
-    WHERE post = @id
+    UPDATE cati.postmeta
+        SET isdeleted = 1
+    WHERE id = @id
 
     COMMIT TRANSACTION
     END TRY

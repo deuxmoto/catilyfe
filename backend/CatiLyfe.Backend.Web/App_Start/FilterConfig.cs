@@ -3,6 +3,8 @@ using System.Web.Mvc;
 
 namespace CatiLyfe.Backend.Web
 {
+    using CatiLyfe.Backend.Web.Code.Filters;
+
     public class FilterConfig
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)

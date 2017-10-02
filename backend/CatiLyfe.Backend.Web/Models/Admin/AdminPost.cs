@@ -19,20 +19,20 @@
         /// <param name="postContent">The content.</param>
         public AdminPost(AdminMetaData metadata, AdminPostContent postContent)
         {
-            this.MetaData = metadata;
-            this.PostContent = postContent;
+            this.Metadata = metadata;
+            this.MarkdownContent = postContent.MarkdownContent;
         }
 
         /// <summary>
         /// The metadata.
         /// </summary>
         [Required]
-        public AdminMetaData MetaData { get; set; }
+        public AdminMetaData Metadata { get; set; }
 
         /// <summary>
         /// Gets the post content.
         /// </summary>
         [Required]
-        public AdminPostContent PostContent { get; set; }
+        public string MarkdownContent { get; set; }
     }
 }

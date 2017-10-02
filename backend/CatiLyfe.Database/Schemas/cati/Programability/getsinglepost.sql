@@ -4,6 +4,7 @@ CREATE PROCEDURE cati.getsinglepost
     @error_message NVARCHAR(2048) OUTPUT
    ,@id             INT = NULL
    ,@slug           NVARCHAR(256) = NULL
+   ,@isadmin        BIT = 0
 AS
     SET NOCOUNT ON
     SET TRANSACTION ISOLATION LEVEL SNAPSHOT
@@ -37,8 +38,8 @@ AS
        ,m.goeslive
        ,m.description
     FROM cati.postmeta m
-    WHERE id = @id
-       OR slug = @slug
+    WHERE (id = @id OR slug = @slug)
+        AND (ispublished = 1 OR @isadmin = 1)
 
     SELECT
         p.id

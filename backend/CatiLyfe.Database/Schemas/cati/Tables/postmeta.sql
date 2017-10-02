@@ -6,4 +6,7 @@
    ,goeslive    DATETIME2       NOT NULL
    ,created     DATETIME2       NOT NULL
    ,description NVARCHAR(256)   NOT NULL
+   ,ispublished BIT             NOT NULL
+   ,isdeleted   BIT             NOT NULL
+   ,isreserved  BIT             NOT NULL
 )

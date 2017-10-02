@@ -54,17 +54,5 @@
 
             return new Post(post);
         }
-
-        /// <summary>
-        /// Delete a post.
-        /// </summary>
-        /// <param name="slug">The slug of the post.</param>
-        /// <returns>No content</returns>
-        [HttpDelete]
-        [Route("{slug}")]
-        public async Task DeletePost(string slug)
-        {
-            await CatiDataLayer.Datalayer.DeletePost(slug);
-        }
     }
 }

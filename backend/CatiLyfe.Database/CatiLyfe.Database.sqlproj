@@ -65,6 +65,7 @@
     <Folder Include="Schemas\cati\Index" />
     <Folder Include="Schemas\cati\Programability\Types" />
     <Folder Include="Schemas\stat" />
+    <Folder Include="Schemas\cati\Tables\Constraints" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\cati\cati.sql" />
@@ -88,6 +89,9 @@
     <Build Include="Schemas\cati\Programability\gettags.sql" />
     <Build Include="Schemas\cati\Programability\Types\tagslist.sql" />
     <Build Include="Schemas\cati\Programability\deletepost.sql" />
+    <Build Include="Schemas\cati\Tables\Constraints\ispublished_default.sql" />
+    <Build Include="Schemas\cati\Tables\Constraints\isdeleted_default.sql" />
+    <Build Include="Schemas\cati\Tables\Constraints\isreserved_default.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />

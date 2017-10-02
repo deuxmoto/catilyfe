@@ -19,16 +19,16 @@
         /// </summary>
         /// <param name="id">The id of the post to change</param>
         /// <param name="title">The post title.</param>
-        /// <param name="liveTime">The live time.</param>
+        /// <param name="whenPublished">The live time.</param>
         /// <param name="whenCreated">When created.</param>
         /// <param name="slug">The post slug.</param>
         /// <param name="description">The post description.</param>
         /// <param name="tags">The tags.</param>
-        public AdminMetaData(int? id, string title, DateTimeOffset liveTime, DateTimeOffset whenCreated, string slug, string description, IEnumerable<string> tags)
+        public AdminMetaData(int? id, string title, DateTimeOffset whenPublished, DateTimeOffset whenCreated, string slug, string description, IEnumerable<string> tags)
         {
             this.Id = id;
             this.Title = title;
-            this.LiveTime = liveTime;
+            this.WhenPublished = whenPublished;
             this.WhenCreated = whenCreated;
             this.Slug = slug;
             this.Description = description;
@@ -50,7 +50,7 @@
         /// When the post is going live.
         /// </summary>
         [Required]
-        public DateTimeOffset LiveTime { get; set; }
+        public DateTimeOffset WhenPublished { get; set; }
 
 
         /// <summary>

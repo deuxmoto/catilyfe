@@ -20,7 +20,7 @@
             this.connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags)
+        public async Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags, bool isAdmin)
         {
             var results =  await this.ExecuteReader(
                 "cati.getpostmetadata",
@@ -30,6 +30,7 @@
                         parmeters.AddWithValue("skip", skip);
                         parmeters.AddWithValue("startdate", startdate);
                         parmeters.AddWithValue("enddate", enddate);
+                        parmeters.AddWithValue("isadmin", isAdmin);
                         var tagslist = parmeters.AddWithValue("tags", CatiSqlDataLayer.GetPostTagRecords(tags));
                         tagslist.SqlDbType = SqlDbType.Structured;
                         tagslist.TypeName = "cati.tagslist";
@@ -92,13 +93,14 @@
             return new PostContent((int)reader["id"], (int)reader["postid"], (string)reader["type"], (string)reader["content"]);
         }
 
-        public async Task<Post> GetPost(int id)
+        public async Task<Post> GetPost(int id, bool isAdmin)
         {
             var results = await this.ExecuteReader(
                 "cati.getsinglepost",
                 parmeters =>
                 {
                     parmeters.AddWithValue("id", id);
+                    parmeters.AddWithValue("isadmin", isAdmin);
                 },
                 ParsePostMeta, ParsePostContent, ParsePostTag);
 
@@ -109,13 +111,14 @@
             return new Post(results.Item1.First(), results.Item2);
         }
 
-        public async Task<Post> GetPost(string slug)
+        public async Task<Post> GetPost(string slug, bool isAdmin)
         {
             var results = await this.ExecuteReader(
                 "cati.getsinglepost",
                 parmeters =>
                 {
                     parmeters.AddWithValue("slug", slug);
+                    parmeters.AddWithValue("isadmin", isAdmin);
                 },
                 ParsePostMeta, ParsePostContent, ParsePostTag);
 
@@ -126,7 +129,7 @@
             return new Post(results.Item1.First(), results.Item2);
         }
 
-        public async Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags)
+        public async Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags, bool isAdmin)
         {
             var results = await this.ExecuteReader(
                 "cati.getposts",
@@ -136,6 +139,7 @@
                     parmeters.AddWithValue("skip", skip);
                     parmeters.AddWithValue("startdate", startdate);
                     parmeters.AddWithValue("enddate", enddate);
+                    parmeters.AddWithValue("isadmin", isAdmin);
                     var tagslist = parmeters.AddWithValue("tags", CatiSqlDataLayer.GetPostTagRecords(tags));
                     tagslist.SqlDbType = SqlDbType.Structured;
                     tagslist.TypeName = "cati.tagslist";

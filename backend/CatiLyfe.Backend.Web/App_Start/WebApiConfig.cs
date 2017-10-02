@@ -6,6 +6,9 @@ using System.Web.Http;
 namespace CatiLyfe.Backend.Web
 {
     using System.Web.Http.Cors;
+    using System.Web.Http.ExceptionHandling;
+
+    using CatiLyfe.Backend.Web.Code.Filters;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -19,6 +22,7 @@ namespace CatiLyfe.Backend.Web
             config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 
             // Web API configuration and services
+            config.Services.Replace(typeof(IExceptionHandler), new CatiLyfeExceptionFilter());
 
             // Enable cors.
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
