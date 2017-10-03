@@ -30,6 +30,8 @@ namespace CatiLyfe.Backend.Web
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            config.SuppressHostPrincipal();
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

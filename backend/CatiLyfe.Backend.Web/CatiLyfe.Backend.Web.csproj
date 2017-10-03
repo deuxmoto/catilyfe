@@ -195,10 +195,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Code\Filters\CatiLyfeErrorResult.cs" />
+    <Compile Include="Code\Filters\AuthenticateAttribute.cs" />
+    <Compile Include="Code\Results\AuthenticationChallengeResponse.cs" />
+    <Compile Include="Code\Results\AuthenticationFailureResult.cs" />
+    <Compile Include="Code\Results\CatiLyfeErrorResult.cs" />
     <Compile Include="Code\Filters\CatiLyfeExceptionFilter.cs" />
     <Compile Include="Code\PostContentFactory.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AuthTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\PostMetaDataController.cs" />
@@ -208,6 +212,7 @@
     <Compile Include="Models\Admin\AdminMetaData.cs" />
     <Compile Include="Models\Admin\AdminPost.cs" />
     <Compile Include="Models\Admin\AdminPostContent.cs" />
+    <Compile Include="Models\AuthTest\AuthTestResult.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\PostContent.cs" />
     <Compile Include="Models\PostMetaData.cs" />
