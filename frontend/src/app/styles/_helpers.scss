@@ -23,5 +23,8 @@ $primary: #8BC34A;
     font-size: 0.8rem;
 }
 
-// Shared sizes
+// Title bar shared style
 $title-bar-height: 4rem;
+@mixin using-title-bar($additionalPadding: 1rem) {
+    padding-top: $title-bar-height + $additionalPadding;
+}

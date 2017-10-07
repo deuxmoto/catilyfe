@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
 import {
   trigger,
@@ -44,7 +44,7 @@ export class TitleBarComponent implements OnInit {
             },
             {
                 text: "About",
-                linkUrl: "/home"
+                linkUrl: "/posts/about"
             },
             {
                 text: "Posts",
@@ -59,5 +59,9 @@ export class TitleBarComponent implements OnInit {
 
     toggleMenu(): void {
         this.menuIsOpen = !this.menuIsOpen;
+    }
+
+    closeMenu(): void {
+        this.menuIsOpen = false;
     }
 }

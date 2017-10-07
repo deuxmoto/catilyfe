@@ -5,7 +5,7 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
-import { BackendApiService, PostMetadata, PostNotFoundError } from "../core/backend-api.service";
+import { BackendApiService, PostMetadata, NotFoundError } from "../core/backend-api.service";
 
 enum State {
     Loading,
@@ -18,10 +18,10 @@ enum State {
     styleUrls: [ "./post.component.scss" ]
 })
 export class PostComponent implements OnInit {
-    private StateEnum = State;
-    private state = State.Loading;
-    private postHtml: string;
-    private tags: Array<string>;
+    public StateEnum = State;
+    public state = State.Loading;
+    public postHtml: string;
+    public tags: Array<string>;
 
     constructor(
         private backend: BackendApiService,
@@ -30,24 +30,28 @@ export class PostComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        const slug = this.route.snapshot.paramMap.get("slug");
-        this.backend.getPost(slug).subscribe(
-            (post) => {
-                this.postHtml = post.rawHtmlThenIGuess;
-                this.tags = post.metadata.tags;
-                this.state = State.Normal;
-            },
-            (error) => {
-                if (error instanceof PostNotFoundError) {
-                    this.router.navigateByUrl("notfound", { skipLocationChange: true });
+        this.route.paramMap.subscribe((paramMap) => {
+            this.state = State.Loading;
+
+            const slug = paramMap.get("slug");
+            this.backend.getPost(slug).subscribe(
+                (post) => {
+                    this.postHtml = post.rawHtmlThenIGuess;
+                    this.tags = post.metadata.tags;
+                    this.state = State.Normal;
+                },
+                (error) => {
+                    if (error instanceof NotFoundError) {
+                        this.router.navigateByUrl("notfound", { skipLocationChange: true });
+                    }
+                    else {
+                        console.error(
+                            `Unrecognized error:\n`
+                            + JSON.stringify(error)
+                        );
+                    }
                 }
-                else {
-                    console.error(
-                        `Unrecognized error:\n`
-                        + JSON.stringify(error)
-                    );
-                }
-            }
-        );
+            );
+        });
     }
 }

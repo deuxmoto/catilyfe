@@ -10,6 +10,10 @@ $dark-background-translucent: rgba(10, 10, 10, 0.9);
 
 $transition-animation: 200ms ease;
 
+:host {
+    z-index: 2;
+}
+
 /*
  * Title bar top component
  *
