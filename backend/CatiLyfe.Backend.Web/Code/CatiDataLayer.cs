@@ -14,6 +14,8 @@ namespace CatiLyfe.Backend.Web.App_Start
         /// </summary>
         public static ICatiDataLayer Datalayer { get; private set; }
 
+        public static ICatiAuthDataLayer AuthDataLayer { get; private set; }
+
         /// <summary>
         /// Initialize the data layer.
         /// </summary>
@@ -21,6 +23,7 @@ namespace CatiLyfe.Backend.Web.App_Start
         public static void InitializeDataLayer(string connectionString)
         {
             CatiDataLayer.Datalayer = CatiDataLayerFactory.CreateDataLayer(connectionString);
+            CatiDataLayer.AuthDataLayer = CatiDataLayerFactory.CreateAuthDataLayer(connectionString);
         }
     }
 }

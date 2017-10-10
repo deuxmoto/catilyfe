@@ -12,7 +12,7 @@
 
     using Microsoft.SqlServer.Server;
 
-    internal sealed class CatiSqlDataLayer : ICatiDataLayer
+    internal sealed class CatiSqlDataLayer : ICatiDataLayer, ICatiAuthDataLayer
     {
         private readonly string connectionString;
         public CatiSqlDataLayer(string connectionString)
@@ -91,6 +91,16 @@
         private static PostContent ParsePostContent(SqlDataReader reader)
         {
             return new PostContent((int)reader["id"], (int)reader["postid"], (string)reader["type"], (string)reader["content"]);
+        }
+
+        /// <summary>
+        /// Parses a user from the reader.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>The user.</returns>
+        private static UserModel ParseUser(SqlDataReader reader)
+        {
+            return new UserModel((int)reader["id"], (string)reader["name"], (string)reader["email"], (byte[])reader["pass"]);
         }
 
         public async Task<Post> GetPost(int id, bool isAdmin)
@@ -435,6 +445,54 @@
                 {
                     parrameters.AddWithValue("slug", slug);
                 });
+        }
+
+        /// <summary>
+        /// Gets all user information.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="token">The token.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
+        public async Task<UserModel> GetUser(int? id, string email, byte[] token)
+        {
+            var result = await this.ExecuteReader(
+                "auth.getuserinfo",
+                parameters =>
+                    {
+                        parameters.AddWithValue("id", id);
+                        parameters.AddWithValue("email", email);
+                        parameters.AddWithValue("token", token);
+                    },
+                CatiSqlDataLayer.ParseUser);
+
+            var user = result.FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new ItemNotFoundException("The user could not be found.");
+            }
+
+            return user;
+        }
+
+        /// <summary>
+        /// Creates a token for a user.
+        /// </summary>
+        /// <param name="user">The user id.</param>
+        /// <param name="token">The token.</param>
+        /// <param name="expiry">The expiry.</param>
+        /// <returns>An async task.</returns>
+        public Task CreateToken(int user, byte[] token, DateTime expiry)
+        {
+            return this.ExecuteNonQuery(
+                "auth.settoken",
+                parameters =>
+                    {
+                        parameters.AddWithValue("user", user);
+                        parameters.AddWithValue("token", token);
+                        parameters.AddWithValue("expiry", expiry);
+                    });
         }
     }
 }

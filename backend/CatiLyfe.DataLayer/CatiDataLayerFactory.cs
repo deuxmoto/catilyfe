@@ -6,5 +6,10 @@
         {
             return new CatiSqlDataLayer(connectionstring);
         }
+
+        public static ICatiAuthDataLayer CreateAuthDataLayer(string connectionString)
+        {
+            return new CatiSqlDataLayer(connectionString);
+        }
     }
 }

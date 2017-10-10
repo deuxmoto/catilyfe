@@ -206,8 +206,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Code\CatiDataLayer.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -249,6 +247,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\PostMetaDataController.cs" />
     <Compile Include="Global.asax.cs">
@@ -258,6 +257,8 @@
     <Compile Include="Models\Admin\AdminPost.cs" />
     <Compile Include="Models\Admin\AdminPostContent.cs" />
     <Compile Include="Models\AuthTest\AuthTestResult.cs" />
+    <Compile Include="Models\Login\LoginCredentials.cs" />
+    <Compile Include="Models\Login\LoginDetails.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\PostContent.cs" />
     <Compile Include="Models\PostMetaData.cs" />
