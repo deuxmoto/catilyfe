@@ -66,6 +66,10 @@
     <Folder Include="Schemas\cati\Programability\Types" />
     <Folder Include="Schemas\stat" />
     <Folder Include="Schemas\cati\Tables\Constraints" />
+    <Folder Include="Schemas\auth" />
+    <Folder Include="Schemas\auth\Tables" />
+    <Folder Include="Schemas\auth\Programability" />
+    <Folder Include="Schemas\auth\Programability\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\cati\cati.sql" />
@@ -92,6 +96,12 @@
     <Build Include="Schemas\cati\Tables\Constraints\ispublished_default.sql" />
     <Build Include="Schemas\cati\Tables\Constraints\isdeleted_default.sql" />
     <Build Include="Schemas\cati\Tables\Constraints\isreserved_default.sql" />
+    <Build Include="Schemas\auth\auth.sql" />
+    <Build Include="Schemas\auth\Tables\users.sql" />
+    <Build Include="Schemas\auth\Tables\tokens.sql" />
+    <Build Include="Schemas\auth\Programability\Stored Procedures\setuserinfo.sql" />
+    <Build Include="Schemas\auth\Programability\Stored Procedures\getuserinfo.sql" />
+    <Build Include="Schemas\auth\Programability\Stored Procedures\settoken.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />

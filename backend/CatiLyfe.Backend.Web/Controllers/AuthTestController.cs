@@ -8,7 +8,7 @@
     /// <summary>
     /// The authentication test controller.
     /// </summary>
-    [Authenticate]
+    [Authorize]
     [RoutePrefix("authtest")]
     public class AuthTestController : ApiController
     {
