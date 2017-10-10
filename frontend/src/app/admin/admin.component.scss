@@ -1,0 +1,37 @@
+@import "../styles/helpers";
+
+:host {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    @include using-title-bar(2rem);
+}
+
+.admin-card {
+    margin-bottom: 2rem;
+}
+
+// Created Posts card
+.cdk-column-postId {
+    width: 60px;
+    flex: none;
+}
+.cdk-column-postSlug {
+    flex: 1;
+}
+.cdk-column-postTitle {
+    flex: 2;
+}
+.cdk-column-postWhenCreated {
+    flex: 1;
+}
+.posts-row {
+    cursor: pointer;
+    transition: 50ms;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+}

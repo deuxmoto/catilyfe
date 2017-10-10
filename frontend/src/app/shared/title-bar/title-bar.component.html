@@ -13,7 +13,7 @@
     <div class="title-bar-menu" *ngIf="menuIsOpen" [@menuEnterAnimation]>
         <ul class="title-bar-menu-items">
             <li *ngFor="let menuItem of menuItems" >
-                <a routerLink="{{menuItem.linkUrl}}" class="title-bar-menu-item">{{menuItem.text}}</a>
+                <a routerLink="{{menuItem.linkUrl}}" class="title-bar-menu-item" (click)="closeMenu()">{{menuItem.text}}</a>
             </li>
         </ul>
     </div>

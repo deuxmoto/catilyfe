@@ -7,6 +7,7 @@ import { Route, RouterModule } from "@angular/router";
 
 import { AppComponent } from "./app.component";
 import { NotFoundComponent } from "./404/404.component";
+import { AdminModule } from "./admin/admin.module";
 import { CoreModule } from "./core/core.module";
 import { HomeComponent } from "./home/home.component";
 import { PostComponent } from "./post/post.component";
@@ -54,9 +55,11 @@ const routes: Route[] = [
         BrowserModule,
         BrowserAnimationsModule,
         HttpModule,
+
+        AdminModule,
         SharedModule
     ],
-    providers: [],
+    providers: [ ],
     bootstrap: [ AppComponent ]
 })
 export class AppModule { }

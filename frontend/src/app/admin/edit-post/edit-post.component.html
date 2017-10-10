@@ -1,0 +1,56 @@
+<div class="edit-post" [ngSwitch]="state">
+
+    <div class="top-bar">
+        <h2 class="top-bar-title">Edit Post <span *ngIf="title">"{{title}}"</span></h2>
+        <a class="top-bar-close" (click)="closeEditPost()">
+            <span class="fa fa-times"></span>
+        </a>
+    </div>
+
+    <div *ngSwitchDefault>
+        <form>
+            <md-form-field class="edit-post-field">
+                <input mdInput placeholder="Title" name="title" [(ngModel)]="title">
+            </md-form-field>
+            <div class="edit-post-fields-inline">
+                <md-form-field class="edit-post-field edit-post-field-inline">
+                    <input mdInput placeholder="Id" name="id" [(ngModel)]="id" disabled>
+                </md-form-field>
+                <md-form-field class="edit-post-field edit-post-field-inline">
+                    <input mdInput placeholder="When Created" name="whenCreated" [(ngModel)]="whenCreated" disabled>
+                </md-form-field>
+            </div>
+            <div class="edit-post-fields-inline">
+                <md-form-field class="edit-post-field edit-post-field-inline">
+                    <input mdInput placeholder="Slug" name="slug" [(ngModel)]="slug">
+                </md-form-field>
+                <md-form-field class="edit-post-field edit-post-field-inline">
+                    <input mdInput placeholder="When Published" name="whenPublished" [(ngModel)]="whenPublished">
+                </md-form-field>
+            </div>
+            <md-form-field class="edit-post-field">
+                <textarea mdInput mdTextareaAutosize placeholder="Description" name="description" [(ngModel)]="description"></textarea>
+            </md-form-field>
+            <md-form-field class="edit-post-field">
+                <textarea mdInput mdTextareaAutosize placeholder="Post content" name="postContent" [(ngModel)]="content"></textarea>
+            </md-form-field>
+        </form>
+
+        <div class="bottom-bar">
+            <span class="bottom-bar-item" style="color: rgba(0,0,0,0.5)">{{savingText}}</span>
+            <button md-button class="bottom-bar-item" [disabled]="state === StateEnum.Saving" (click)="savePost()"> SAVE </button>
+            <button md-button class="bottom-bar-item" (click)="closeEditPost()">CANCEL</button>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="StateEnum.Loading">
+        Loading...
+    </div>
+
+    <div class="error-message" *ngSwitchCase="StateEnum.Error">
+        An error occurred, yo:
+        <br>
+        {{lastErrorMessage}}
+    </div>
+
+</div>
