@@ -1,0 +1,4 @@
+﻿CREATE TYPE auth.rolelist AS TABLE
+(
+    role    NVARCHAR(64) NOT NULL PRIMARY KEY
+)

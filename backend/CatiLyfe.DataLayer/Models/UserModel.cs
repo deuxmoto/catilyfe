@@ -1,5 +1,7 @@
 ﻿namespace CatiLyfe.DataLayer.Models
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// The user model.
     /// </summary>
@@ -12,7 +14,8 @@
         /// <param name="name">The name.</param>
         /// <param name="email">The email.</param>
         /// <param name="password">The user password.</param>
-        public UserModel(int id, string name, string email, byte[] password)
+        /// <param name="roles">The user roles.</param>
+        public UserModel(int id, string name, string email, byte[] password, HashSet<string> roles = null)
         {
             this.Id = id;
             this.Name = name;
@@ -39,5 +42,10 @@
         /// Gets the email.
         /// </summary>
         public string Email { get; }
+
+        /// <summary>
+        /// Gets the roles.
+        /// </summary>
+        public HashSet<string> Roles { get; internal set; }
     }
 }

@@ -70,6 +70,8 @@
     <Folder Include="Schemas\auth\Tables" />
     <Folder Include="Schemas\auth\Programability" />
     <Folder Include="Schemas\auth\Programability\Stored Procedures" />
+    <Folder Include="Schemas\auth\Tables\Indexs" />
+    <Folder Include="Schemas\auth\Programability\Types" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\cati\cati.sql" />
@@ -102,6 +104,14 @@
     <Build Include="Schemas\auth\Programability\Stored Procedures\setuserinfo.sql" />
     <Build Include="Schemas\auth\Programability\Stored Procedures\getuserinfo.sql" />
     <Build Include="Schemas\auth\Programability\Stored Procedures\settoken.sql" />
+    <Build Include="Schemas\auth\Tables\roles.sql" />
+    <Build Include="Schemas\auth\Tables\Indexs\pk_roles.sql" />
+    <Build Include="Schemas\auth\Tables\userroles.sql" />
+    <Build Include="Schemas\auth\Tables\Indexs\pk_user.sql" />
+    <Build Include="Schemas\auth\Tables\Indexs\index_useremail.sql" />
+    <Build Include="Schemas\auth\Tables\Indexs\pk_token.sql" />
+    <Build Include="Schemas\auth\Tables\Indexs\pk_userroles.sql" />
+    <Build Include="Schemas\auth\Programability\Types\rolelist.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />

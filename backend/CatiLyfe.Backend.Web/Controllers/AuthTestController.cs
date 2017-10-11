@@ -1,5 +1,7 @@
 ﻿namespace CatiLyfe.Backend.Web.Controllers
 {
+    using System.Linq;
+    using System.Web;
     using System.Web.Http;
 
     using CatiLyfe.Backend.Web.Code.Filters;
@@ -8,7 +10,7 @@
     /// <summary>
     /// The authentication test controller.
     /// </summary>
-    [Authorize]
+    [Authenticate]
     [RoutePrefix("authtest")]
     public class AuthTestController : ApiController
     {
@@ -20,7 +22,8 @@
         [Route("")]
         public AuthTestResult Test()
         {
-            return new AuthTestResult("CATI AUTH SUCCESS YO.");
+            var user = HttpContext.Current.User.Identity;
+            return new AuthTestResult("CATI AUTH SUCCESS YO.", user.Name, Enumerable.Empty<string>());
         }
     }
 }

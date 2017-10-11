@@ -51,6 +51,7 @@ AS
         WHERE token = @token
     END
 
+    COMMIT TRANSACTION
     END TRY
     BEGIN CATCH
         SET @error = ERROR_NUMBER()

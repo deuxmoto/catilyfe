@@ -9,17 +9,35 @@ AS
 
     DECLARE @error          INT = 0
 
+    IF(@id IS NULL)
+    BEGIN
+
         SELECT TOP 1
-           u.id
-          ,u.email
-          ,u.name
-          ,u.pass
+           @id = u.id
         FROM auth.users u
         LEFT JOIN auth.tokens t
                ON t.userid = u.id AND t.expiry > GETUTCDATE()
-        WHERE u.id = @id
-           OR u.email = @email
+        WHERE u.email = @email
            OR t.token = @token
 
+    END
+
+    -- OUTPUT all of the roles
+    SELECT
+        ur.userid
+       ,r.role
+    FROM auth.userroles ur
+    JOIN auth.roles r
+        ON r.id = ur.userid
+    WHERE ur.userid = @id
+
+    -- Output user details
+    SELECT
+        u.id
+       ,u.name
+       ,u.email
+       ,u.pass
+    FROM auth.users u
+    WHERE u.id = @id
 ErrorHandler:
     RETURN @error

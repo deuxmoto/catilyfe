@@ -103,6 +103,16 @@
             return new UserModel((int)reader["id"], (string)reader["name"], (string)reader["email"], (byte[])reader["pass"]);
         }
 
+        /// <summary>
+        /// Parse a role from a reader.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>The role.</returns>
+        private static string ParseRole(SqlDataReader reader)
+        {
+            return (string)reader["role"];
+        }
+
         public async Task<Post> GetPost(int id, bool isAdmin)
         {
             var results = await this.ExecuteReader(
@@ -427,6 +437,21 @@
                     });
         }
 
+        /// <summary>
+        /// Gets the role records.
+        /// </summary>
+        /// <param name="roles">The roles.</param>
+        /// <returns>The records.</returns>
+        private static IEnumerable<SqlDataRecord> GetRoleRecord(IEnumerable<string> roles)
+        {
+            return roles.ToDataTable(
+                () => new[] { new SqlMetaData("role", SqlDbType.NVarChar, 64) },
+                (record, role) =>
+                    {
+                        record.SetValue(0, role);
+                    });
+        }
+
         public Task DeletePost(int id)
         {
             return this.ExecuteNonQuery(
@@ -464,14 +489,18 @@
                         parameters.AddWithValue("email", email);
                         parameters.AddWithValue("token", token);
                     },
+                CatiSqlDataLayer.ParseRole,
                 CatiSqlDataLayer.ParseUser);
 
-            var user = result.FirstOrDefault();
+            var user = result.Item2.FirstOrDefault();
 
             if (user == null)
             {
                 throw new ItemNotFoundException("The user could not be found.");
             }
+
+            var roles = new HashSet<string>(result.Item1, StringComparer.OrdinalIgnoreCase);
+            user.Roles = roles;
 
             return user;
         }
@@ -489,9 +518,32 @@
                 "auth.settoken",
                 parameters =>
                     {
-                        parameters.AddWithValue("user", user);
+                        parameters.AddWithValue("userid", user);
                         parameters.AddWithValue("token", token);
                         parameters.AddWithValue("expiry", expiry);
+                    });
+        }
+
+        /// <summary>
+        /// Sets a user based on the user model.
+        /// </summary>
+        /// <param name="usermodel">The user model.</param>
+        /// <returns>An async task..</returns>
+        public Task SetUser(UserModel usermodel)
+        {
+            return this.ExecuteNonQuery(
+                "auth.setuserinfo",
+                parameters =>
+                    {
+                        parameters.AddWithValue("id", usermodel.Id > 0 ? (int?)usermodel.Id : null);
+                        parameters.AddWithValue("name", usermodel.Name);
+                        parameters.AddWithValue("email", usermodel.Email);
+                        parameters.AddWithValue("password", usermodel.Password);
+                        var rolelist = parameters.AddWithValue(
+                            "rolelist",
+                            CatiSqlDataLayer.GetRoleRecord(usermodel.Roles));
+                        rolelist.SqlDbType = SqlDbType.Structured;
+                        rolelist.TypeName = "auth.rolelist";
                     });
         }
     }

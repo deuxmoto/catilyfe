@@ -4,6 +4,7 @@
    ,@name           NVARCHAR(128) = NULL
    ,@email          NVARCHAR(256) = NULL
    ,@password       BINARY(64)    = NULL
+   ,@rolelist       auth.rolelist READONLY
 AS
     SET NOCOUNT ON
 
@@ -58,6 +59,32 @@ AS
 
     END
 
+    IF (EXISTS( SELECT TOP 1 1 FROM @rolelist))
+    BEGIN
+
+        MERGE auth.userroles roles
+        USING (SELECT def.id FROM @rolelist r
+                JOIN auth.roles def
+                  ON def.role = r.role
+        ) AS r
+           ON roles.userid = @id AND r.id = roles.roleid
+        WHEN NOT MATCHED BY TARGET
+        THEN INSERT
+        (
+            userid
+           ,roleid
+        )
+        VALUES
+        (
+            @id
+           ,r.id
+        )
+        WHEN NOT MATCHED BY SOURCE AND roles.userid = @id
+        THEN DELETE;
+
+    END
+
+    COMMIT TRANSACTION
     END TRY
     BEGIN CATCH
         SET @error = ERROR_NUMBER()

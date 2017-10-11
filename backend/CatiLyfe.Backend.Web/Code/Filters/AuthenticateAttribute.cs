@@ -1,6 +1,7 @@
 ﻿namespace CatiLyfe.Backend.Web.Code.Filters
 {
     using System;
+    using System.Linq;
     using System.Net.Cache;
     using System.Net.Http.Headers;
     using System.Security.Principal;
@@ -8,6 +9,7 @@
     using System.Threading.Tasks;
     using System.Web.Http.Filters;
 
+    using CatiLyfe.Backend.Web.App_Start;
     using CatiLyfe.Backend.Web.Code.Results;
 
     public class AuthenticateAttribute : Attribute, IAuthenticationFilter
@@ -36,7 +38,10 @@
                 return;
             }
 
-            var principal = new GenericPrincipal(new GenericIdentity("admin"), new[] { "admin" });
+            var token = Convert.FromBase64String(authorizationHeader.Parameter);
+            var user = await CatiDataLayer.AuthDataLayer.GetUser(null, null, token);
+
+            var principal = new GenericPrincipal(new GenericIdentity(user.Name), user.Roles.ToArray());
             context.Principal = principal;
         }
 

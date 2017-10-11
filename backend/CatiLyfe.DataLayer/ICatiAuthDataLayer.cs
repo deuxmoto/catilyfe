@@ -27,5 +27,12 @@
         /// <param name="expiry">The expiry.</param>
         /// <returns>An async task.</returns>
         Task CreateToken(int user, byte[] token, DateTime expiry);
+
+        /// <summary>
+        /// Sets a user based on the user model.
+        /// </summary>
+        /// <param name="usermodel">The user model.</param>
+        /// <returns>An async task..</returns>
+        Task SetUser(UserModel usermodel);
     }
 }
