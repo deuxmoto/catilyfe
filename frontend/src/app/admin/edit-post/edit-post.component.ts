@@ -7,8 +7,6 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/fromEvent";
 import "rxjs/add/operator/map";
 
-import { AdminService } from "../admin.service";
-
 import {
     BackendApiService, AdminPost, AdminPostMetadata,
     NotFoundError, UnknownError
@@ -26,7 +24,7 @@ enum State {
     templateUrl: "./edit-post.component.html",
     styleUrls: [ "./edit-post.component.scss" ]
 })
-export class EditPostComponent implements OnInit, OnDestroy {
+export class EditPostComponent implements OnInit {
     public id: number;
     public title: string;
     public description: string;
@@ -45,7 +43,6 @@ export class EditPostComponent implements OnInit, OnDestroy {
         private backend: BackendApiService,
         private route: ActivatedRoute,
         private router: Router,
-        private adminService: AdminService
     ) { }
 
     public ngOnInit(): void {
@@ -73,15 +70,6 @@ export class EditPostComponent implements OnInit, OnDestroy {
                 this.handleNetworkError(error);
             }
         );
-
-        setTimeout(() => {
-            // Prevent scrolling on main admin page
-            this.adminService.hideBodyOverflow(true);
-        });
-    }
-
-    public ngOnDestroy(): void {
-        this.adminService.hideBodyOverflow(false);
     }
 
     public closeEditPost(): void {
@@ -107,7 +95,6 @@ export class EditPostComponent implements OnInit, OnDestroy {
         this.backend.setAdminPost(adminPost).subscribe(
             () => {
                 this.savingText = "Saved! Yeeee";
-                this.adminService.refreshAdminView();
             },
             (error) => {
                 this.handleNetworkError(error);
