@@ -7,12 +7,14 @@
     using System.Web.Http;
 
     using CatiLyfe.Backend.Web.App_Start;
+    using CatiLyfe.Backend.Web.Code;
     using CatiLyfe.Backend.Web.Models.Admin;
+    using CatiLyfe.Common.Exceptions;
 
     /// <summary>
     /// Controller for admin operations.
     /// </summary>
-    [RoutePrefix("admin/post")]
+    [RoutePrefix("admin")]
     public class AdminController : ApiController
     {
         /// <summary>
@@ -24,7 +26,7 @@
         /// <param name="enddate">The end date.</param>
         /// <returns>The metadata for the post.</returns>
         [HttpGet]
-        [Route("")]
+        [Route("post")]
         public async Task<IEnumerable<AdminMetaData>> GetMetadata(
             int? top = 20,
             int? skip = 0,
@@ -50,7 +52,7 @@
         /// <param name="id">The id of the post.</param>
         /// <returns>The post.</returns>
         [HttpGet]
-        [Route("{id}")]
+        [Route("post/{id}")]
         public async Task<AdminPost> GetPost(int id)
         {
             var admin = await CatiDataLayer.Datalayer.GetPost(id, isAdmin: true);
@@ -73,7 +75,7 @@
         /// <param name="post">The post.</param>
         /// <returns>The result post.</returns>
         [HttpPost]
-        [Route("")]
+        [Route("post")]
         public async Task<AdminPost> SetPost([FromBody] AdminPost post)
         {
             var content = new DataLayer.Models.PostContent(0, 0, "markdown", post.MarkdownContent);
@@ -107,10 +109,29 @@
         /// <param name="id">The id of the post.</param>
         /// <returns>No content</returns>
         [HttpDelete]
-        [Route("{id}")]
+        [Route("post/{id}")]
         public async Task DeletePost(int id)
         {
             await CatiDataLayer.Datalayer.DeletePost(id);
+        }
+
+        /// <summary>
+        /// Preview markdown.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        /// <returns>The preview.</returns>
+        [HttpPost]
+        [Route("previewmarkdown")]
+        public MarkdownPreview Preview(MarkdownPreviewArgs args)
+        {
+            try
+            {
+                return new MarkdownPreview(PostContentFactory.ResolveMarkdown(args.MarkDOWN));
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidArgumentException(ex.Message);
+            }
         }
     }
 }

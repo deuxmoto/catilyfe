@@ -28,8 +28,9 @@ AS
        ,r.role
     FROM auth.userroles ur
     JOIN auth.roles r
-        ON r.id = ur.userid
+      ON r.id = ur.roleid
     WHERE ur.userid = @id
+       OR @id IS NULL
 
     -- Output user details
     SELECT
@@ -39,5 +40,7 @@ AS
        ,u.pass
     FROM auth.users u
     WHERE u.id = @id
+       OR @id IS NULL
+
 ErrorHandler:
     RETURN @error

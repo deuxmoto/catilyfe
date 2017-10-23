@@ -1,6 +1,7 @@
 ﻿namespace CatiLyfe.DataLayer
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using CatiLyfe.DataLayer.Models;
@@ -17,7 +18,7 @@
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns>The <see cref="Task"/>.</returns>
-        Task<UserModel> GetUser(int? id, string email, byte[] token);
+        Task<IEnumerable<UserModel>> GetUser(int? id, string email, byte[] token);
 
         /// <summary>
         /// Creates a token for a user.

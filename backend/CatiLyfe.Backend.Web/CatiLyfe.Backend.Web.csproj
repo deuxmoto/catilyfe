@@ -187,6 +187,8 @@
     <Compile Include="Models\Admin\AdminMetaData.cs" />
     <Compile Include="Models\Admin\AdminPost.cs" />
     <Compile Include="Models\Admin\AdminPostContent.cs" />
+    <Compile Include="Models\Admin\MarkdownPreview.cs" />
+    <Compile Include="Models\Admin\MarkdownPreviewArgs.cs" />
     <Compile Include="Models\AuthTest\AuthTestResult.cs" />
     <Compile Include="Models\Login\LoginCredentials.cs" />
     <Compile Include="Models\Login\LoginDetails.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Models\StatusModel.cs" />
     <Compile Include="Models\TagInfo.cs" />
     <Compile Include="Models\User\CreateUser.cs" />
+    <Compile Include="Models\User\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

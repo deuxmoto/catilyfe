@@ -108,9 +108,9 @@
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>The role.</returns>
-        private static string ParseRole(SqlDataReader reader)
+        private static UserRole ParseRole(SqlDataReader reader)
         {
-            return (string)reader["role"];
+            return new UserRole((int)reader["userid"], (string)reader["role"]);
         }
 
         public async Task<Post> GetPost(int id, bool isAdmin)
@@ -479,30 +479,34 @@
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns>The <see cref="Task"/>.</returns>
-        public async Task<UserModel> GetUser(int? id, string email, byte[] token)
+        public async Task<IEnumerable<UserModel>> GetUser(int? id, string email, byte[] token)
         {
             var result = await this.ExecuteReader(
                 "auth.getuserinfo",
                 parameters =>
-                    {
-                        parameters.AddWithValue("id", id);
-                        parameters.AddWithValue("email", email);
-                        parameters.AddWithValue("token", token);
-                    },
+                {
+                    parameters.AddWithValue("id", id);
+                    parameters.AddWithValue("email", email);
+                    parameters.AddWithValue("token", token);
+                },
                 CatiSqlDataLayer.ParseRole,
                 CatiSqlDataLayer.ParseUser);
 
-            var user = result.Item2.FirstOrDefault();
+            var users = result.Item2.ToList();
 
-            if (user == null)
+            if (false == users.Any())
             {
                 throw new ItemNotFoundException("The user could not be found.");
             }
 
-            var roles = new HashSet<string>(result.Item1, StringComparer.OrdinalIgnoreCase);
-            user.Roles = roles;
+            var roles = result.Item1.ToLookup(role => role.UserId, role => role.Role);
 
-            return user;
+            foreach (var user in users)
+            {
+                user.Roles = new HashSet<string>((roles.Contains(user.Id) ? roles[user.Id] : Enumerable.Empty<string>()));
+            }
+
+            return users;
         }
 
         /// <summary>

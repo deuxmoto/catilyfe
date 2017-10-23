@@ -22,7 +22,7 @@ namespace CatiLyfe.Backend.Web.Controllers
         [HttpPost]
         public async Task<LoginDetails> Login(LoginCredentials credentials)
         {
-            var user = await CatiDataLayer.AuthDataLayer.GetUser(null, credentials.Email, null);
+            var user = (await CatiDataLayer.AuthDataLayer.GetUser(null, credentials.Email, null)).First();
             var hashedPassword = PasswordGenerator.HashPassword(LoginController.PasswordSalt, credentials.Password);
 
             if (false == Convert.ToBase64String(hashedPassword).Equals(Convert.ToBase64String(user.Password)))

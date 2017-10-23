@@ -31,6 +31,26 @@
         }
 
         /// <summary>
+        /// Transforms a string of markdown into html.
+        /// </summary>
+        /// <param name="markdown">The markdown string.</param>
+        /// <returns>The HTML.</returns>
+        public static string ResolveMarkdown(string markdown)
+        {
+            var options = new MarkdownOptions
+            {
+                AutoHyperlink = true,
+                AutoNewLines = true,
+                LinkEmails = true,
+                QuoteSingleLine = true,
+                StrictBoldItalic = true,
+            };
+
+            var markdownParser = new Markdown(options);
+            return markdownParser.Transform(markdown);
+        }
+
+        /// <summary>
         /// Resolve the content type and return the result.
         /// </summary>
         /// <param name="content">The content type.</param>
@@ -53,17 +73,7 @@
         /// <returns>The html string.</returns>
         private static string ParseMarkdown(DataLayer.Models.PostContent content)
         {
-            var options = new MarkdownOptions
-            {
-                AutoHyperlink = true,
-                AutoNewLines = true,
-                LinkEmails = true,
-                QuoteSingleLine = true,
-                StrictBoldItalic = true,
-            };
-
-            var markdown = new Markdown(options);
-            return markdown.Transform(content.Content);
+            return PostContentFactory.ResolveMarkdown(content.Content);
         }
     }
 }

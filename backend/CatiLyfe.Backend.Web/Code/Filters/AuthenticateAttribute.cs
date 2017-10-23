@@ -39,7 +39,7 @@
             }
 
             var token = Convert.FromBase64String(authorizationHeader.Parameter);
-            var user = await CatiDataLayer.AuthDataLayer.GetUser(null, null, token);
+            var user = (await CatiDataLayer.AuthDataLayer.GetUser(null, null, token)).First();
 
             var principal = new GenericPrincipal(new GenericIdentity(user.Name), user.Roles.ToArray());
             context.Principal = principal;
