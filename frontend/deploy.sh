@@ -19,3 +19,9 @@ fi
 cp -r ./dist/* "$distRepo"
 cp -r "$supplementalDist"/* "$distRepo"
 echo "Done building n copying janx"
+
+# Add and commit to deployment repo
+cd "$distRepo"
+git add .
+git commit -m "Deploy janx"
+git push

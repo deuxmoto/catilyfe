@@ -9,6 +9,10 @@
     @include using-title-bar(2rem);
 }
 
+:host(.hide-overflow) {
+    overflow-y: hidden;
+}
+
 .admin-card {
     margin-bottom: 2rem;
 }

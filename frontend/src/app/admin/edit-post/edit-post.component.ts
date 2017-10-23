@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DataSource } from "@angular/cdk/collections";
 import { MdSort } from "@angular/material";
@@ -6,8 +6,6 @@ import { MdSort } from "@angular/material";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/fromEvent";
 import "rxjs/add/operator/map";
-
-import { AdminService } from "../admin.service";
 
 import {
     BackendApiService, AdminPost, AdminPostMetadata,
@@ -45,7 +43,6 @@ export class EditPostComponent implements OnInit {
         private backend: BackendApiService,
         private route: ActivatedRoute,
         private router: Router,
-        private adminService: AdminService
     ) { }
 
     public ngOnInit(): void {
@@ -98,7 +95,6 @@ export class EditPostComponent implements OnInit {
         this.backend.setAdminPost(adminPost).subscribe(
             () => {
                 this.savingText = "Saved! Yeeee";
-                this.adminService.emitRefreshAdminView();
             },
             (error) => {
                 this.handleNetworkError(error);

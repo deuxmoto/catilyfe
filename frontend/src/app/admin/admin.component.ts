@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostBinding, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DataSource } from "@angular/cdk/collections";
 import { MdSort } from "@angular/material";
@@ -7,7 +7,6 @@ import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 import "rxjs/add/operator/map";
 
-import { AdminService } from "./admin.service";
 import { BackendApiService, AdminPostMetadata } from "../core/backend-api.service";
 
 @Component({
@@ -28,15 +27,10 @@ export class AdminComponent implements OnInit {
         private backend: BackendApiService,
         private route: ActivatedRoute,
         private router: Router,
-        private adminService: AdminService
     ) { }
 
     public ngOnInit(): void {
         this.dataSource = new AdminPostMetadataDatasource(this.backend);
-
-        this.adminService.observableRefreshAdminViewEmitter().subscribe(() => {
-            this.dataSource.refresh();
-        });
     }
 
     public editPost(id: string): void {
