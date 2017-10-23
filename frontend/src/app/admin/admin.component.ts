@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostBinding, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DataSource } from "@angular/cdk/collections";
 import { MdSort } from "@angular/material";
@@ -24,11 +24,14 @@ export class AdminComponent implements OnInit {
         "postWhenCreated"
     ];
 
+    @HostBinding("class.hide-overflow")
+    public hideOverflow = false;
+
     constructor(
         private backend: BackendApiService,
         private route: ActivatedRoute,
         private router: Router,
-        private adminService: AdminService
+        private adminService: AdminService,
     ) { }
 
     public ngOnInit(): void {
@@ -36,6 +39,10 @@ export class AdminComponent implements OnInit {
 
         this.adminService.observableRefreshAdminViewEmitter().subscribe(() => {
             this.dataSource.refresh();
+        });
+
+        this.adminService.observableBodyOverflow().subscribe((hidden) => {
+            this.hideOverflow = hidden;
         });
     }
 

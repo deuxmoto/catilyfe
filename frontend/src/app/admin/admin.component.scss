@@ -2,11 +2,17 @@
 
 :host {
     min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
 
     display: flex;
     flex-direction: column;
 
     @include using-title-bar(2rem);
+}
+
+:host(.hide-overflow) {
+    overflow-y: hidden;
 }
 
 .admin-card {

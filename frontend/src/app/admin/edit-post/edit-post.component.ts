@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DataSource } from "@angular/cdk/collections";
 import { MdSort } from "@angular/material";
@@ -26,7 +26,7 @@ enum State {
     templateUrl: "./edit-post.component.html",
     styleUrls: [ "./edit-post.component.scss" ]
 })
-export class EditPostComponent implements OnInit {
+export class EditPostComponent implements OnInit, OnDestroy {
     public id: number;
     public title: string;
     public description: string;
@@ -73,6 +73,15 @@ export class EditPostComponent implements OnInit {
                 this.handleNetworkError(error);
             }
         );
+
+        setTimeout(() => {
+            // Prevent scrolling on main admin page
+            this.adminService.hideBodyOverflow(true);
+        });
+    }
+
+    public ngOnDestroy(): void {
+        this.adminService.hideBodyOverflow(false);
     }
 
     public closeEditPost(): void {
@@ -98,7 +107,7 @@ export class EditPostComponent implements OnInit {
         this.backend.setAdminPost(adminPost).subscribe(
             () => {
                 this.savingText = "Saved! Yeeee";
-                this.adminService.emitRefreshAdminView();
+                this.adminService.refreshAdminView();
             },
             (error) => {
                 this.handleNetworkError(error);

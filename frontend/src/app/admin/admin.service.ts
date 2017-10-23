@@ -7,9 +7,18 @@ import { Subject } from "rxjs/Subject";
 export class AdminService {
 
     private refreshAdminViewEmitter = new Subject<void>();
+    private bodyOverflowEmitter = new Subject<boolean>();
 
-    public emitRefreshAdminView(): void {
+    public hideBodyOverflow(hidden: boolean): void {
+        this.bodyOverflowEmitter.next(hidden);
+    }
+
+    public refreshAdminView(): void {
         this.refreshAdminViewEmitter.next();
+    }
+
+    public observableBodyOverflow(): Observable<boolean> {
+        return this.bodyOverflowEmitter.asObservable();
     }
 
     public observableRefreshAdminViewEmitter(): Observable<void> {
