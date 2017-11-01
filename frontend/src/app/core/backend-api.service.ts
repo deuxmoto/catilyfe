@@ -36,6 +36,10 @@ export interface Post {
     rawHtmlThenIGuess: string;
 }
 
+export interface MarkdownPreview {
+    content: string;
+}
+
 export class NotFoundError {
 }
 
@@ -117,6 +121,14 @@ export class BackendApiService {
 
     public setAdminPost(post: AdminPost): Observable<AdminPost> {
         return this.http.post(`${BackendEndpoint}/admin/post`, post)
+            .catch(handleFetchError);
+    }
+
+    public getMarkdownPreview(markdown: string): Observable<MarkdownPreview> {
+        return this.http.post(`${BackendEndpoint}/admin/previewmarkdown`, { markdown })
+            .map<Response, MarkdownPreview>((response) => {
+                return response.json();
+            })
             .catch(handleFetchError);
     }
 
