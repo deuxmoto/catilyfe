@@ -55,6 +55,7 @@ $bottom-bar-height: 4rem;
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
+    overflow-y: hidden;
 
     @include if-larger-than($bp-lg) {
         margin-bottom: 2rem;
