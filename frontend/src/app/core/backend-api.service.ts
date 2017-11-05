@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 import { Observable } from "rxjs/Observable";
 import { ErrorObservable } from "rxjs/observable/ErrorObservable";
@@ -79,71 +79,83 @@ const handleFetchError = (error: any): ErrorObservable => {
     return Observable.throw(unknownError);
 };
 
+const convertDateStringsToObjects = <T>(obj: T): T => {
+    let anyObj = <any>obj;
+    if (anyObj.whenCreated) {
+        anyObj.whenCreated = new Date(anyObj.whenCreated);
+    }
+    if (anyObj.whenPublished) {
+        anyObj.whenPublished = new Date(anyObj.whenPublished);
+    }
+    return anyObj;
+};
+
 @Injectable()
 export class BackendApiService {
-    constructor(private http: Http) { }
+    private adminToken = "AibFscOeiNQjCWbV76FBJujfEVI7jq+Blarbi2uxDfj2XPwm5Shrw45oCyI/+IEkSX0FhdFP0Dbg89SmT45KyA==";
+
+    constructor(private http: HttpClient) { }
 
     public getRecentPostMetadata(count: number): Observable<PostMetadata[]> {
-        return this.http.get(`${BackendEndpoint}/postmetadata?top=${count}`)
-            .map<Response, PostMetadata[]>((response) => {
-                const responseArray: PostMetadata[] = response.json();
-                return responseArray.map((postMetadata) => this.parseServerPostMetadata(postMetadata));
+        return this.http.get<PostMetadata[]>(`${BackendEndpoint}/postmetadata?top=${count}`)
+            .map((postMetadata) => {
+                // Convert date strings to actual dates
+                postMetadata.forEach((metadata) => {
+                    convertDateStringsToObjects(metadata);
+                });
+
+                return postMetadata;
             });
     }
 
     public getPost(slug: string): Observable<Post> {
-        return this.http.get(`${BackendEndpoint}/post/${slug}`)
-            .map<Response, Post>((response) => {
-                const post: Post = response.json();
-                post.metadata = this.parseServerPostMetadata(post.metadata);
+        return this.http.get<Post>(`${BackendEndpoint}/post/${slug}`)
+            .map((post) => {
+                convertDateStringsToObjects(post.metadata);
                 return post;
             })
             .catch(handleFetchError);
     }
 
     public getAdminPostMetadata(count = 1000): Observable<AdminPostMetadata[]> {
-        return this.http.get(`${BackendEndpoint}/admin/post?top=${count}`)
-            .map<Response, AdminPostMetadata[]>((response) => {
-                const responseArray: AdminPostMetadata[] = response.json();
-                return responseArray.map((adminPostMetadata) => this.parseServerAdminPostMetadata(adminPostMetadata));
-            });
+        return this.http.get<AdminPostMetadata[]>(`${BackendEndpoint}/admin/post?top=${count}`, {
+            headers: this.getAuthHeaders()
+        })
+            .map((postMetadata) => {
+                postMetadata.forEach((metadata) => {
+                    convertDateStringsToObjects(metadata);
+                });
+                return postMetadata;
+            })
+            .catch(handleFetchError);
     }
 
     public getAdminPost(id: string): Observable<AdminPost> {
-        return this.http.get(`${BackendEndpoint}/admin/post/${id}`)
-            .map<Response, AdminPost>((response) => {
-                const post: AdminPost = response.json();
-                post.metadata = this.parseServerAdminPostMetadata(post.metadata);
-                return post;
+        return this.http.get<AdminPost>(`${BackendEndpoint}/admin/post/${id}`, {
+            headers: this.getAuthHeaders()
+        })
+            .map((adminPost) => {
+                convertDateStringsToObjects(adminPost.metadata);
+                return adminPost;
             })
             .catch(handleFetchError);
     }
 
     public setAdminPost(post: AdminPost): Observable<AdminPost> {
-        return this.http.post(`${BackendEndpoint}/admin/post`, post)
+        return this.http.post(`${BackendEndpoint}/admin/post`, post, {
+            headers: this.getAuthHeaders()
+        })
             .catch(handleFetchError);
     }
 
     public getMarkdownPreview(markdown: string): Observable<MarkdownPreview> {
-        return this.http.post(`${BackendEndpoint}/admin/previewmarkdown`, { markdown })
-            .map<Response, MarkdownPreview>((response) => {
-                return response.json();
-            })
+        return this.http.post<MarkdownPreview>(`${BackendEndpoint}/admin/previewmarkdown`, { markdown }, {
+            headers: this.getAuthHeaders()
+        })
             .catch(handleFetchError);
     }
 
-    /**
-     * Ensures that the post metadata is in the format expected by the client
-     * (i.e. Dates are proper JS Date objects and not strings, etc.)
-     */
-    private parseServerPostMetadata(postMetadata: PostMetadata): PostMetadata {
-        postMetadata.whenPublished = new Date(postMetadata.whenPublished);
-        return postMetadata;
-    }
-
-    private parseServerAdminPostMetadata(adminPostMetadata: AdminPostMetadata): AdminPostMetadata {
-        adminPostMetadata.whenCreated = new Date(adminPostMetadata.whenCreated);
-        adminPostMetadata.whenPublished = new Date(adminPostMetadata.whenPublished);
-        return adminPostMetadata;
+    private getAuthHeaders(): HttpHeaders {
+        return new HttpHeaders().set("Authorization", `Bearer ${this.adminToken}`);
     }
 }

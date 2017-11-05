@@ -4,11 +4,12 @@ import {
 } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
 
 import { BackendApiService } from "./backend-api.service";
 
 @NgModule({
-    imports: [ CommonModule ],
+    imports: [ CommonModule, HttpClientModule ],
     providers: [ BackendApiService ]
 })
 export class CoreModule {
