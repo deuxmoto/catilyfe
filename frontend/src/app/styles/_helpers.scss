@@ -3,7 +3,7 @@ $bp-sm: 960px;
 $bp-md: 1152px;
 $bp-lg: 1344px;
 @mixin if-larger-than($bp) {
-    @media (min-width: $bp) {
+    @media screen and (min-width: $bp) {
         @content;
     }
 }

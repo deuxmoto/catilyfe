@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DataSource } from "@angular/cdk/collections";
 import { MdSort } from "@angular/material";
@@ -7,6 +7,7 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/fromEvent";
 import "rxjs/add/operator/map";
 
+import { MarkdownPreviewComponent } from "./markdown-preview/markdown-preview.component";
 import {
     BackendApiService, AdminPost, AdminPostMetadata,
     NotFoundError, UnknownError
@@ -17,6 +18,16 @@ enum State {
     Loading,
     Saving,
     Error
+}
+
+interface DisplayTab {
+    text: string;
+    value: Tab;
+}
+enum Tab {
+    Metadata,
+    Markdown,
+    MarkdownPreview
 }
 
 @Component({
@@ -38,6 +49,23 @@ export class EditPostComponent implements OnInit {
     public StateEnum = State;
     public lastErrorMessage: string;
     public savingText: string;
+
+    public TabEnum = Tab;
+    public tabs: DisplayTab[] = [
+        {
+            text: "Metadata",
+            value: Tab.Metadata
+        },
+        {
+            text: "Markdown",
+            value: Tab.Markdown
+        },
+        {
+            text: "Markdown Preview",
+            value: Tab.MarkdownPreview
+        }
+    ];
+    public currentTab = Tab.Metadata;
 
     constructor(
         private backend: BackendApiService,
@@ -95,14 +123,16 @@ export class EditPostComponent implements OnInit {
         this.backend.setAdminPost(adminPost).subscribe(
             () => {
                 this.savingText = "Saved! Yeeee";
+                this.state = State.Normal;
             },
             (error) => {
                 this.handleNetworkError(error);
-            },
-            () => {
-                this.state = State.Normal;
             }
         );
+    }
+
+    public setCurrentTab(tab: Tab): void {
+        this.currentTab = tab;
     }
 
     private handleNetworkError(error: any): void {

@@ -4,6 +4,7 @@ import { Route, RouterModule } from "@angular/router";
 
 import { AdminComponent } from "./admin.component";
 import { EditPostComponent } from "./edit-post/edit-post.component";
+import { MarkdownPreviewComponent } from "./edit-post/markdown-preview/markdown-preview.component";
 
 import { SharedModule } from "../shared/shared.module";
 
@@ -30,7 +31,8 @@ const adminRoutes: Route[] = [
     ],
     declarations: [
         AdminComponent,
-        EditPostComponent
+        EditPostComponent,
+        MarkdownPreviewComponent
     ]
 })
 export class AdminModule { }

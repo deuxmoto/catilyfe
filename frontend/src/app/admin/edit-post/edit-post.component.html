@@ -1,47 +1,66 @@
+<div class="top-bar">
+    <div class="top-bar-inner container">
+        <a class="top-bar-back" (click)="closeEditPost()">
+            <span class="fa fa-arrow-left"></span>
+        </a>
+        <h2 class="top-bar-title" [title]="title">Edit Post
+            <span *ngIf="title">"{{title}}"</span>
+        </h2>
+    </div>
+</div>
+
 <div class="edit-post container" [ngSwitch]="state">
 
-    <div class="top-bar">
-        <h2 class="top-bar-title">Edit Post <span *ngIf="title">"{{title}}"</span></h2>
-        <a class="top-bar-close" (click)="closeEditPost()">
-            <span class="fa fa-times"></span>
-        </a>
-    </div>
 
-    <div *ngSwitchDefault>
-        <form>
-            <md-form-field class="edit-post-field">
-                <input mdInput placeholder="Title" name="title" [(ngModel)]="title">
-            </md-form-field>
-            <div class="edit-post-fields-inline">
-                <md-form-field class="edit-post-field edit-post-field-inline">
-                    <input mdInput placeholder="Id" name="id" [(ngModel)]="id" disabled>
-                </md-form-field>
-                <md-form-field class="edit-post-field edit-post-field-inline">
-                    <input mdInput placeholder="When Created" name="whenCreated" [(ngModel)]="whenCreated" disabled>
-                </md-form-field>
-            </div>
-            <div class="edit-post-fields-inline">
-                <md-form-field class="edit-post-field edit-post-field-inline">
-                    <input mdInput placeholder="Slug" name="slug" [(ngModel)]="slug">
-                </md-form-field>
-                <md-form-field class="edit-post-field edit-post-field-inline">
-                    <input mdInput placeholder="When Published" name="whenPublished" [(ngModel)]="whenPublished">
-                </md-form-field>
-            </div>
-            <md-form-field class="edit-post-field">
-                <textarea mdInput mdTextareaAutosize placeholder="Description" name="description" [(ngModel)]="description"></textarea>
-            </md-form-field>
-            <md-form-field class="edit-post-field">
-                <textarea mdInput mdTextareaAutosize placeholder="Post content" name="postContent" [(ngModel)]="content"></textarea>
-            </md-form-field>
-        </form>
+    <div *ngSwitchDefault [ngSwitch]="currentTab">
 
-        <div class="bottom-bar">
-            <span class="bottom-bar-item" style="color: rgba(0,0,0,0.5)">{{savingText}}</span>
-            <button md-button class="bottom-bar-item" [disabled]="state === StateEnum.Saving" (click)="savePost()"> SAVE </button>
-            <button md-button class="bottom-bar-item" (click)="closeEditPost()">CANCEL</button>
+        <div class="tab-group">
+            <button md-button
+                *ngFor="let tab of tabs"
+                [ngClass]="{ active: currentTab == tab.value }"
+                (click)="setCurrentTab(tab.value)">
+                {{tab.text}}
+            </button>
+        </div>
+
+        <div *ngSwitchCase="TabEnum.Metadata" class="tab-body">
+            <form>
+                <md-form-field class="edit-post-field">
+                    <input mdInput placeholder="Title" name="title" [(ngModel)]="title">
+                </md-form-field>
+                <div class="edit-post-fields-inline">
+                    <md-form-field class="edit-post-field">
+                        <input mdInput placeholder="Id" name="id" [(ngModel)]="id" disabled>
+                    </md-form-field>
+                    <md-form-field class="edit-post-field">
+                        <input mdInput placeholder="Slug" name="slug" [(ngModel)]="slug">
+                    </md-form-field>
+                </div>
+                <div class="edit-post-fields-inline">
+                    <md-form-field class="edit-post-field">
+                        <input mdInput placeholder="When Created" name="whenCreated" [(ngModel)]="whenCreated" disabled>
+                    </md-form-field>
+                    <md-form-field class="edit-post-field">
+                        <input mdInput placeholder="When Published" name="whenPublished" [(ngModel)]="whenPublished">
+                    </md-form-field>
+                </div>
+                <md-form-field class="edit-post-field">
+                    <textarea mdInput mdTextareaAutosize placeholder="Description" name="description" [(ngModel)]="description"></textarea>
+                </md-form-field>
+            </form>
+        </div>
+        <div *ngSwitchCase="TabEnum.Markdown" class="tab-body">
+            <form>
+                <md-form-field class="edit-post-field">
+                    <textarea mdInput mdTextareaAutosize placeholder="Write dank janx" name="postContent" [(ngModel)]="content"></textarea>
+                </md-form-field>
+            </form>
+        </div>
+        <div *ngSwitchCase="TabEnum.MarkdownPreview" class="tab-body">
+            <markdown-preview [markdown]="content"></markdown-preview>
         </div>
     </div>
+
 
     <div *ngSwitchCase="StateEnum.Loading">
         Loading...
@@ -49,8 +68,15 @@
 
     <div class="error-message" *ngSwitchCase="StateEnum.Error">
         An error occurred, yo:
-        <br>
-        {{lastErrorMessage}}
+        <br> {{lastErrorMessage}}
     </div>
 
+</div>
+
+<div class="bottom-bar">
+    <div class="bottom-bar-inner container">
+        <span class="bottom-bar-item" style="color: rgba(0,0,0,0.5)">{{savingText}}</span>
+        <button md-button class="bottom-bar-item" [disabled]="state !== StateEnum.Normal" (click)="savePost()"> SAVE </button>
+        <button md-button class="bottom-bar-item" [disabled]="state !== StateEnum.Normal" (click)="closeEditPost()">CANCEL</button>
+    </div>
 </div>
