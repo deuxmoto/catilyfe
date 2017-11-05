@@ -112,6 +112,11 @@
     <Build Include="Schemas\auth\Tables\Indexs\pk_token.sql" />
     <Build Include="Schemas\auth\Tables\Indexs\pk_userroles.sql" />
     <Build Include="Schemas\auth\Programability\Types\rolelist.sql" />
+    <Build Include="Schemas\auth\Programability\Stored Procedures\getroles.sql" />
+    <Build Include="Schemas\auth\Tables\Indexs\index_rolename.sql" />
+    <Build Include="Schemas\auth\Tables\Indexs\default_role_deleted.sql" />
+    <Build Include="Schemas\auth\Programability\Stored Procedures\setrole.sql" />
+    <Build Include="Schemas\auth\Programability\Stored Procedures\deleterole.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />

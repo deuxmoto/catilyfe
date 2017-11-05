@@ -9,7 +9,7 @@ AS
 
     DECLARE @error          INT = 0
 
-    IF(@id IS NULL)
+    IF(@id IS NULL AND (@email IS NOT NULL OR @token IS NOT NULL))
     BEGIN
 
         SELECT TOP 1

@@ -35,5 +35,26 @@
         /// <param name="usermodel">The user model.</param>
         /// <returns>An async task..</returns>
         Task SetUser(UserModel usermodel);
+
+        /// <summary>
+        /// Gets the user roles.
+        /// </summary>
+        /// <returns>The list of roles.</returns>
+        Task<IEnumerable<UserRoleDescription>> GetRoles();
+
+        /// <summary>
+        /// Deletes a role.
+        /// </summary>
+        /// <param name="name">The name of role.</param>
+        /// <param name="commit">To really delete it. Or just soft delete.</param>
+        /// <returns>The task.</returns>
+        Task DeleteRole(string name, bool commit);
+
+        /// <summary>
+        /// Creates or edits a role.
+        /// </summary>
+        /// <param name="role">The role.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
+        Task SetRole(UserRoleDescription role);
     }
 }

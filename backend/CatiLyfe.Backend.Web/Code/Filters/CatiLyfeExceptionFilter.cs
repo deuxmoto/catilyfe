@@ -17,14 +17,17 @@
     {
         public Task HandleAsync(ExceptionHandlerContext context, CancellationToken cancellationToken)
         {
+            var detailed = context.Request.IsLocal();
+
             var exception = context.Exception as CatiFailureException;
             if (exception != null)
             {
-                context.Result = new CatiLyfeErrorResult((HttpStatusCode)exception.HtmlErrorCode, "CATI ERROR", "AN ERROR HAS OCCURRED");
+                context.Result = new CatiLyfeErrorResult((HttpStatusCode)exception.HtmlErrorCode, detailed, "CATI ERROR", exception.Message, exception.StackTrace);
                 return Task.FromResult(1);
             }
 
-            context.Result = new CatiLyfeErrorResult(HttpStatusCode.InternalServerError, "CATI ERROR", "Error has occurred.");
+            var message = detailed ? context.Exception.Message : "An error has occurred.";
+            context.Result = new CatiLyfeErrorResult(HttpStatusCode.InternalServerError, detailed, "CATI ERROR", message, context.Exception.StackTrace);
             return Task.FromResult(1);
         }
     }

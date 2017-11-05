@@ -499,7 +499,7 @@
                 throw new ItemNotFoundException("The user could not be found.");
             }
 
-            var roles = result.Item1.ToLookup(role => role.UserId, role => role.Role);
+            var roles = result.Item1.ToLookup(role => (int?)role.UserId, role => role.Role);
 
             foreach (var user in users)
             {
@@ -539,7 +539,7 @@
                 "auth.setuserinfo",
                 parameters =>
                     {
-                        parameters.AddWithValue("id", usermodel.Id > 0 ? (int?)usermodel.Id : null);
+                        parameters.AddWithValue("id", usermodel.Id);
                         parameters.AddWithValue("name", usermodel.Name);
                         parameters.AddWithValue("email", usermodel.Email);
                         parameters.AddWithValue("password", usermodel.Password);
@@ -549,6 +549,54 @@
                         rolelist.SqlDbType = SqlDbType.Structured;
                         rolelist.TypeName = "auth.rolelist";
                     });
+        }
+
+        /// <summary>
+        /// Gets the user roles.
+        /// </summary>
+        /// <returns>The list of roles.</returns>
+        public Task<IEnumerable<UserRoleDescription>> GetRoles()
+        {
+            return this.ExecuteReader(
+                "auth.getroles",
+                parameters: parameters =>
+                    {
+                    },
+                readerset1: UserRoleDescription.FromReader);
+        }
+
+        /// <summary>
+        /// Deletes a role.
+        /// </summary>
+        /// <param name="name">The name of role.</param>
+        /// <param name="commit">To really delete it. Or just soft delete.</param>
+        /// <returns>The task.</returns>
+        public Task DeleteRole(string name, bool commit)
+        {
+            return this.ExecuteNonQuery(
+                "auth.deleterole",
+                parameters: parameters =>
+                    {
+                        parameters.AddWithValue("name", name);
+                        parameters.AddWithValue("commit", commit);
+                    });
+        }
+
+        /// <summary>
+        /// Creates or edits a role.
+        /// </summary>
+        /// <param name="role">The role.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
+        public Task SetRole(UserRoleDescription role)
+        {
+            return this.ExecuteNonQuery(
+                "auth.setrole",
+                parameters: paramters =>
+                {
+                    paramters.AddWithValue("name", role.RoleName);
+                    paramters.AddWithValue("description", role.Description);
+                    paramters.AddWithValue("revive", true);
+                });
         }
     }
 }

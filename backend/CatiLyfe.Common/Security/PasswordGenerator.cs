@@ -18,7 +18,7 @@
         /// <returns>The hashed password.</returns>
         public static byte[] HashPassword(string salt, string password)
         {
-            var saltBytes = Convert.FromBase64String(salt);
+            var saltBytes = Encoding.Unicode.GetBytes(salt);
             var passwordBytes = Encoding.Unicode.GetBytes(password);
 
             var binary = saltBytes.Concat(passwordBytes).ToArray();

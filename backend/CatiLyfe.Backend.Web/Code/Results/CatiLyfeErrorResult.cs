@@ -19,18 +19,36 @@ namespace CatiLyfe.Backend.Web.Code.Filters
 
         private readonly string longMessage;
 
-        public CatiLyfeErrorResult(HttpStatusCode code, string shortMessage, string longMessage)
+        private readonly string stacktrace;
+
+        private readonly bool detailed;
+
+        public CatiLyfeErrorResult(HttpStatusCode code, bool detailed, string shortMessage, string longMessage, string stackTrace)
         {
             this.code = code;
+            this.detailed = detailed;
             this.shortMessage = shortMessage;
             this.longMessage = longMessage;
+            this.stacktrace = stackTrace;
         }
 
         public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
             var message = new HttpResponseMessage(this.code);
             message.ReasonPhrase = this.shortMessage;
-            message.Content = new StringContent(JObject.FromObject(new { message = this.longMessage }).ToString());
+            if (this.detailed)
+            {
+                message.Content = new StringContent(JObject.FromObject(new
+                                                                           {
+                                                                               message = this.longMessage,
+                                                                               stacktrace = this.stacktrace
+                                                                           }).ToString());
+            }
+            else
+            {
+                message.Content = new StringContent(JObject.FromObject(new { message = this.longMessage }).ToString());
+            }
+
             message.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             return Task.FromResult(message);
         }

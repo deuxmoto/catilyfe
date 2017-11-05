@@ -15,12 +15,13 @@
         /// <param name="email">The email.</param>
         /// <param name="password">The user password.</param>
         /// <param name="roles">The user roles.</param>
-        public UserModel(int id, string name, string email, byte[] password, HashSet<string> roles = null)
+        public UserModel(int? id, string name, string email, byte[] password, HashSet<string> roles = null)
         {
             this.Id = id;
             this.Name = name;
             this.Email = email;
             this.Password = password;
+            this.Roles = roles;
         }
 
         /// <summary>
@@ -31,7 +32,7 @@
         /// <summary>
         /// Gets the id.
         /// </summary>
-        public int Id { get; }
+        public int? Id { get; }
 
         /// <summary>
         /// Gets the name.
