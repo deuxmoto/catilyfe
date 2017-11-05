@@ -1,5 +1,6 @@
 @using System.Web.Http
 @using System.Web.Http.Description
+@using CatiLyfe.Backend.Web.Areas.HelpPage
 @using CatiLyfe.Backend.Web.Areas.HelpPage.Models
 @using CatiLyfe.Backend.Web.Areas.HelpPage.ModelDescriptions
 @model HelpPageApiModel
@@ -8,10 +9,16 @@
     ApiDescription description = Model.ApiDescription;
 }
 <h1>@description.HttpMethod.Method @description.RelativePath</h1>
+@if (description.RequiresAuth())
+{
+    <h1 class="warning-message-container">bearer Authorization</h1>
+}
 <div>
     <p>@description.Documentation</p>
 
     <h2>Request Information</h2>
+    
+    
 
     <h3>URI Parameters</h3>
     @Html.DisplayFor(m => m.UriParameters, "Parameters")

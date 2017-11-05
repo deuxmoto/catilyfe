@@ -1,10 +1,12 @@
 ﻿namespace CatiLyfe.Backend.Web.Models.AuthTest
 {
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// The auth test result.
     /// </summary>
+    [DataContract]
     public class AuthTestResult
     {
         /// <summary>
@@ -21,16 +23,19 @@
         /// <summary>
         /// Gets the user roles.
         /// </summary>
-        public IEnumerable<string> Roles { get; }
+        [DataMember]
+        public IEnumerable<string> Roles { get; private set; }
 
         /// <summary>
         /// Gets the message.
         /// </summary>
-        public string Message { get; }
+        [DataMember]
+        public string Message { get; private set; }
 
         /// <summary>
         /// Gets the user name.
         /// </summary>
-        public string Name { get; }
+        [DataMember]
+        public string Name { get; private set; }
     }
 }

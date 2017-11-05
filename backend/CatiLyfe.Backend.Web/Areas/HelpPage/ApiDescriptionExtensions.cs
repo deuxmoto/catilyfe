@@ -5,6 +5,11 @@ using System.Web.Http.Description;
 
 namespace CatiLyfe.Backend.Web.Areas.HelpPage
 {
+    using System.Linq;
+    using System.Reflection;
+
+    using CatiLyfe.Backend.Web.Code.Filters;
+
     public static class ApiDescriptionExtensions
     {
         /// <summary>
@@ -34,6 +39,21 @@ namespace CatiLyfe.Backend.Web.Areas.HelpPage
                 friendlyPath.AppendFormat("_{0}", queryKeyString.Replace('.', '-'));
             }
             return friendlyPath.ToString();
+        }
+
+        /// <summary>
+        /// Gets if the api requires authorizaiton.
+        /// </summary>
+        /// <param name="description">The api description.</param>
+        /// <returns>True if yes.</returns>
+        public static bool RequiresAuth(this ApiDescription description)
+        {
+            var controller =
+                description.ActionDescriptor.ControllerDescriptor.ControllerType
+                    .GetCustomAttributes<AuthenticateAttribute>().FirstOrDefault();
+            var api = description.ActionDescriptor.GetCustomAttributes<AuthenticateAttribute>().FirstOrDefault();
+
+            return controller != null || api != null;
         }
     }
 }

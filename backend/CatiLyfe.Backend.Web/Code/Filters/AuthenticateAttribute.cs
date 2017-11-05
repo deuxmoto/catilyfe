@@ -26,7 +26,7 @@
                 return;
             }
 
-            if (authorizationHeader.Scheme != "Bearer")
+            if (false == string.Equals(authorizationHeader.Scheme, "Bearer", StringComparison.OrdinalIgnoreCase))
             {
                 context.ErrorResult = new AuthenticationFailureResult("BEARER YO", context.Request);
                 return;

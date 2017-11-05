@@ -8,12 +8,14 @@
 
     using CatiLyfe.Backend.Web.App_Start;
     using CatiLyfe.Backend.Web.Code;
+    using CatiLyfe.Backend.Web.Code.Filters;
     using CatiLyfe.Backend.Web.Models.Admin;
     using CatiLyfe.Common.Exceptions;
 
     /// <summary>
     /// Controller for admin operations.
     /// </summary>
+    [Authenticate]
     [RoutePrefix("admin")]
     public class AdminController : ApiController
     {

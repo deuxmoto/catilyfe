@@ -16,12 +16,13 @@ namespace CatiLyfe.Backend.Web.Controllers
     using System.Web.Http;
 
     using CatiLyfe.Backend.Web.App_Start;
+    using CatiLyfe.Backend.Web.Code.Filters;
     using CatiLyfe.Backend.Web.Models.User;
-    using CatiLyfe.Common.Exceptions;
     using CatiLyfe.Common.Security;
     using CatiLyfe.DataLayer.Models;
 
     [RoutePrefix("user")]
+    [Authenticate]
     public class UserController : ApiController
     {
         /// <summary>

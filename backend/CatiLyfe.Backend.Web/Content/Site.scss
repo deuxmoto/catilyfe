@@ -11,6 +11,13 @@ body {
     text-align: center;
 }
 
+.title li{
+    font-size: 3em;
+    font-style: normal;
+    text-decoration: none;
+    list-style-type: none;
+}
+
 @mixin nav {
     padding: 0;
     list-style-type: none;

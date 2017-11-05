@@ -1,10 +1,12 @@
 ﻿namespace CatiLyfe.Backend.Web.Models.Admin
 {
+    using System.Runtime.Serialization;
     using System.Web.Mvc;
 
     /// <summary>
     /// The markdown preview result object.
     /// </summary>
+    [DataContract]
     public class MarkdownPreview
     {
         /// <summary>
@@ -20,6 +22,7 @@
         /// The html content.
         /// </summary>
         [AllowHtml]
-        public string Content { get; }
+        [DataMember]
+        public string Content { get; private set; }
     }
 }

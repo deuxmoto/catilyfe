@@ -8,13 +8,13 @@
 </head>
 <body>
 
-    <div class="horizontal-align">
+    <div class="horizontal-align title">
         <ul class="nav-horizontal horizontal-align">
             <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
             <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
         </ul>
     </div>
-    <div class="body-content">
+    <div>
         @RenderBody()
         <hr />
         <footer>

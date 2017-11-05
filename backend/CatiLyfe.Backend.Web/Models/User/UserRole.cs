@@ -1,10 +1,13 @@
 ﻿namespace CatiLyfe.Backend.Web.Models.User
 {
+    using System.Runtime.Serialization;
+
     using CatiLyfe.DataLayer.Models;
 
     /// <summary>
     /// A user role.
     /// </summary>
+    [DataContract]
     public class UserRole
     {
         /// <summary>
@@ -20,11 +23,13 @@
         /// <summary>
         /// Gets the name of the role.
         /// </summary>
-        public string Role { get; }
+        [DataMember]
+        public string Role { get; private set; }
 
         /// <summary>
         /// Gets the description of the role.
         /// </summary>
-        public string Description { get; }
+        [DataMember]
+        public string Description { get; private set; }
     }
 }

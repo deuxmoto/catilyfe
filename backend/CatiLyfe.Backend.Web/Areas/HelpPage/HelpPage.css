@@ -132,3 +132,9 @@
     color: #0000EE;
     text-decoration: none;
 }
+
+.help-page-auth-required {
+    color: darkgoldenrod;
+    border: darkgoldenrod;
+    border-style:solid;
+}
