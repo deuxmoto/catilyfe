@@ -49,6 +49,10 @@ export class TitleBarComponent implements OnInit {
             {
                 text: "Posts",
                 linkUrl: "/home"
+            },
+            {
+                text: "Admin",
+                linkUrl: "/admin"
             }
         ];
     }

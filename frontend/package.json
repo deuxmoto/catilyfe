@@ -24,7 +24,6 @@
     "@angular/platform-browser": "^4.3.1",
     "@angular/platform-browser-dynamic": "^4.3.1",
     "@angular/router": "^4.3.1",
-    "bulma": "^0.4.3",
     "core-js": "^2.4.1",
     "flexboxgrid": "^6.3.1",
     "font-awesome": "^4.7.0",
@@ -35,7 +34,7 @@
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
-    "@angular/cli": "1.0.3",
+    "@angular/cli": "^1.0.3",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",

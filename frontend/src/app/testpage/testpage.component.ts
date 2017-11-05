@@ -29,7 +29,7 @@ const scrollDelayMs = 500;
     ]
 })
 export class TestPageComponent implements OnInit {
-    private showingTitleBar = true;
+    public showingTitleBar = true;
     private previousScrollPos: number = null;
 
     ngOnInit(): void {
