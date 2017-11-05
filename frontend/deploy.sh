@@ -13,7 +13,7 @@ cd ..
 echo "Done removing dist"
 
 # Build n copy janx
-if ! ng build; then
+if ! ng build --target production; then
     exit
 fi
 cp -r ./dist/* "$distRepo"

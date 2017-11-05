@@ -1,9 +1,37 @@
+@import "../../styles/helpers";
+
 :host {
     background-color: #313131;
-    padding: 3rem;
     margin-top: auto;
+    color: white;
+    padding: 3rem 1rem;
 
-    & > * {
-        color: rgb(230, 230, 230);
+    @include if-larger-than($bp-sm) {
+        padding: 3rem;
+    }
+}
+
+.footer-items {
+    display: flex;
+    justify-content: center;
+
+    & + & {
+        margin-top: 0.5rem;
+
+        @include if-larger-than($bp-sm) {
+            margin-top: 0%;
+        }
+    }
+}
+
+.left-items {
+    @include if-larger-than($bp-sm) {
+        justify-content: flex-start;
+    }
+}
+
+.right-items {
+    @include if-larger-than($bp-sm) {
+        justify-content: flex-end;
     }
 }

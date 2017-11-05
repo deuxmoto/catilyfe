@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DataSource } from "@angular/cdk/collections";
-import { MdSort } from "@angular/material";
 
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/fromEvent";
