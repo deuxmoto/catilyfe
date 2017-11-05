@@ -1,39 +1,39 @@
 <title-bar></title-bar>
 
-<div class="container">
+<div class="admin-cards responsive-container">
 
-    <md-card class="posts-table admin-card">
-        <md-card-title>Created Posts</md-card-title>
-        <md-table #table [dataSource]="dataSource" mdSort>
+    <mat-card class="posts-table admin-card">
+        <mat-card-title>Created Posts</mat-card-title>
+        <mat-table class="" #table [dataSource]="dataSource" matSort>
 
             <!-- ID Column -->
-            <ng-container mdColumnDef="postId">
-                <md-header-cell *mdHeaderCellDef md-sort-header> ID </md-header-cell>
-                <md-cell *mdCellDef="let row"> {{row.id}} </md-cell>
+            <ng-container matColumnDef="postId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
             </ng-container>
 
             <!-- Slug Column -->
-            <ng-container mdColumnDef="postSlug">
-                <md-header-cell *mdHeaderCellDef md-sort-header> Slug </md-header-cell>
-                <md-cell *mdCellDef="let row"> {{row.slug}} </md-cell>
+            <ng-container matColumnDef="postSlug">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Slug </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.slug}} </mat-cell>
             </ng-container>
 
             <!-- Title Column -->
-            <ng-container mdColumnDef="postTitle">
-                <md-header-cell *mdHeaderCellDef md-sort-header> Title </md-header-cell>
-                <md-cell *mdCellDef="let row"> {{row.title}} </md-cell>
+            <ng-container matColumnDef="postTitle">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
             </ng-container>
 
             <!-- WhenCreated Column -->
-            <ng-container mdColumnDef="postWhenCreated">
-                <md-header-cell *mdHeaderCellDef md-sort-header> When Created </md-header-cell>
-                <md-cell *mdCellDef="let row"> {{row.whenCreated}} </md-cell>
+            <ng-container matColumnDef="postWhenCreated">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> When Created </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.whenCreated}} </mat-cell>
             </ng-container>
 
-            <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-            <md-row class="posts-row" (click)="editPost(row.id)" *mdRowDef="let row; columns: displayedColumns;"></md-row>
-        </md-table>
-    </md-card>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row class="posts-row" (click)="editPost(row.id)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </mat-card>
 
 </div>
 

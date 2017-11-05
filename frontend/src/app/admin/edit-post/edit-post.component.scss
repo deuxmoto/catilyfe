@@ -62,8 +62,9 @@ $bottom-bar-height: 4rem;
     }
 
     button {
-        height: 3rem;
+        flex: none;
         min-width: 10rem;
+        height: 3rem;
         border-radius: 0px;
         margin-bottom: -1px; // to overlap tab-group bottom-border
         text-transform: uppercase;

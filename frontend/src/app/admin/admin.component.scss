@@ -13,8 +13,13 @@
     overflow-y: hidden;
 }
 
+.admin-cards {
+    padding: 0 1rem;
+}
+
 .admin-card {
     margin-bottom: 2rem;
+    overflow-x: auto;
 }
 
 // Created Posts card
@@ -27,6 +32,11 @@
 }
 .cdk-column-postTitle {
     flex: 2;
+    display: none;
+
+    @include if-larger-than($bp-sm) {
+        display: initial;
+    }
 }
 .cdk-column-postWhenCreated {
     flex: 1;

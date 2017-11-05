@@ -1,7 +1,7 @@
 import { Component, HostBinding, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DataSource } from "@angular/cdk/collections";
-import { MdSort } from "@angular/material";
+import { MatSort } from "@angular/material";
 
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";

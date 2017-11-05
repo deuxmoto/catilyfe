@@ -1,5 +1,5 @@
 <div class="top-bar">
-    <div class="top-bar-inner container">
+    <div class="top-bar-inner responsive-container">
         <a class="top-bar-back" (click)="closeEditPost()">
             <span class="fa fa-arrow-left"></span>
         </a>
@@ -9,13 +9,13 @@
     </div>
 </div>
 
-<div class="edit-post container" [ngSwitch]="state">
+<div class="edit-post responsive-container" [ngSwitch]="state">
 
 
     <div *ngSwitchDefault [ngSwitch]="currentTab">
 
         <div class="tab-group">
-            <button md-button
+            <button mat-button
                 *ngFor="let tab of tabs"
                 [ngClass]="{ active: currentTab == tab.value }"
                 (click)="setCurrentTab(tab.value)">
@@ -25,35 +25,35 @@
 
         <div *ngSwitchCase="TabEnum.Metadata" class="tab-body">
             <form>
-                <md-form-field class="edit-post-field">
-                    <input mdInput placeholder="Title" name="title" [(ngModel)]="title">
-                </md-form-field>
+                <mat-form-field class="edit-post-field">
+                    <input matInput placeholder="Title" name="title" [(ngModel)]="title">
+                </mat-form-field>
                 <div class="edit-post-fields-inline">
-                    <md-form-field class="edit-post-field">
-                        <input mdInput placeholder="Id" name="id" [(ngModel)]="id" disabled>
-                    </md-form-field>
-                    <md-form-field class="edit-post-field">
-                        <input mdInput placeholder="Slug" name="slug" [(ngModel)]="slug">
-                    </md-form-field>
+                    <mat-form-field class="edit-post-field">
+                        <input matInput placeholder="Id" name="id" [(ngModel)]="id" disabled>
+                    </mat-form-field>
+                    <mat-form-field class="edit-post-field">
+                        <input matInput placeholder="Slug" name="slug" [(ngModel)]="slug">
+                    </mat-form-field>
                 </div>
                 <div class="edit-post-fields-inline">
-                    <md-form-field class="edit-post-field">
-                        <input mdInput placeholder="When Created" name="whenCreated" [(ngModel)]="whenCreated" disabled>
-                    </md-form-field>
-                    <md-form-field class="edit-post-field">
-                        <input mdInput placeholder="When Published" name="whenPublished" [(ngModel)]="whenPublished">
-                    </md-form-field>
+                    <mat-form-field class="edit-post-field">
+                        <input matInput placeholder="When Created" name="whenCreated" [(ngModel)]="whenCreated" disabled>
+                    </mat-form-field>
+                    <mat-form-field class="edit-post-field">
+                        <input matInput placeholder="When Published" name="whenPublished" [(ngModel)]="whenPublished">
+                    </mat-form-field>
                 </div>
-                <md-form-field class="edit-post-field">
-                    <textarea mdInput mdTextareaAutosize placeholder="Description" name="description" [(ngModel)]="description"></textarea>
-                </md-form-field>
+                <mat-form-field class="edit-post-field">
+                    <textarea matInput mdTextareaAutosize placeholder="Description" name="description" [(ngModel)]="description"></textarea>
+                </mat-form-field>
             </form>
         </div>
         <div *ngSwitchCase="TabEnum.Markdown" class="tab-body">
             <form>
-                <md-form-field class="edit-post-field">
-                    <textarea mdInput mdTextareaAutosize placeholder="Write dank janx" name="postContent" [(ngModel)]="content"></textarea>
-                </md-form-field>
+                <mat-form-field class="edit-post-field">
+                    <textarea matInput matTextareaAutosize placeholder="Write dank janx" name="postContent" [(ngModel)]="content"></textarea>
+                </mat-form-field>
             </form>
         </div>
         <div *ngSwitchCase="TabEnum.MarkdownPreview" class="tab-body">
@@ -74,9 +74,9 @@
 </div>
 
 <div class="bottom-bar">
-    <div class="bottom-bar-inner container">
+    <div class="bottom-bar-inner responsive-container">
         <span class="bottom-bar-item" style="color: rgba(0,0,0,0.5)">{{savingText}}</span>
-        <button md-button class="bottom-bar-item" [disabled]="state !== StateEnum.Normal" (click)="savePost()"> SAVE </button>
-        <button md-button class="bottom-bar-item" [disabled]="state !== StateEnum.Normal" (click)="closeEditPost()">CANCEL</button>
+        <button mat-button class="bottom-bar-item" [disabled]="state !== StateEnum.Normal" (click)="savePost()"> SAVE </button>
+        <button mat-button class="bottom-bar-item" [disabled]="state !== StateEnum.Normal" (click)="closeEditPost()">CANCEL</button>
     </div>
 </div>

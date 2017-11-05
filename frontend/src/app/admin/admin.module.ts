@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { MdButtonModule, MdCardModule, MdInputModule, MdTableModule } from "@angular/material";
+import { MatButtonModule, MatCardModule, MatInputModule, MatTableModule } from "@angular/material";
 import { Route, RouterModule } from "@angular/router";
 
 import { AdminComponent } from "./admin.component";
@@ -22,10 +22,10 @@ const adminRoutes: Route[] = [
 @NgModule({
     imports: [
         RouterModule.forChild(adminRoutes),
-        MdButtonModule,
-        MdCardModule,
-        MdInputModule,
-        MdTableModule,
+        MatButtonModule,
+        MatCardModule,
+        MatInputModule,
+        MatTableModule,
 
         SharedModule
     ],
