@@ -262,16 +262,6 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CatiLyfe.Common\CatiLyfe.Common.csproj">
-      <Project>{C1C8C62F-35B8-49BB-B3F4-9C077B4C9A21}</Project>
-      <Name>CatiLyfe.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CatiLyfe.DataLayer\CatiLyfe.DataLayer.csproj">
-      <Project>{F1A16E53-C00F-4C53-A755-0497039DF704}</Project>
-      <Name>CatiLyfe.DataLayer</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

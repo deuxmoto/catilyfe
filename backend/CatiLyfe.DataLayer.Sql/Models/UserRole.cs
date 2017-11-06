@@ -17,7 +17,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the user id.
+        /// Gets the user id.
         /// </summary>
         public int UserId { get; }
 

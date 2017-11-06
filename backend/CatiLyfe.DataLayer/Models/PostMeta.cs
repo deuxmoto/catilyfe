@@ -63,6 +63,6 @@
         /// <summary>
         /// The tags associated with the post.
         /// </summary>
-        public IEnumerable<string> Tags { get; internal set; }
+        public IEnumerable<string> Tags { get; set; }
     }
 }

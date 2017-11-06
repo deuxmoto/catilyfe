@@ -1,4 +1,4 @@
-﻿namespace CatiLyfe.DataLayer
+﻿namespace CatiLyfe.DataLayer.Sql
 {
     using System;
     using System.Collections.Generic;

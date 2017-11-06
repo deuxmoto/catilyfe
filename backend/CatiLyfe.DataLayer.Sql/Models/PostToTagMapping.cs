@@ -1,4 +1,4 @@
-﻿namespace CatiLyfe.DataLayer.Models
+﻿namespace CatiLyfe.DataLayer.Sql.Models
 {
     /// <summary>
     /// The post to tag mapping.

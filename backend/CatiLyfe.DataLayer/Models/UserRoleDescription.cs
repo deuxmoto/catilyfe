@@ -1,9 +1,5 @@
 ﻿namespace CatiLyfe.DataLayer.Models
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.Data.SqlClient;
-    using System.Runtime.CompilerServices;
-
     /// <summary>
     /// The user role description.
     /// </summary>
@@ -32,25 +28,11 @@
         /// <summary>
         /// Gets the description.
         /// </summary>
-        [MaxLength(512)]
-        [Required]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets the role name.
         /// </summary>
-        [MaxLength(64)]
-        [Required]
         public string RoleName { get; set; }
-
-        /// <summary>
-        /// The from reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>The <see cref="UserRoleDescription"/>.</returns>
-        public static UserRoleDescription FromReader(SqlDataReader reader)
-        {
-            return new UserRoleDescription((string)reader["role"], (string)reader["description"]);
-        }
     }
 }

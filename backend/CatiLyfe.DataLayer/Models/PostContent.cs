@@ -16,6 +16,6 @@
 
         public string Content { get; }
 
-        internal int PostId { get; }
+        public int PostId { get; }
     }
 }

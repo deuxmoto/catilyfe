@@ -18,7 +18,7 @@
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns>The <see cref="Task"/>.</returns>
-        Task<IEnumerable<UserModel>> GetUser(int? id, string email, byte[] token);
+        Task<IEnumerable<User>> GetUser(int? id, string email, byte[] token);
 
         /// <summary>
         /// Creates a token for a user.
@@ -34,7 +34,7 @@
         /// </summary>
         /// <param name="usermodel">The user model.</param>
         /// <returns>An async task..</returns>
-        Task SetUser(UserModel usermodel);
+        Task SetUser(User usermodel);
 
         /// <summary>
         /// Gets the user roles.

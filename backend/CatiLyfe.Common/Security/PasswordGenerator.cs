@@ -5,23 +5,37 @@
     using System.Security.Cryptography;
     using System.Text;
 
+    using CatiLyfe.Common.Exceptions;
+
     /// <summary>
     /// The password generator.
     /// </summary>
-    public static class PasswordGenerator
+    public class PasswordGenerator : IPasswordHelper
     {
+        /// <summary>
+        /// The salt bytes.
+        /// </summary>
+        private readonly byte[] saltBytes;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PasswordGenerator"/> class.
+        /// </summary>
+        /// <param name="passwordSalt">The password salt.</param>
+        public PasswordGenerator(string passwordSalt)
+        {
+            this.saltBytes = Encoding.Unicode.GetBytes(passwordSalt);
+        }
+
         /// <summary>
         /// Hashes a password.
         /// </summary>
-        /// <param name="salt">The password salt in base 64.</param>
         /// <param name="password">The password.</param>
         /// <returns>The hashed password.</returns>
-        public static byte[] HashPassword(string salt, string password)
+        public byte[] HashPassword(string password)
         {
-            var saltBytes = Encoding.Unicode.GetBytes(salt);
             var passwordBytes = Encoding.Unicode.GetBytes(password);
 
-            var binary = saltBytes.Concat(passwordBytes).ToArray();
+            var binary = this.saltBytes.Concat(passwordBytes).ToArray();
 
             using (var hash = SHA512Managed.Create())
             {
@@ -34,7 +48,7 @@
         /// </summary>
         /// <param name="length">The length in bytes.</param>
         /// <returns>The random bytes.</returns>
-        public static byte[] GenerateTokenBytes(int length)
+        public byte[] GenerateTokenBytes(int length)
         {
             var bytes = new byte[length];
             using (var random = RandomNumberGenerator.Create())
@@ -43,6 +57,29 @@
             }
 
             return bytes;
+        }
+
+        /// <summary>
+        /// test two passwords for equality.
+        /// </summary>
+        /// <param name="actualPassword">The actual password.</param>
+        /// <param name="testPassword">The test password.</param>
+        /// <exception cref="AuthFailureException">On failure.
+        /// </exception>
+        public void Validate(byte[] actualPassword, byte[] testPassword)
+        {
+            if (actualPassword.Length != testPassword.Length)
+            {
+                throw new AuthFailureException();
+            }
+
+            for (var i = 0; i < actualPassword.Length; i++)
+            {
+                if (actualPassword[i] != testPassword[i])
+                {
+                    throw new AuthFailureException();
+                }
+            }
         }
     }
 }

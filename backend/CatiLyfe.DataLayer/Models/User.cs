@@ -5,17 +5,17 @@
     /// <summary>
     /// The user model.
     /// </summary>
-    public class UserModel
+    public class User
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserModel"/> class.
+        /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="name">The name.</param>
         /// <param name="email">The email.</param>
         /// <param name="password">The user password.</param>
         /// <param name="roles">The user roles.</param>
-        public UserModel(int? id, string name, string email, byte[] password, HashSet<string> roles = null)
+        public User(int? id, string name, string email, byte[] password, HashSet<string> roles = null)
         {
             this.Id = id;
             this.Name = name;
@@ -47,6 +47,6 @@
         /// <summary>
         /// Gets the roles.
         /// </summary>
-        public HashSet<string> Roles { get; internal set; }
+        public HashSet<string> Roles { get; set; }
     }
 }

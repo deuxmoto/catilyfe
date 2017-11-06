@@ -1,4 +1,4 @@
-﻿namespace CatiLyfe.DataLayer
+﻿namespace CatiLyfe.DataLayer.Sql
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
 
     using CatiLyfe.DataLayer.Models;
+    using CatiLyfe.DataLayer.Sql.Models;
     using CatiLyfe.Common.Exceptions;
 
     using Microsoft.SqlServer.Server;
@@ -94,13 +95,23 @@
         }
 
         /// <summary>
+        /// The from reader.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>The <see cref="UserRoleDescription"/>.</returns>
+        public static UserRoleDescription ParseUserRoleDescription(SqlDataReader reader)
+        {
+            return new UserRoleDescription((string)reader["role"], (string)reader["description"]);
+        }
+
+        /// <summary>
         /// Parses a user from the reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>The user.</returns>
-        private static UserModel ParseUser(SqlDataReader reader)
+        private static User ParseUser(SqlDataReader reader)
         {
-            return new UserModel((int)reader["id"], (string)reader["name"], (string)reader["email"], (byte[])reader["pass"]);
+            return new User((int)reader["id"], (string)reader["name"], (string)reader["email"], (byte[])reader["pass"]);
         }
 
         /// <summary>
@@ -479,7 +490,7 @@
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns>The <see cref="Task"/>.</returns>
-        public async Task<IEnumerable<UserModel>> GetUser(int? id, string email, byte[] token)
+        public async Task<IEnumerable<User>> GetUser(int? id, string email, byte[] token)
         {
             var result = await this.ExecuteReader(
                 "auth.getuserinfo",
@@ -533,7 +544,7 @@
         /// </summary>
         /// <param name="usermodel">The user model.</param>
         /// <returns>An async task..</returns>
-        public Task SetUser(UserModel usermodel)
+        public Task SetUser(User usermodel)
         {
             return this.ExecuteNonQuery(
                 "auth.setuserinfo",
@@ -562,7 +573,7 @@
                 parameters: parameters =>
                     {
                     },
-                readerset1: UserRoleDescription.FromReader);
+                readerset1: CatiSqlDataLayer.ParseUserRoleDescription);
         }
 
         /// <summary>

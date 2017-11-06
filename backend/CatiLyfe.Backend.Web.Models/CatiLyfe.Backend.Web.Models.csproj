@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CatiLyfe.Common\CatiLyfe.Common.csproj" />
+    <ProjectReference Include="..\CatiLyfe.DataLayer\CatiLyfe.DataLayer.csproj" />
+  </ItemGroup>
+
+</Project>

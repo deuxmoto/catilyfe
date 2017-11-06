@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Code\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CatiLyfe.Backend.Web.Models\CatiLyfe.Backend.Web.Models.csproj" />
+    <ProjectReference Include="..\CatiLyfe.Common\CatiLyfe.Common.csproj" />
+    <ProjectReference Include="..\CatiLyfe.DataLayer.Sql\CatiLyfe.DataLayer.Sql.csproj" />
+    <ProjectReference Include="..\CatiLyfe.DataLayer\CatiLyfe.DataLayer.csproj" />
+  </ItemGroup>
+
+</Project>
