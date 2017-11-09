@@ -11,9 +11,16 @@ using Microsoft.Extensions.Options;
 
 namespace CatiLyfe.Backend.Web.Core
 {
+    using CatiLyfe.Backend.Web.Core.Code;
+    using CatiLyfe.Backend.Web.Core.Code.Filters;
     using CatiLyfe.Common.Security;
     using CatiLyfe.DataLayer;
     using CatiLyfe.DataLayer.Sql;
+
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Server.IISIntegration;
 
     using Swashbuckle.AspNetCore.Swagger;
 
@@ -24,6 +31,9 @@ namespace CatiLyfe.Backend.Web.Core
             this.Configuration = configuration;
         }
 
+        /// <summary>
+        /// The configuration.
+        /// </summary>
         public IConfiguration Configuration { get; }
 
         /// <summary>
@@ -36,13 +46,59 @@ namespace CatiLyfe.Backend.Web.Core
             var security = this.Configuration.GetSection("Security");
 
             var passwordSalt = security["salt"];
-
-            services.AddMvc();
+            var authDataLayer = CatiDataLayerFactory.CreateAuthDataLayer(constr);
 
             // Add the data layers.
             services.AddSingleton<ICatiDataLayer>(CatiDataLayerFactory.CreateDataLayer(constr));
-            services.AddSingleton<ICatiAuthDataLayer>(CatiDataLayerFactory.CreateAuthDataLayer(constr));
+            services.AddSingleton<ICatiAuthDataLayer>(authDataLayer);
             services.AddSingleton<IPasswordHelper>(new PasswordGenerator(passwordSalt));
+            services.AddSingleton<IContentTransformer>(new MarkdownProcessor());
+            services.AddSingleton<IAuthorizationHandler, DefaultAuthorizationHandler>().AddAuthorization(
+                options =>
+                    {
+                        options.AddPolicy("default", policy => policy.Requirements.Add(new DefaultAuthorizationRequirement()));
+                    });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                config =>
+                    {
+                        config.Cookie.Name = "CatiCookie";
+                        config.Events.OnRedirectToLogin = options =>
+                            {
+                                options.Response.StatusCode = 401;
+                                return Task.CompletedTask;
+                            };
+                        config.Events.OnRedirectToAccessDenied = options =>
+                            {
+                                options.Response.StatusCode = 401;
+                                return Task.CompletedTask;
+                            };
+                        config.Events.OnRedirectToReturnUrl = options =>
+                        {
+                            options.Response.StatusCode = 401;
+                            return Task.CompletedTask;
+                        };
+                    });
+
+            services.AddCors(
+                options =>
+                    {
+                        options.AddPolicy(
+                            "default",
+                            policy =>
+                                {
+                                    policy.AllowAnyHeader();
+                                    policy.AllowAnyMethod();
+                                    policy.AllowAnyOrigin();
+                                });
+                    });
+
+            services.AddMvc(
+                config =>
+                    {
+                        // config.Filters.Add(new AuthorizationFilter(authDataLayer));
+                        config.Filters.Add(new CatiExceptionFilter());
+                    });
 
             // Add the documentation
             services.AddSwaggerGen(
@@ -60,6 +116,9 @@ namespace CatiLyfe.Backend.Web.Core
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
+            app.UseCors("default");
+
             // Enable api documentation
             app.UseSwagger();
             app.UseSwaggerUI(
@@ -72,3 +131,4 @@ namespace CatiLyfe.Backend.Web.Core
         }
     }
 }
+

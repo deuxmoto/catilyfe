@@ -12,11 +12,23 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="PostModel"/> class.
         /// </summary>
-        /// <param name="post">The post.</param>
-        public PostModel(Post post)
+        /// <param name="metadata">The metadata.</param>
+        /// <param name="html">The html.</param>
+        private PostModel(PostMeta metadata, string html)
         {
-            this.Metadata = new PostMetaModel(post.MetaData);
-            this.RawHtmlThenIGuess = ""; //PostContentFactory.Build(post.PostContent).RawHtmlThenIGuess;
+            this.Metadata = new PostMetaModel(metadata);
+            this.RawHtmlThenIGuess = html;
+        }
+
+        /// <summary>
+        /// Create a post model.
+        /// </summary>
+        /// <param name="metadata">The metadata.</param>
+        /// <param name="content">The content.</param>
+        /// <returns>The <see cref="PostModel"/>.</returns>
+        public static PostModel Create(PostMeta metadata, string content)
+        {
+            return new PostModel(metadata, content);
         }
 
         /// <summary>

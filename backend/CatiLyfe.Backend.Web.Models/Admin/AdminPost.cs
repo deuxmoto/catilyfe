@@ -1,6 +1,9 @@
 ﻿namespace CatiLyfe.Backend.Web.Models.Admin
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+
+    using CatiLyfe.DataLayer.Models;
 
     /// <summary>
     /// The admin post.
@@ -17,10 +20,10 @@
         /// </summary>
         /// <param name="metadata">The metadata.</param>
         /// <param name="postContent">The content.</param>
-        public AdminPost(AdminMetaData metadata, AdminPostContent postContent)
+        public AdminPost(PostMeta metadata, string postContent)
         {
-            this.Metadata = metadata;
-            this.MarkdownContent = postContent.MarkdownContent;
+            this.Metadata = new AdminMetaData(metadata);
+            this.MarkdownContent = postContent;
         }
 
         /// <summary>
@@ -34,5 +37,14 @@
         /// </summary>
         [Required]
         public string MarkdownContent { get; set; }
+
+        /// <summary>
+        /// Convert this object to a post.
+        /// </summary>
+        /// <returns>The post.</returns>
+        public Post ToPost()
+        {
+            return new Post(this.Metadata.ToPostMeta(), new []{ new PostContent(0, 0, "markdown", this.MarkdownContent), });
+        }
     }
 }

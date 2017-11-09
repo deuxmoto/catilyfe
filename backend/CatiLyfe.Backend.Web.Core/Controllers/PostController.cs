@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using CatiLyfe.Backend.Web.Core.Code;
     using CatiLyfe.Backend.Web.Models;
     using CatiLyfe.DataLayer;
 
@@ -22,12 +23,18 @@
         private readonly ICatiDataLayer datalayer;
 
         /// <summary>
+        /// The content transformer.
+        /// </summary>
+        private readonly IContentTransformer contentTransformer;
+
+        /// <summary>
         /// Initializes the post controller.
         /// </summary>
         /// <param name="datalayer">The data layer.</param>
-        public PostController(ICatiDataLayer datalayer)
+        public PostController(ICatiDataLayer datalayer, IContentTransformer contentTransformer)
         {
             this.datalayer = datalayer;
+            this.contentTransformer = contentTransformer;
         }
 
         /// <summary>
@@ -43,7 +50,7 @@
         public async Task<IEnumerable<PostModel>> GetMany(int? top, int? skip, DateTime? startDate, DateTime? endDate, IEnumerable<string> tags)
         {
             var posts = await this.datalayer.GetPost(top, skip, startDate, endDate, tags ?? Enumerable.Empty<string>(), false);
-            return posts.Select(p => new PostModel(p));
+            return posts.Select(p => PostModel.Create(p.MetaData, this.contentTransformer.TransformMarkdown(p.PostContent.First().Content)));
         }
 
         /// <summary>
@@ -55,7 +62,7 @@
         public async Task<PostModel> GetSingle(string slug)
         {
             var post = await this.datalayer.GetPost(slug, false);
-            return new PostModel(post);
+            return PostModel.Create(post.MetaData, this.contentTransformer.TransformMarkdown(post.PostContent.First().Content));
         }
     }
 }

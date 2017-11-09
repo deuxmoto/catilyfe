@@ -23,7 +23,7 @@
         /// <param name="passwordSalt">The password salt.</param>
         public PasswordGenerator(string passwordSalt)
         {
-            this.saltBytes = Encoding.Unicode.GetBytes(passwordSalt);
+           this.saltBytes = Encoding.Unicode.GetBytes(passwordSalt);
         }
 
         /// <summary>

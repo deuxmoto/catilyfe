@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+
+    using CatiLyfe.DataLayer.Models;
 
     /// <summary>
     /// The admin meta data.
@@ -11,28 +14,21 @@
     {
         public AdminMetaData()
         {
-            
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminMetaData"/> class.
         /// </summary>
-        /// <param name="id">The id of the post to change</param>
-        /// <param name="title">The post title.</param>
-        /// <param name="whenPublished">The live time.</param>
-        /// <param name="whenCreated">When created.</param>
-        /// <param name="slug">The post slug.</param>
-        /// <param name="description">The post description.</param>
-        /// <param name="tags">The tags.</param>
-        public AdminMetaData(int? id, string title, DateTimeOffset whenPublished, DateTimeOffset whenCreated, string slug, string description, IEnumerable<string> tags)
+        /// <param name="meta">The meta.</param>
+        public AdminMetaData(PostMeta meta)
         {
-            this.Id = id;
-            this.Title = title;
-            this.WhenPublished = whenPublished;
-            this.WhenCreated = whenCreated;
-            this.Slug = slug;
-            this.Description = description;
-            this.Tags = tags;
+            this.Id = meta.Id;
+            this.Title = meta.Title;
+            this.WhenCreated = meta.WhenCreated;
+            this.WhenPublished = meta.GoesLive;
+            this.Slug = meta.Slug;
+            this.Description = meta.Description;
+            this.Tags = meta.Tags;
         }
 
         /// <summary>
@@ -76,5 +72,21 @@
         /// </summary>
         [Required]
         public IEnumerable<string> Tags { get; set; }
+
+        /// <summary>
+        /// Convert this object to a post meta.
+        /// </summary>
+        /// <returns>The post meta.</returns>
+        public PostMeta ToPostMeta()
+        {
+            return new PostMeta(
+                this.Id ?? -1,
+                this.Slug,
+                this.Title,
+                this.Description,
+                this.WhenCreated,
+                this.WhenPublished,
+                this.Tags ?? Enumerable.Empty<string>());
+        }
     }
 }
