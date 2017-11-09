@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/Site.min.css" />
+</head>
+<body>
+
+    <div class="horizontal-align title">
+        <ul class="nav-horizontal horizontal-align">
+            <li>@Html.ActionLink("Home", "HomePage", "Index", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("API", "Api", "Index", new { area = "" }, null)</li>
+        </ul>
+    </div>
+    <div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Peter and Justin</p>
+        </footer>
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
