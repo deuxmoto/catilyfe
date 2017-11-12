@@ -113,7 +113,9 @@ export class BackendApiService {
     }
 
     public getAdminPostMetadata(count = 1000): Observable<AdminPostMetadata[]> {
-        return this.http.get<AdminPostMetadata[]>(`${BackendEndpoint}/admin/post?top=${count}`)
+        return this.http.get<AdminPostMetadata[]>(`${BackendEndpoint}/admin/post?top=${count}`, {
+            withCredentials: true
+        })
             .map((postMetadata) => {
                 postMetadata.forEach((metadata) => {
                     convertDateStringsToObjects(metadata);
@@ -124,7 +126,9 @@ export class BackendApiService {
     }
 
     public getAdminPost(id: string): Observable<AdminPost> {
-        return this.http.get<AdminPost>(`${BackendEndpoint}/admin/post/${id}`)
+        return this.http.get<AdminPost>(`${BackendEndpoint}/admin/post/${id}`, {
+            withCredentials: true
+        })
             .map((adminPost) => {
                 convertDateStringsToObjects(adminPost.metadata);
                 return adminPost;
@@ -133,12 +137,16 @@ export class BackendApiService {
     }
 
     public setAdminPost(post: AdminPost): Observable<AdminPost> {
-        return this.http.post(`${BackendEndpoint}/admin/post`, post)
+        return this.http.post(`${BackendEndpoint}/admin/post`, post, {
+            withCredentials: true
+        })
             .catch(this._handleFetchError);
     }
 
     public getMarkdownPreview(markdown: string): Observable<MarkdownPreview> {
-        return this.http.post<MarkdownPreview>(`${BackendEndpoint}/admin/previewmarkdown`, { markdown })
+        return this.http.post<MarkdownPreview>(`${BackendEndpoint}/admin/previewmarkdown`, { markdown }, {
+            withCredentials: true
+        })
             .catch(this._handleFetchError);
     }
 
