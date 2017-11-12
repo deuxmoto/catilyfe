@@ -1,9 +1,8 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
-import { MatCardModule } from "@angular/material";
+import { MatButtonModule, MatCardModule, MatInputModule } from "@angular/material";
 import { Route, RouterModule } from "@angular/router";
 
 import { AppComponent } from "./app.component";
@@ -11,6 +10,7 @@ import { NotFoundComponent } from "./404/404.component";
 import { AdminModule } from "./admin/admin.module";
 import { CoreModule } from "./core/core.module";
 import { HomeComponent } from "./home/home.component";
+import { LoginComponent } from "./login/login.component";
 import { PostComponent } from "./post/post.component";
 import { TestPageComponent } from "./testpage/testpage.component";
 import { SharedModule } from "./shared/shared.module";
@@ -37,6 +37,10 @@ const routes: Route[] = [
         component: TestPageComponent
     },
     {
+        path: "login",
+        component: LoginComponent
+    },
+    {
         path: "**",
         component: NotFoundComponent
     }
@@ -46,8 +50,9 @@ const routes: Route[] = [
     declarations: [
         AppComponent,
         HomeComponent,
-        PostComponent,
+        LoginComponent,
         NotFoundComponent,
+        PostComponent,
         TestPageComponent
     ],
     imports: [
@@ -57,7 +62,9 @@ const routes: Route[] = [
         BrowserModule,
         BrowserAnimationsModule,
         HttpModule,
+        MatButtonModule,
         MatCardModule,
+        MatInputModule,
 
         AdminModule,
         SharedModule

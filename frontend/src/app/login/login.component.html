@@ -1,0 +1,18 @@
+<title-bar></title-bar>
+
+<div class="login-container">
+    <form class="login-form" [formGroup]="loginForm">
+        <mat-form-field>
+            <input matInput placeholder="Email" name="email" formControlName="email" type="email">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Password" name="password" formControlName="password" type="password">
+        </mat-form-field>
+        <div class="button-bar">
+            <button mat-button (click)="onSubmit()" type="submit">LOGIN</button>
+            <button mat-button (click)="onReset()" type="reset">RESET</button>
+        </div>
+    </form>
+</div>
+
+<footer></footer>

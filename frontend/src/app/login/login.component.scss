@@ -1,0 +1,33 @@
+@import "../styles/helpers";
+
+:host {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container {
+    margin-top: $title-bar-height;
+    flex: 1 1 0%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 30rem;
+    padding: 0 1rem;
+
+    & > * {
+        width: 100%;
+    }
+}
+
+.button-bar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}

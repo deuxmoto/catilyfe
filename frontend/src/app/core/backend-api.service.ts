@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 import { Observable } from "rxjs/Observable";
@@ -68,16 +69,9 @@ export class UnknownError {
     }
 }
 
-const BackendEndpoint = "http://caticake.azurewebsites.net";
-const handleFetchError = (error: any): ErrorObservable => {
-    if (error instanceof Response && error.status === 404) {
-        return Observable.throw(new NotFoundError());
-    }
+export const RedirectQueryParamName = "redirectUrl";
 
-    const unknownError = new UnknownError(error);
-    console.error(`${unknownError.errorMessage} %o`, error);
-    return Observable.throw(unknownError);
-};
+const BackendEndpoint = "http://caticake.azurewebsites.net";
 
 const convertDateStringsToObjects = <T>(obj: T): T => {
     let anyObj = <any>obj;
@@ -92,9 +86,10 @@ const convertDateStringsToObjects = <T>(obj: T): T => {
 
 @Injectable()
 export class BackendApiService {
-    private adminToken = "AibFscOeiNQjCWbV76FBJujfEVI7jq+Blarbi2uxDfj2XPwm5Shrw45oCyI/+IEkSX0FhdFP0Dbg89SmT45KyA==";
-
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private router: Router
+    ) { }
 
     public getRecentPostMetadata(count: number): Observable<PostMetadata[]> {
         return this.http.get<PostMetadata[]>(`${BackendEndpoint}/postmetadata?top=${count}`)
@@ -114,48 +109,60 @@ export class BackendApiService {
                 convertDateStringsToObjects(post.metadata);
                 return post;
             })
-            .catch(handleFetchError);
+            .catch(this._handleFetchError);
     }
 
     public getAdminPostMetadata(count = 1000): Observable<AdminPostMetadata[]> {
-        return this.http.get<AdminPostMetadata[]>(`${BackendEndpoint}/admin/post?top=${count}`, {
-            headers: this.getAuthHeaders()
-        })
+        return this.http.get<AdminPostMetadata[]>(`${BackendEndpoint}/admin/post?top=${count}`)
             .map((postMetadata) => {
                 postMetadata.forEach((metadata) => {
                     convertDateStringsToObjects(metadata);
                 });
                 return postMetadata;
             })
-            .catch(handleFetchError);
+            .catch(this._handleFetchError);
     }
 
     public getAdminPost(id: string): Observable<AdminPost> {
-        return this.http.get<AdminPost>(`${BackendEndpoint}/admin/post/${id}`, {
-            headers: this.getAuthHeaders()
-        })
+        return this.http.get<AdminPost>(`${BackendEndpoint}/admin/post/${id}`)
             .map((adminPost) => {
                 convertDateStringsToObjects(adminPost.metadata);
                 return adminPost;
             })
-            .catch(handleFetchError);
+            .catch(this._handleFetchError);
     }
 
     public setAdminPost(post: AdminPost): Observable<AdminPost> {
-        return this.http.post(`${BackendEndpoint}/admin/post`, post, {
-            headers: this.getAuthHeaders()
-        })
-            .catch(handleFetchError);
+        return this.http.post(`${BackendEndpoint}/admin/post`, post)
+            .catch(this._handleFetchError);
     }
 
     public getMarkdownPreview(markdown: string): Observable<MarkdownPreview> {
-        return this.http.post<MarkdownPreview>(`${BackendEndpoint}/admin/previewmarkdown`, { markdown }, {
-            headers: this.getAuthHeaders()
-        })
-            .catch(handleFetchError);
+        return this.http.post<MarkdownPreview>(`${BackendEndpoint}/admin/previewmarkdown`, { markdown })
+            .catch(this._handleFetchError);
     }
 
-    private getAuthHeaders(): HttpHeaders {
-        return new HttpHeaders().set("Authorization", `Bearer ${this.adminToken}`);
+    public loginUser(email: string, password: string): Observable<void> {
+        const credentials = {
+            email: email,
+            password: password
+        };
+        return this.http.put<void>(`${BackendEndpoint}/login`, credentials);
+    }
+
+    private _handleFetchError(error: any): ErrorObservable {
+        if (error instanceof Response) {
+            switch (error.status) {
+                case 404:
+                    return Observable.throw(new NotFoundError());
+                case 401:
+                    this.router.navigateByUrl("login");
+                    return;
+            }
+        }
+
+        const unknownError = new UnknownError(error);
+        console.error(`${unknownError.errorMessage} %o`, error);
+        return Observable.throw(unknownError);
     }
 }
