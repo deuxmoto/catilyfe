@@ -47,12 +47,22 @@
 
             this.passwordHelper.Validate(user.Password, hashedPassword);
 
+            var token = this.passwordHelper.GenerateTokenBytes(64);
+            var tokenExpiration = DateTime.UtcNow + TimeSpan.FromDays(8);
+
+            await this.authDataLayer.CreateToken(
+                            user.Id.Value,
+                            token,
+                            tokenExpiration);
+
             var claims = new[]
                              {
                                  new Claim(ClaimTypes.Name, user.Name), new Claim(ClaimTypes.Email, user.Email),
                                  new Claim(ClaimTypes.AuthenticationMethod, "catilyfe"),
                                  new Claim(ClaimTypes.AuthenticationInstant, DateTime.UtcNow.ToLongTimeString()),
                                  new Claim(ClaimTypes.Authentication, "yes"),
+                                 new Claim(ClaimTypes.Expiration, tokenExpiration.ToLongTimeString()),
+                                 new Claim(ClaimTypes.Hash, Convert.ToBase64String(token))
                              };
             var identity = new ClaimsIdentity(claims, "catilyfe");
 
