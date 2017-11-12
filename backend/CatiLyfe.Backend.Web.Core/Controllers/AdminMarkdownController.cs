@@ -5,12 +5,14 @@
     using CatiLyfe.Backend.Web.Core.Code;
     using CatiLyfe.Backend.Web.Models.Admin;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// The admin markdown controller.
     /// </summary>
     [Route("admin/previewmarkdown")]
+    [Authorize(Policy = "default")]
     public class AdminMarkdownController : Controller
     {
         /// <summary>
@@ -33,7 +35,7 @@
         /// <param name="args">The arguments.</param>
         /// <returns>The preview.</returns>
         [HttpPost]
-        public Task<MarkdownPreview> PreviewMarkdown(MarkdownPreviewArgs args)
+        public Task<MarkdownPreview> PreviewMarkdown([FromBody]MarkdownPreviewArgs args)
         {
             var result = this.contentTransformer.TransformMarkdown(args.MarkDOWN);
             return Task.FromResult(new MarkdownPreview(result));

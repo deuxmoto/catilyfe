@@ -39,7 +39,7 @@
         /// The <see cref="Task"/>.
         /// </returns>
         [HttpPut]
-        public async Task Login([FromBody]LoginCredentials credentials)
+        public async Task<IActionResult> Login([FromBody]LoginCredentials credentials)
         {
             var user = (await this.authDataLayer.GetUser(null, credentials.Email, null)).FirstOrDefault();
 
@@ -54,7 +54,7 @@
                                  new Claim(ClaimTypes.AuthenticationInstant, DateTime.UtcNow.ToLongTimeString()),
                                  new Claim(ClaimTypes.Authentication, "yes"),
                              };
-            var identity = new ClaimsIdentity(claims.Concat(user.Roles.Select(r => new Claim(ClaimTypes.Role, r))), "catilyfe");
+            var identity = new ClaimsIdentity(claims, "catilyfe");
 
             var principal = new ClaimsPrincipal(identity);
 
@@ -62,6 +62,8 @@
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 principal,
                 new AuthenticationProperties { IsPersistent = true });
+
+            return this.NoContent();
         }
     }
 }

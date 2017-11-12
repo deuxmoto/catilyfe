@@ -8,12 +8,14 @@
     using CatiLyfe.Common.Security;
     using CatiLyfe.DataLayer;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// The userModel controller.
     /// </summary>
     [Route("[controller]")]
+    [Authorize(Policy = "default")]
     public class UserController : Controller
     {
         /// <summary>

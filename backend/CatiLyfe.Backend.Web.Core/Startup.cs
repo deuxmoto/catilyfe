@@ -20,6 +20,7 @@ namespace CatiLyfe.Backend.Web.Core
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Server.IISIntegration;
 
     using Swashbuckle.AspNetCore.Swagger;
@@ -62,7 +63,10 @@ namespace CatiLyfe.Backend.Web.Core
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                 config =>
                     {
+                        config.Cookie.HttpOnly = true;
+                        //config.Cookie.Domain = "caticake.azurewebsites.net";
                         config.Cookie.Name = "CatiCookie";
+                        config.Cookie.SameSite = SameSiteMode.None;
                         config.Events.OnRedirectToLogin = options =>
                             {
                                 options.Response.StatusCode = 401;
@@ -89,6 +93,7 @@ namespace CatiLyfe.Backend.Web.Core
                                 {
                                     policy.AllowAnyHeader();
                                     policy.AllowAnyMethod();
+                                    policy.AllowCredentials();
                                     policy.AllowAnyOrigin();
                                 });
                     });

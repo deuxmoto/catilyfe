@@ -9,12 +9,14 @@
     using CatiLyfe.Backend.Web.Models.Admin;
     using CatiLyfe.DataLayer;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// The admin post controller.
     /// </summary>
     [Route("admin/post")]
+    [Authorize(Policy = "default")]
     public class AdminPostController : Controller
     {
         /// <summary>
@@ -56,7 +58,7 @@
         public async Task<AdminPost> GetPost(int id)
         {
             var post = await this.catiDatalayer.GetPost(id, true);
-            return new AdminPost(post.MetaData, this.contentTransformer.TransformMarkdown(post.PostContent.First().Content));
+            return new AdminPost(post.MetaData, post.PostContent.First().Content);
         }
 
         /// <summary>
