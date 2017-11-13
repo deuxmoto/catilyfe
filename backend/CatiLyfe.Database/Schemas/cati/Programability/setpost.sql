@@ -5,6 +5,7 @@
    ,@title         NVARCHAR(256)
    ,@description   NVARCHAR(256)
    ,@goeslive      DATETIME2
+   ,@userid        INT
    ,@content       cati.postcontentlist READONLY
    ,@tags          cati.tagslist        READONLY
 AS
@@ -12,8 +13,14 @@ AS
 
     DECLARE @invalidArgs INT = 50002
 
+    DECLARE @auditModify NVARCHAR(64) = 'Modified'
+    DECLARE @auditCreate NVARCHAR(64) = 'Created'
+
     BEGIN TRY
+
     DECLARE @error INT = 0
+    DECLARE @auditOperation NVARCHAR(64) = NULL
+
     SET TRANSACTION ISOLATION LEVEL READ COMMITTED
     BEGIN TRANSACTION
 
@@ -51,7 +58,30 @@ AS
            ,GETUTCDATE()
         );
 
+    IF(@id IS NULL)
+    BEGIN
+        SET @auditOperation = @auditCreate
+    END
+    ELSE
+    BEGIN
+        SET @auditOperation = @auditModify
+    END
+
     SET @id = ISNULL(@id, SCOPE_IDENTITY())
+
+    -- Update the audit log with the operation.
+    INSERT INTO cati.postaudit
+    (
+        postid
+       ,userid
+       ,action
+    )
+    VALUES
+    (
+        @id
+       ,@userid
+       ,@auditOperation
+    )
 
     MERGE INTO cati.postcontent c
     USING @content src

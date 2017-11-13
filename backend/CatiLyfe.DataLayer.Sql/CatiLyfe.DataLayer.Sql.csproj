@@ -5,14 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CatiLyfe.Common\CatiLyfe.Common.csproj" />
-    <ProjectReference Include="..\CatiLyfe.DataLayer\CatiLyfe.DataLayer.csproj" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="System.Data.SqlClient">
-      <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\system.data.sqlclient\4.4.0\ref\netstandard2.0\System.Data.SqlClient.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\CatiLyfe.Common\CatiLyfe.Common.csproj" />
+    <ProjectReference Include="..\CatiLyfe.DataLayer\CatiLyfe.DataLayer.csproj" />
   </ItemGroup>
 
 </Project>

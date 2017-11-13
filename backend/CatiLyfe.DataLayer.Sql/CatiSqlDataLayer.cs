@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Data.SqlClient;
     using System.Linq;
     using System.Threading.Tasks;
@@ -12,6 +11,7 @@
     using CatiLyfe.Common.Exceptions;
 
     using Microsoft.SqlServer.Server;
+    using System.Data;
 
     internal sealed class CatiSqlDataLayer : ICatiDataLayer, ICatiAuthDataLayer
     {

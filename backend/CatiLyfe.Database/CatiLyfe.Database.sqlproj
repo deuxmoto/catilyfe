@@ -117,6 +117,9 @@
     <Build Include="Schemas\auth\Tables\Indexs\default_role_deleted.sql" />
     <Build Include="Schemas\auth\Programability\Stored Procedures\setrole.sql" />
     <Build Include="Schemas\auth\Programability\Stored Procedures\deleterole.sql" />
+    <Build Include="Schemas\cati\Tables\postaudit.sql" />
+    <Build Include="Schemas\cati\Index\cl_postaudit_postid.sql" />
+    <Build Include="Schemas\cati\Index\ncl_postaudit_userid.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />
