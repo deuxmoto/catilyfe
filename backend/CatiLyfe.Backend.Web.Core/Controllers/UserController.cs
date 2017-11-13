@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using CatiLyfe.Backend.Web.Models.User;
@@ -58,6 +59,18 @@
         {
             var users = await this.authDataLayer.GetUser(null, null, null);
             return users.Select(u => new UserModel(u));
+        }
+
+        /// <summary>
+        /// Get all users.
+        /// </summary>
+        /// <returns>The users.</returns>
+        [HttpGet("/me")]
+        public async Task<UserModel> GetSelf()
+        {
+            var userId = int.Parse(this.HttpContext.User.FindFirstValue(ClaimTypes.Sid));
+            var users = await this.authDataLayer.GetUser(userId, null, null);
+            return users.Select(u => new UserModel(u)).First();
         }
     }
 }
