@@ -19,9 +19,10 @@
         /// <param name="startdate">The start date.</param>
         /// <param name="enddate">The end date.</param>
         /// <param name="tags">The post tags.</param>
-        /// <param name="isAdmin">Is the user an admin.</param>
+        /// <param name="includeUnpublished">Include the unpublished ones.</param>
+        /// <param name="includeDeleted">Include the deleted ones.</param>
         /// <returns>The post metadata</returns>
-        Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags, bool isAdmin = false);
+        Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate, bool includeUnpublished, bool includeDeleted, IEnumerable<string> tags);
 
         /// <summary>
         /// The get post.
@@ -31,25 +32,28 @@
         /// <param name="startdate">The start date.</param>
         /// <param name="enddate">The end date.</param>
         /// <param name="tags">The list of tags to search.</param>
-        /// <param name="isAdmin">Is the user an admin.</param>
+        /// <param name="includeUnpublished">Include the unpublished ones.</param>
+        /// <param name="includeDeleted">Include the deleted ones.</param>
         /// <returns>The list of posts.</returns>
-        Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags, bool isAdmin = false);
+        Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate, bool includeUnpublished, bool includeDeleted, IEnumerable<string> tags);
 
         /// <summary>
         /// Get a single post
         /// </summary>
         /// <param name="id">The id</param>
-        /// <param name="isAdmin">Is the user an admin.</param>
+        /// <param name="includeUnpublished">Include the unpublished ones.</param>
+        /// <param name="includeDeleted">Include the deleted ones.</param>
         /// <returns>A post</returns>
-        Task<Post> GetPost(int id, bool isAdmin = false);
+        Task<Post> GetPost(int id, bool includeUnpublished, bool includeDeleted);
 
         /// <summary>
         /// Get a single post
         /// </summary>
         /// <param name="slug">The slug</param>
-        /// <param name="isAdmin">Is the user an admin.</param>
+        /// <param name="includeUnpublished">Include the unpublished ones.</param>
+        /// <param name="includeDeleted">Include the deleted ones.</param>
         /// <returns>A post.</returns>
-        Task<Post> GetPost(string slug, bool isAdmin = false);
+        Task<Post> GetPost(string slug, bool includeUnpublished, bool includeDeleted);
 
         /// <summary>
         /// Gets all of the tags.
@@ -61,21 +65,24 @@
         /// Set a post.
         /// </summary>
         /// <param name="post">The post.</param>
+        /// <param name="userAccessDetails">The user acess details.</param>
         /// <returns>An async task.</returns>
-        Task<Post> SetPost(Post post);
+        Task<Post> SetPost(Post post, UserAccessDetails userAccessDetails);
 
         /// <summary>
         /// Delete a single post
         /// </summary>
         /// <param name="id">The id</param>
+        /// <param name="userAccessDetails">The user acess details.</param>
         /// <returns>A task</returns>
-        Task DeletePost(int id);
+        Task DeletePost(int id, UserAccessDetails userAccessDetails);
 
         /// <summary>
         /// Delete a single post
         /// </summary>
         /// <param name="slug">The slug</param>
+        /// <param name="userAccessDetails">The user acess details.</param>
         /// <returns>A task.</returns>
-        Task DeletePost(string slug);
+        Task DeletePost(string slug, UserAccessDetails userAccessDetails);
     }
 }

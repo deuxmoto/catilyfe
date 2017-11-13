@@ -154,9 +154,8 @@ AS
 
     COMMIT TRANSACTION
 
-    EXECUTE @error = cati.getsinglepost @error_message = @error_message
-                              ,@id = @id
-                              ,@slug = NULL
+    EXECUTE @error = cati.getposts @error_message = @error_message
+                                  ,@id = @id
 
     END TRY
     BEGIN CATCH

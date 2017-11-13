@@ -19,13 +19,9 @@
         /// <returns>An async task.</returns>
         public Task OnExceptionAsync(ExceptionContext context)
         {
-            var catiException = context.Exception as CatiFailureException;
-            if (catiException == null)
-            {
-                return Task.FromResult(0);
-            }
+            var catiException = context.Exception as CatiFailureException ?? new DeveloperIsAnIdiotException(context.Exception);
 
-            var result = new JsonResult(new { Message = catiException.ShortMessage })
+            var result = new JsonResult(new { Message = catiException.ShortMessage, Details = catiException.Message, StackTrace = context.Exception.StackTrace })
                              {
                                  StatusCode =
                                      catiException

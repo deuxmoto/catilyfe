@@ -65,7 +65,7 @@
         /// Get all users.
         /// </summary>
         /// <returns>The users.</returns>
-        [HttpGet("/me")]
+        [HttpGet("me")]
         public async Task<UserModel> GetSelf()
         {
             var userId = int.Parse(this.HttpContext.User.FindFirstValue(ClaimTypes.Sid));

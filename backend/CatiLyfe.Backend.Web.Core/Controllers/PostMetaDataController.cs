@@ -47,8 +47,15 @@
             DateTime? endDate,
             IEnumerable<string> tags)
         {
-            var metas = await this.datalayer.GetPostMetadata(top, skip, startDate, endDate, tags ?? Enumerable.Empty<string>());
-            return metas.Select(m => new PostMetaModel(m));
+            var metas = await this.datalayer.GetPostMetadata(
+                            top: top,
+                            skip: skip,
+                            startdate: startDate,
+                            enddate: endDate,
+                            includeUnpublished: false,
+                            includeDeleted: false,
+                            tags: tags ?? Enumerable.Empty<string>());
+            return metas.Where(m => false == m.IsReserved).Select(m => new PostMetaModel(m));
         }
     }
 }

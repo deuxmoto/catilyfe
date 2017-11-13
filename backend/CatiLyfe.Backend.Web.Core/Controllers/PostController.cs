@@ -49,8 +49,18 @@
         [HttpGet]
         public async Task<IEnumerable<PostModel>> GetMany(int? top, int? skip, DateTime? startDate, DateTime? endDate, IEnumerable<string> tags)
         {
-            var posts = await this.datalayer.GetPost(top, skip, startDate, endDate, tags ?? Enumerable.Empty<string>(), false);
-            return posts.Select(p => PostModel.Create(p.MetaData, this.contentTransformer.TransformMarkdown(p.PostContent.First().Content)));
+            var posts = await this.datalayer.GetPost(
+                            top: top,
+                            skip: skip,
+                            startdate: startDate,
+                            enddate: endDate,
+                            includeUnpublished: false,
+                            includeDeleted: false,
+                            tags: tags ?? Enumerable.Empty<string>());
+            return posts.Where(predicate: p => false == p.MetaData.IsReserved).Select(
+                selector: p => PostModel.Create(
+                    metadata: p.MetaData,
+                    content: this.contentTransformer.TransformMarkdown(markdown: p.PostContent.First().Content)));
         }
 
         /// <summary>
@@ -61,7 +71,7 @@
         [HttpGet("{slug}")]
         public async Task<PostModel> GetSingle(string slug)
         {
-            var post = await this.datalayer.GetPost(slug, false);
+            var post = await this.datalayer.GetPost(slug: slug, includeUnpublished: false, includeDeleted: false);
             return PostModel.Create(post.MetaData, this.contentTransformer.TransformMarkdown(post.PostContent.First().Content));
         }
     }

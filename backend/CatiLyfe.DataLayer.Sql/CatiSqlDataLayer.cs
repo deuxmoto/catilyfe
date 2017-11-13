@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Immutable;
     using System.Data.SqlClient;
     using System.Linq;
     using System.Threading.Tasks;
@@ -21,7 +22,7 @@
             this.connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags, bool isAdmin)
+        public async Task<IEnumerable<PostMeta>> GetPostMetadata(int? top, int? skip, DateTime? startdate, DateTime? enddate, bool includeUnpublished, bool includeDeleted, IEnumerable<string> tags)
         {
             var results =  await this.ExecuteReader(
                 "cati.getpostmetadata",
@@ -31,13 +32,14 @@
                         parmeters.AddWithValue("skip", skip);
                         parmeters.AddWithValue("startdate", startdate);
                         parmeters.AddWithValue("enddate", enddate);
-                        parmeters.AddWithValue("isadmin", isAdmin);
+                        parmeters.AddWithValue("includeUnpublished", includeUnpublished);
+                        parmeters.AddWithValue("includeDeleted", includeDeleted);
                         var tagslist = parmeters.AddWithValue("tags", CatiSqlDataLayer.GetPostTagRecords(tags));
                         tagslist.SqlDbType = SqlDbType.Structured;
                         tagslist.TypeName = "cati.tagslist";
                     },
-                ParsePostMeta,
-                ParsePostTag);
+                SqlParsers.ParsePostMeta,
+                SqlParsers.ParsePostTag);
 
             var tagsLookup = results.Item2.ToLookup(t => t.PostId);
 
@@ -53,129 +55,92 @@
             return results.Item1;
         }
 
-        private static PostMeta ParsePostMeta(SqlDataReader reader)
+        public async Task<Post> GetPost(int id, bool includeUnpublished, bool includeDeleted)
         {
-            return new PostMeta(
-                (int)reader["id"],
-                (string)reader["slug"],
-                (string)reader["title"],
-                (string)reader["description"],
-                new DateTimeOffset((DateTime)reader["created"]),
-                new DateTimeOffset((DateTime)reader["goeslive"]));
+            var post = (await this.GetPostInternal(
+                        id: id,
+                        slug: null,
+                        top: null,
+                        skip: null,
+                        startdate: null,
+                        enddate: null,
+                        includeUnpublished: includeUnpublished,
+                        includeDeleted: includeDeleted,
+                        tags: null)).FirstOrDefault();
+
+            if (null == post)
+            {
+                throw new ItemNotFoundException($"The post with the id '{id}' was not found.");
+            }
+
+            return post;
         }
 
-        /// <summary>
-        /// Parses a post to tag mapping.
-        /// </summary>
-        /// <param name="reader">The sql data reader.</param>
-        /// <returns>A post to tag mapping object.</returns>
-        private static PostToTagMapping ParsePostTag(SqlDataReader reader)
+        public async Task<Post> GetPost(string slug, bool includeUnpublished, bool includeDeleted)
         {
-            return new PostToTagMapping((int)reader["post"], (string)reader["tag"]);
+            var post = (await this.GetPostInternal(
+                        id: null,
+                        slug: slug,
+                        top: null,
+                        skip: null,
+                        startdate: null,
+                        enddate: null,
+                        includeUnpublished: includeUnpublished,
+                        includeDeleted: includeDeleted,
+                        tags: null)).FirstOrDefault();
+
+            if (null == post)
+            {
+                throw new ItemNotFoundException($"The post with the slug '{slug}' was not found.");
+            }
+
+            return post;
         }
 
-        /// <summary>
-        /// Parse a post tags object from the reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>The post tag.</returns>
-        private static PostTag ParseTag(SqlDataReader reader)
+        public async Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate, bool includeUnpublished, bool includeDeleted, IEnumerable<string> tags)
         {
-            return new PostTag((string)reader["tag"], (int)reader["posts"]);
+            return (await this.GetPostInternal(
+                        id: null,
+                        slug: null,
+                        top: top,
+                        skip: skip,
+                        startdate: startdate,
+                        enddate: enddate,
+                        includeUnpublished: includeUnpublished,
+                        includeDeleted: includeDeleted,
+                        tags: tags)).ToImmutableList();
         }
 
-        /// <summary>
-        /// Parses a row of post content from the the reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>A peice of post content.</returns>
-        private static PostContent ParsePostContent(SqlDataReader reader)
-        {
-            return new PostContent((int)reader["id"], (int)reader["postid"], (string)reader["type"], (string)reader["content"]);
-        }
-
-        /// <summary>
-        /// The from reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>The <see cref="UserRoleDescription"/>.</returns>
-        public static UserRoleDescription ParseUserRoleDescription(SqlDataReader reader)
-        {
-            return new UserRoleDescription((string)reader["role"], (string)reader["description"]);
-        }
-
-        /// <summary>
-        /// Parses a user from the reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>The user.</returns>
-        private static User ParseUser(SqlDataReader reader)
-        {
-            return new User((int)reader["id"], (string)reader["name"], (string)reader["email"], (byte[])reader["pass"]);
-        }
-
-        /// <summary>
-        /// Parse a role from a reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>The role.</returns>
-        private static UserRole ParseRole(SqlDataReader reader)
-        {
-            return new UserRole((int)reader["userid"], (string)reader["role"]);
-        }
-
-        public async Task<Post> GetPost(int id, bool isAdmin)
+        private async Task<IEnumerable<Post>> GetPostInternal(
+            int? id,
+            string slug,
+            int? top,
+            int? skip,
+            DateTime? startdate,
+            DateTime? enddate,
+            bool includeUnpublished,
+            bool includeDeleted,
+            IEnumerable<string> tags)
         {
             var results = await this.ExecuteReader(
-                "cati.getsinglepost",
-                parmeters =>
-                {
-                    parmeters.AddWithValue("id", id);
-                    parmeters.AddWithValue("isadmin", isAdmin);
-                },
-                ParsePostMeta, ParsePostContent, ParsePostTag);
-
-            var metadata = results.Item1.First();
-            var tags = results.Item3;
-            metadata.Tags = tags.Select(t => t.Tag);
-
-            return new Post(results.Item1.First(), results.Item2);
-        }
-
-        public async Task<Post> GetPost(string slug, bool isAdmin)
-        {
-            var results = await this.ExecuteReader(
-                "cati.getsinglepost",
-                parmeters =>
-                {
-                    parmeters.AddWithValue("slug", slug);
-                    parmeters.AddWithValue("isadmin", isAdmin);
-                },
-                ParsePostMeta, ParsePostContent, ParsePostTag);
-
-            var metadata = results.Item1.First();
-            var tags = results.Item3;
-            metadata.Tags = tags.Select(t => t.Tag);
-
-            return new Post(results.Item1.First(), results.Item2);
-        }
-
-        public async Task<IEnumerable<Post>> GetPost(int? top, int? skip, DateTime? startdate, DateTime? enddate, IEnumerable<string> tags, bool isAdmin)
-        {
-            var results = await this.ExecuteReader(
-                "cati.getposts",
-                parmeters =>
-                {
-                    parmeters.AddWithValue("top", top);
-                    parmeters.AddWithValue("skip", skip);
-                    parmeters.AddWithValue("startdate", startdate);
-                    parmeters.AddWithValue("enddate", enddate);
-                    parmeters.AddWithValue("isadmin", isAdmin);
-                    var tagslist = parmeters.AddWithValue("tags", CatiSqlDataLayer.GetPostTagRecords(tags));
-                    tagslist.SqlDbType = SqlDbType.Structured;
-                    tagslist.TypeName = "cati.tagslist";
-                },
-                ParsePostMeta, ParsePostContent, ParsePostTag);
+                              "cati.getposts",
+                              parmeters =>
+                                  {
+                                      parmeters.AddWithValue("id", id);
+                                      parmeters.AddWithValue("slug", slug);
+                                      parmeters.AddWithValue("top", top);
+                                      parmeters.AddWithValue("skip", skip);
+                                      parmeters.AddWithValue("startdate", startdate);
+                                      parmeters.AddWithValue("enddate", enddate);
+                                      parmeters.AddWithValue("includeUnpublished", includeUnpublished);
+                                      parmeters.AddWithValue("includeDeleted", includeDeleted);
+                                      var tagslist = parmeters.AddWithValue("tags", CatiSqlDataLayer.GetPostTagRecords(tags));
+                                      tagslist.SqlDbType = SqlDbType.Structured;
+                                      tagslist.TypeName = "cati.tagslist";
+                                  },
+                              SqlParsers.ParsePostMeta,
+                              SqlParsers.ParsePostContent,
+                              SqlParsers.ParsePostTag);
 
             var postContentlookup = results.Item2.ToLookup(c => c.PostId);
             var tagsLookup = results.Item3.ToLookup(t => t.PostId);
@@ -189,7 +154,7 @@
                 }
             }
 
-            return results.Item1.Select(meta => new Post(meta, postContentlookup.First(m => m.Key == meta.Id))).ToList();
+            return results.Item1.Select(meta => new Post(meta, postContentlookup.First(m => m.Key == meta.Id)));
         }
 
         /// <summary>
@@ -203,7 +168,7 @@
                 parmeters =>
                 {
                 },
-                ParseTag);
+                SqlParsers.ParseTag);
 
             return result;
         }
@@ -212,8 +177,9 @@
         /// Set a post.
         /// </summary>
         /// <param name="post">The post.</param>
+        /// <param name="userAccessDetails">The user access details.</param>
         /// <returns>An async task.</returns>
-        public async Task<Post> SetPost(Post post)
+        public async Task<Post> SetPost(Post post, UserAccessDetails userAccessDetails)
         {
             var results = await this.ExecuteReader(
                               "cati.setpost",
@@ -223,6 +189,7 @@
                                       parmeters.AddWithValue("slug", post.MetaData.Slug);
                                       parmeters.AddWithValue("title", post.MetaData.Title);
                                       parmeters.AddWithValue("description", post.MetaData.Description);
+                                      parmeters.AddWithValue("userid", userAccessDetails.UserId);
                                       parmeters.AddWithValue("goeslive", post.MetaData.GoesLive);
                                       var contentList = parmeters.AddWithValue(
                                           "content",
@@ -235,9 +202,9 @@
                                       tagslist.SqlDbType = SqlDbType.Structured;
                                       tagslist.TypeName = "cati.tagslist";
                                   },
-                              ParsePostMeta,
-                              ParsePostContent,
-                              ParsePostTag);
+                              SqlParsers.ParsePostMeta,
+                              SqlParsers.ParsePostContent,
+                              SqlParsers.ParsePostTag);
 
             var metadata = results.Item1.First();
             var tags = results.Item3;
@@ -403,9 +370,8 @@
             try
             {
                 await function();
-
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
@@ -463,23 +429,25 @@
                     });
         }
 
-        public Task DeletePost(int id)
+        public Task DeletePost(int id, UserAccessDetails userAccessDetails)
         {
             return this.ExecuteNonQuery(
                 "cati.deletepost",
                 parrameters =>
                     {
                         parrameters.AddWithValue("id", id);
+                        parrameters.AddWithValue("userid", userAccessDetails.UserId);
                     });
         }
 
-        public Task DeletePost(string slug)
+        public Task DeletePost(string slug, UserAccessDetails userAccessDetails)
         {
             return this.ExecuteNonQuery(
                 "cati.deletepost",
                 parrameters =>
                 {
                     parrameters.AddWithValue("slug", slug);
+                    parrameters.AddWithValue("userid", userAccessDetails.UserId);
                 });
         }
 
@@ -500,8 +468,8 @@
                     parameters.AddWithValue("email", email);
                     parameters.AddWithValue("token", token);
                 },
-                CatiSqlDataLayer.ParseRole,
-                CatiSqlDataLayer.ParseUser);
+                SqlParsers.ParseRole,
+                SqlParsers.ParseUser);
 
             var users = result.Item2.ToList();
 
@@ -573,7 +541,7 @@
                 parameters: parameters =>
                     {
                     },
-                readerset1: CatiSqlDataLayer.ParseUserRoleDescription);
+                readerset1: SqlParsers.ParseUserRoleDescription);
         }
 
         /// <summary>

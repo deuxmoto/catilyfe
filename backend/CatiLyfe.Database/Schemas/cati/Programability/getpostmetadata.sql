@@ -2,12 +2,13 @@
 
 CREATE PROCEDURE cati.getpostmetadata
     @error_message NVARCHAR(2048) OUTPUT
-   ,@top            INT = NULL
-   ,@skip           INT = NULL
-   ,@startdate      DATETIME2 = NULL
-   ,@enddate        DATETIME2 = NULL
-   ,@isadmin        BIT = 0
-   ,@tags           cati.tagslist READONLY
+   ,@top                   INT = NULL
+   ,@skip                  INT = NULL
+   ,@startdate             DATETIME2 = NULL
+   ,@enddate               DATETIME2 = NULL
+   ,@includeUnpublished    BIT = 0
+   ,@includeDeleted        BIT = 0
+   ,@tags                  cati.tagslist READONLY
 AS
     SET NOCOUNT ON
     -- Run as snapshot
@@ -51,9 +52,8 @@ AS
         p.id
     FROM cati.postmeta p
     WHERE p.goeslive BETWEEN @startdate AND @enddate
-      AND isdeleted = 0
-      AND (ispublished = 1 OR @isadmin = 1)
-      AND (isreserved = 0 OR @isadmin = 1)
+      AND (isdeleted = 0 OR @includeDeleted = 1)
+      AND (ispublished = 1 OR @includeUnpublished = 1)
       AND (EXISTS (SELECT TOP 1 1 
                   FROM cati.posttags pt
                   JOIN @tagids id
@@ -69,8 +69,11 @@ AS
        ,p.slug
        ,p.title
        ,p.goeslive
-       ,p.description
        ,p.created
+       ,p.description
+       ,p.ispublished
+       ,p.isreserved
+       ,p.isdeleted
     FROM cati.postmeta p
     JOIN @selectedIds id
       ON id.id = p.id

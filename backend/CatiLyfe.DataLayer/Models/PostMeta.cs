@@ -18,8 +18,11 @@
         /// <param name="description">the posts description</param>
         /// <param name="whencreated">When the post was created.</param>
         /// <param name="goeslive">When the post goes live.</param>
+        /// <param name="isReserved">Gets if the post is reserved.</param>
+        /// <param name="isPublished">Gets if the post is published.</param>
+        /// <param name="isDeleted">Gets if the post is deleted.</param>
         /// <param name="tags">The tags.</param>
-        public PostMeta(int id, string slug, string title, string description, DateTimeOffset whencreated, DateTimeOffset goeslive, IEnumerable<string> tags = null)
+        public PostMeta(int id, string slug, string title, string description, DateTimeOffset whencreated, DateTimeOffset goeslive, bool isReserved, bool isPublished, bool isDeleted, IEnumerable<string> tags = null)
         {
             this.Id = id;
             this.Slug = slug;
@@ -27,6 +30,9 @@
             this.Description = description;
             this.WhenCreated = whencreated;
             this.GoesLive = goeslive;
+            this.IsReserved = isReserved;
+            this.IsPublished = isPublished;
+            this.IsDeleted = isDeleted;
             this.Tags = tags ?? Enumerable.Empty<string>();
         }
 
@@ -59,6 +65,21 @@
         /// When the post goes live.
         /// </summary>
         public DateTimeOffset GoesLive { get; }
+
+        /// <summary>
+        /// Gets if the post is reserved.
+        /// </summary>
+        public bool IsReserved { get; }
+
+        /// <summary>
+        /// Gets if the post is published.
+        /// </summary>
+        public bool IsPublished { get; }
+
+        /// <summary>
+        /// Gets if the post is deleted.
+        /// </summary>
+        public bool IsDeleted { get; }
 
         /// <summary>
         /// The tags associated with the post.

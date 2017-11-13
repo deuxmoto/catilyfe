@@ -8,6 +8,7 @@
     using CatiLyfe.Backend.Web.Core.Code;
     using CatiLyfe.Backend.Web.Models.Admin;
     using CatiLyfe.DataLayer;
+    using CatiLyfe.DataLayer.Models;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -41,23 +42,27 @@
         }
 
         [HttpGet]
-        public async Task<IEnumerable<AdminMetaData>> GetMetadata(int? top, int? skip, DateTime? startDate, DateTime? endDate)
+        public async Task<IEnumerable<AdminMetaData>> GetMetadata([FromQuery]int? top, [FromQuery]int? skip, [FromQuery]DateTime? startDate, [FromQuery]DateTime? endDate, [FromQuery]bool includeReserved, [FromQuery]bool includeDeleted, [FromQuery]IEnumerable<string> tags)
         {
             var metas = await this.catiDatalayer.GetPostMetadata(
                 top,
                 skip,
                 startDate,
                 endDate,
-                Enumerable.Empty<string>(),
-                true);
+                includeReserved,
+                includeDeleted,
+                tags ?? Enumerable.Empty<string>());
 
             return metas.Select(m => new AdminMetaData(m));
         }
 
         [HttpGet("{id}")]
-        public async Task<AdminPost> GetPost(int id)
+        public async Task<AdminPost> GetPost([FromRoute]int id, [FromQuery]bool includeDeleted)
         {
-            var post = await this.catiDatalayer.GetPost(id, true);
+            var post = await this.catiDatalayer.GetPost(
+                id: id,
+                includeUnpublished: true,
+                includeDeleted: includeDeleted);
             return new AdminPost(post.MetaData, post.PostContent.First().Content);
         }
 
@@ -69,7 +74,7 @@
         [HttpPost]
         public async Task<AdminPost> SetPost([FromBody] AdminPost post)
         {
-            var updated = await this.catiDatalayer.SetPost(post.ToPost());
+            var updated = await this.catiDatalayer.SetPost(post.ToPost(), this.GetUserAccessDetails());
             return new AdminPost(updated.MetaData, updated.PostContent.First().Content);
         }
 
@@ -81,7 +86,7 @@
         [HttpDelete]
         public Task DeletePost(int id)
         {
-            return this.catiDatalayer.DeletePost(id);
+            return this.catiDatalayer.DeletePost(id, this.GetUserAccessDetails());
         }
     }
 }

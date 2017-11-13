@@ -2,6 +2,7 @@
     @error_message NVARCHAR(2048) OUTPUT
    ,@id            INT = NULL
    ,@slug          NVARCHAR(256) = NULL
+   ,@userid        INT
 AS
     SET NOCOUNT ON
 
@@ -35,6 +36,20 @@ AS
     UPDATE cati.postmeta
         SET isdeleted = 1
     WHERE id = @id
+
+    -- Update the audit log.
+    INSERT INTO cati.postaudit
+    (
+        postid
+       ,userid
+       ,action
+    )
+    VALUES
+    (
+        @id
+       ,@userid
+       ,N'Deleted'
+    )
 
     COMMIT TRANSACTION
     END TRY

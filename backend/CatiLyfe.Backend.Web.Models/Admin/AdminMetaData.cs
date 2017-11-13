@@ -28,6 +28,9 @@
             this.WhenPublished = meta.GoesLive;
             this.Slug = meta.Slug;
             this.Description = meta.Description;
+            this.IsReserved = meta.IsReserved;
+            this.IsPublished = meta.IsPublished;
+            this.IsDeleted = meta.IsDeleted;
             this.Tags = meta.Tags;
         }
 
@@ -68,6 +71,21 @@
         public string Description { get; set; }
 
         /// <summary>
+        /// A value indicating whether the post is reserved.
+        /// </summary>
+        public bool IsReserved { get; set; }
+
+        /// <summary>
+        /// Gets if the post is published.
+        /// </summary>
+        public bool IsPublished { get; }
+
+        /// <summary>
+        /// Gets if the post is deleted.
+        /// </summary>
+        public bool IsDeleted { get; }
+
+        /// <summary>
         /// The tags for the post.
         /// </summary>
         [Required]
@@ -80,13 +98,16 @@
         public PostMeta ToPostMeta()
         {
             return new PostMeta(
-                this.Id ?? -1,
-                this.Slug,
-                this.Title,
-                this.Description,
-                this.WhenCreated,
-                this.WhenPublished,
-                this.Tags ?? Enumerable.Empty<string>());
+                id: this.Id ?? -1,
+                slug: this.Slug,
+                title: this.Title,
+                description: this.Description,
+                whencreated: this.WhenCreated,
+                goeslive: this.WhenPublished,
+                isReserved: this.IsReserved,
+                isPublished: this.IsPublished,
+                isDeleted: this.IsDeleted,
+                tags: this.Tags ?? Enumerable.Empty<string>());
         }
     }
 }

@@ -83,7 +83,6 @@
     <Build Include="Schemas\cati\Index\pk_postcontent.sql" />
     <Build Include="Schemas\cati\Index\pk_contenttype.sql" />
     <Build Include="Schemas\cati\Index\ncl_postmetaslug.sql" />
-    <Build Include="Schemas\cati\Programability\getsinglepost.sql" />
     <Build Include="Schemas\cati\Programability\setpost.sql" />
     <Build Include="Schemas\cati\Programability\Types\postcontentlist.sql" />
     <Build Include="Schemas\cati\Programability\getposts.sql" />
