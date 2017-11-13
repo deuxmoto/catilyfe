@@ -36,6 +36,16 @@ namespace CatiLyfe.DataLayer.Sql
         }
 
         /// <summary>
+        /// Gets a post audit mapping from the reader.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>The post audit mapping.</returns>
+        public static PostAuditMapping ParsePostAuditMapping(SqlDataReader reader)
+        {
+            return new PostAuditMapping((int)reader["postid"], (int)reader["userid"], (string)reader["action"]);
+        }
+
+        /// <summary>
         /// Parse a post tags object from the reader.
         /// </summary>
         /// <param name="reader">The reader.</param>

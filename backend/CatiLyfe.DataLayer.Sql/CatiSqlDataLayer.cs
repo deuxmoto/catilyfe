@@ -39,9 +39,11 @@
                         tagslist.TypeName = "cati.tagslist";
                     },
                 SqlParsers.ParsePostMeta,
-                SqlParsers.ParsePostTag);
+                SqlParsers.ParsePostTag,
+                SqlParsers.ParsePostAuditMapping);
 
             var tagsLookup = results.Item2.ToLookup(t => t.PostId);
+            var historyLookup = results.Item3.ToLookup(a => a.PostId);
 
             // Get the tag mapping.
             foreach (var metadata in results.Item1)
@@ -49,6 +51,11 @@
                 if (tagsLookup.Contains(metadata.Id))
                 {
                     metadata.Tags = tagsLookup[metadata.Id].Select(t => t.Tag);
+                }
+
+                if (historyLookup.Contains(metadata.Id))
+                {
+                    metadata.History = historyLookup[metadata.Id].Select(a => a.ToPostAuditHistory());
                 }
             }
 
@@ -140,10 +147,12 @@
                                   },
                               SqlParsers.ParsePostMeta,
                               SqlParsers.ParsePostContent,
-                              SqlParsers.ParsePostTag);
+                              SqlParsers.ParsePostTag,
+                              SqlParsers.ParsePostAuditMapping);
 
             var postContentlookup = results.Item2.ToLookup(c => c.PostId);
             var tagsLookup = results.Item3.ToLookup(t => t.PostId);
+            var historyLookup = results.Item4.ToLookup(a => a.PostId);
 
             // Get the tag mapping.
             foreach (var metadata in results.Item1)
@@ -151,6 +160,11 @@
                 if (tagsLookup.Contains(metadata.Id))
                 {
                     metadata.Tags = tagsLookup[metadata.Id].Select(t => t.Tag);
+                }
+
+                if (historyLookup.Contains(metadata.Id))
+                {
+                    metadata.History = historyLookup[metadata.Id].Select(a => a.ToPostAuditHistory());
                 }
             }
 
@@ -204,11 +218,15 @@
                                   },
                               SqlParsers.ParsePostMeta,
                               SqlParsers.ParsePostContent,
-                              SqlParsers.ParsePostTag);
+                              SqlParsers.ParsePostTag,
+                              SqlParsers.ParsePostAuditMapping);
 
             var metadata = results.Item1.First();
             var tags = results.Item3;
             metadata.Tags = tags.Select(t => t.Tag);
+
+            var history = results.Item4;
+            metadata.History = history.Select(h => h.ToPostAuditHistory());
 
             return new Post(results.Item1.First(), results.Item2);
         }
@@ -245,6 +263,22 @@
                               new Func<SqlDataReader,object>[] { readerset1, readerset2, readerset3 });
 
             return (results[0].Cast<T1>(), results[1].Cast<T2>(), results[2].Cast<T3>());
+        }
+
+        private async Task<(IEnumerable<T1>, IEnumerable<T2>, IEnumerable<T3>, IEnumerable<T4>)> ExecuteReader<T1, T2, T3, T4>(
+            string sproc,
+            Action<SqlParameterCollection> parameters,
+            Func<SqlDataReader, T1> readerset1,
+            Func<SqlDataReader, T2> readerset2,
+            Func<SqlDataReader, T3> readerset3,
+            Func<SqlDataReader, T4> readerset4) where T1 : class where T2 : class where T3 : class where T4 : class
+        {
+            var results = await this.ExecuteReader(
+                              sproc,
+                              parameters,
+                              new Func<SqlDataReader, object>[] { readerset1, readerset2, readerset3, readerset4 });
+
+            return (results[0].Cast<T1>(), results[1].Cast<T2>(), results[2].Cast<T3>(), results[3].Cast<T4>());
         }
 
         /// <summary>

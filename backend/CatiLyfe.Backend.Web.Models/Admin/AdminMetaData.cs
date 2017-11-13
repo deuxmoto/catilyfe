@@ -32,6 +32,7 @@
             this.IsPublished = meta.IsPublished;
             this.IsDeleted = meta.IsDeleted;
             this.Tags = meta.Tags;
+            this.History = meta.History.Select(h => new AdminAuditHistory(h)).ToList();
         }
 
         /// <summary>
@@ -92,6 +93,11 @@
         public IEnumerable<string> Tags { get; set; }
 
         /// <summary>
+        /// The admin audit history.
+        /// </summary>
+        public IEnumerable<AdminAuditHistory> History { get; set; }
+
+        /// <summary>
         /// Convert this object to a post meta.
         /// </summary>
         /// <returns>The post meta.</returns>
@@ -107,7 +113,8 @@
                 isReserved: this.IsReserved,
                 isPublished: this.IsPublished,
                 isDeleted: this.IsDeleted,
-                tags: this.Tags ?? Enumerable.Empty<string>());
+                tags: this.Tags ?? Enumerable.Empty<string>(),
+                history: this.History?.Select(h => h.ToPostAuditHistory()) ?? Enumerable.Empty<PostAuditHistory>());
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace CatiLyfe.Backend.Web.Models.Admin
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
 
     using CatiLyfe.DataLayer.Models;
 

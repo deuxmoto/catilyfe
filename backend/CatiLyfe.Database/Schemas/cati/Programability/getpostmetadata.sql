@@ -88,4 +88,13 @@ AS
     JOIN @selectedIds s
       ON s.id = pt.post
 
+    -- Dump the audit log.
+    SELECT
+      pt.postid
+     ,pt.userid
+     ,pt.action
+    FROM cati.postaudit pt
+    JOIN @selectedIds s
+      ON s.id = pt.postid
+
 RETURN 0

@@ -22,7 +22,8 @@
         /// <param name="isPublished">Gets if the post is published.</param>
         /// <param name="isDeleted">Gets if the post is deleted.</param>
         /// <param name="tags">The tags.</param>
-        public PostMeta(int id, string slug, string title, string description, DateTimeOffset whencreated, DateTimeOffset goeslive, bool isReserved, bool isPublished, bool isDeleted, IEnumerable<string> tags = null)
+        /// <param name="history">The post audit history.</param>
+        public PostMeta(int id, string slug, string title, string description, DateTimeOffset whencreated, DateTimeOffset goeslive, bool isReserved, bool isPublished, bool isDeleted, IEnumerable<string> tags = null, IEnumerable<PostAuditHistory> history = null)
         {
             this.Id = id;
             this.Slug = slug;
@@ -34,6 +35,7 @@
             this.IsPublished = isPublished;
             this.IsDeleted = isDeleted;
             this.Tags = tags ?? Enumerable.Empty<string>();
+            this.History = history ?? Enumerable.Empty<PostAuditHistory>();
         }
 
         /// <summary>
@@ -85,5 +87,10 @@
         /// The tags associated with the post.
         /// </summary>
         public IEnumerable<string> Tags { get; set; }
+
+        /// <summary>
+        /// The audit history of the post.
+        /// </summary>
+        public IEnumerable<PostAuditHistory> History { get; set; }
     }
 }

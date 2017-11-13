@@ -101,5 +101,14 @@ AS
     JOIN @selected s
       ON s.id = pt.post
 
+    -- Dump the audit log.
+    SELECT
+      pt.postid
+     ,pt.userid
+     ,pt.action
+    FROM cati.postaudit pt
+    JOIN @selected s
+      ON s.id = pt.postid
+
 ErrorHandler:
     RETURN @error
