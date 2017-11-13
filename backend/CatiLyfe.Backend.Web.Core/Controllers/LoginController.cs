@@ -57,12 +57,11 @@
 
             var claims = new[]
                              {
-                                 new Claim(ClaimTypes.Name, user.Name), new Claim(ClaimTypes.Email, user.Email),
                                  new Claim(ClaimTypes.AuthenticationMethod, "catilyfe"),
                                  new Claim(ClaimTypes.AuthenticationInstant, DateTime.UtcNow.ToLongTimeString()),
                                  new Claim(ClaimTypes.Authentication, "yes"),
                                  new Claim(ClaimTypes.Expiration, tokenExpiration.ToLongTimeString()),
-                                 new Claim(ClaimTypes.Hash, Convert.ToBase64String(token))
+                                 new Claim(ClaimTypes.Hash, Convert.ToBase64String(token)),
                              };
             var identity = new ClaimsIdentity(claims, "catilyfe");
 

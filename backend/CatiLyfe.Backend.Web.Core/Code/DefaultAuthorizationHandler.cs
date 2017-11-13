@@ -52,6 +52,7 @@ namespace CatiLyfe.Backend.Web.Core.Code
                                  new Claim(ClaimTypes.AuthenticationMethod, "catilyfe"),
                                  new Claim(ClaimTypes.AuthenticationInstant, DateTime.UtcNow.ToLongTimeString()),
                                  new Claim(ClaimTypes.Authentication, "yes"),
+                                 new Claim(ClaimTypes.Sid, user.Id.ToString())
                              };
 
                 var claimsIdentity = (ClaimsIdentity)context.User.Identity;
@@ -59,7 +60,7 @@ namespace CatiLyfe.Backend.Web.Core.Code
 
                 context.Succeed(requirement);
             }
-            catch (Exception ex)
+            catch
             {
                 // Nuffin
                 context.Fail();
