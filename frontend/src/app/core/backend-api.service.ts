@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { ActivatedRoute, Router, Params as QueryParams } from "@angular/router";
+import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 
 import { Observable } from "rxjs/Observable";
 import { ErrorObservable } from "rxjs/observable/ErrorObservable";
@@ -42,6 +42,9 @@ export interface MarkdownPreview {
 }
 
 export class NotFoundError {
+}
+
+export class UnauthorizedError {
 }
 
 export class UnknownError {
@@ -109,7 +112,9 @@ export class BackendApiService {
                 convertDateStringsToObjects(post.metadata);
                 return post;
             })
-            .catch(this._handleFetchError);
+            .catch((error) => {
+                return this._handleFetchError(error);
+            });
     }
 
     public getAdminPostMetadata(count = 1000): Observable<AdminPostMetadata[]> {
@@ -122,7 +127,9 @@ export class BackendApiService {
                 });
                 return postMetadata;
             })
-            .catch(this._handleFetchError);
+            .catch((error) => {
+                return this._handleFetchError(error);
+            });
     }
 
     public getAdminPost(id: string): Observable<AdminPost> {
@@ -133,21 +140,27 @@ export class BackendApiService {
                 convertDateStringsToObjects(adminPost.metadata);
                 return adminPost;
             })
-            .catch(this._handleFetchError);
+            .catch((error) => {
+                return this._handleFetchError(error);
+            });
     }
 
     public setAdminPost(post: AdminPost): Observable<AdminPost> {
         return this.http.post(`${BackendEndpoint}/admin/post`, post, {
             withCredentials: true
         })
-            .catch(this._handleFetchError);
+            .catch((error) => {
+                return this._handleFetchError(error);
+            });
     }
 
     public getMarkdownPreview(markdown: string): Observable<MarkdownPreview> {
         return this.http.post<MarkdownPreview>(`${BackendEndpoint}/admin/previewmarkdown`, { markdown }, {
             withCredentials: true
         })
-            .catch(this._handleFetchError);
+            .catch((error) => {
+                return this._handleFetchError(error);
+            });
     }
 
     public loginUser(email: string, password: string): Observable<void> {
@@ -155,17 +168,22 @@ export class BackendApiService {
             email: email,
             password: password
         };
-        return this.http.put<void>(`${BackendEndpoint}/login`, credentials);
+        return this.http.put<void>(`${BackendEndpoint}/login`, credentials, { withCredentials: true });
     }
 
     private _handleFetchError(error: any): ErrorObservable {
-        if (error instanceof Response) {
+        if (error instanceof HttpErrorResponse) {
             switch (error.status) {
                 case 404:
                     return Observable.throw(new NotFoundError());
                 case 401:
-                    this.router.navigateByUrl("login");
-                    return;
+                    const redirectUrl = this.router.url;
+                    this.router.navigate(["/login"], {
+                        queryParams: {
+                            [RedirectQueryParamName]: redirectUrl
+                        }
+                    });
+                    return Observable.throw(new UnauthorizedError());
             }
         }
 
