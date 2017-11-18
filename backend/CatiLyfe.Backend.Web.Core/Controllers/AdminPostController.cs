@@ -17,7 +17,7 @@
     /// The admin post controller.
     /// </summary>
     [Route("admin/post")]
-    [Authorize(Policy = "default")]
+    [Authorize(Policy = "default", Roles = "god-post")]
     public class AdminPostController : Controller
     {
         /// <summary>
@@ -72,6 +72,7 @@
         /// <param name="post">The post.</param>
         /// <returns>The updated post.</returns>
         [HttpPost]
+        [Authorize(Policy = "default", Roles = "god-post,post-edit,post-add")]
         public async Task<AdminPost> SetPost([FromBody] AdminPost post)
         {
             var updated = await this.catiDatalayer.SetPost(post.ToPost(), this.GetUserAccessDetails());
@@ -84,6 +85,7 @@
         /// <param name="id">The post id.</param>
         /// <returns>Nothing or an error.</returns>
         [HttpDelete]
+        [Authorize(Policy = "default", Roles = "god-post,post-delete")]
         public Task DeletePost(int id)
         {
             return this.catiDatalayer.DeletePost(id, this.GetUserAccessDetails());

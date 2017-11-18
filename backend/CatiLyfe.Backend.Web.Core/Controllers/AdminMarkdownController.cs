@@ -35,6 +35,7 @@
         /// <param name="args">The arguments.</param>
         /// <returns>The preview.</returns>
         [HttpPost]
+        [Authorize(Policy = "default", Roles = "god-post,post-add,post-edit")]
         public Task<MarkdownPreview> PreviewMarkdown([FromBody]MarkdownPreviewArgs args)
         {
             var result = this.contentTransformer.TransformMarkdown(args.MarkDOWN);

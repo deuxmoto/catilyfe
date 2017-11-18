@@ -15,8 +15,8 @@
     /// <summary>
     /// The userModel controller.
     /// </summary>
-    [Route("[controller]")]
-    [Authorize(Policy = "default")]
+    [Route("admin/user")]
+    [Authorize(Policy = "default", Roles = "god-post")]
     public class UserController : Controller
     {
         /// <summary>
@@ -45,6 +45,7 @@
         /// <param name="userModel">The userModel.</param>
         /// <returns>Nothing, or an error on failure.</returns>
         [HttpPut]
+        [Authorize(Policy = "default", Roles = "god-post,user-add,user-edit")]
         public Task SetUser([FromBody]UserModel userModel)
         {
             return this.authDataLayer.SetUser(userModel.ToUser(this.passwordHelper));
@@ -55,6 +56,7 @@
         /// </summary>
         /// <returns>The users.</returns>
         [HttpGet]
+        [Authorize(Policy = "default", Roles = "god-post")]
         public async Task<IEnumerable<UserModel>> GetAllUsers()
         {
             var users = await this.authDataLayer.GetUser(null, null, null);
