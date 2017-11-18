@@ -12,6 +12,8 @@
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+    using CatiLyfe.Backend.Web.Core.Code;
 
     /// <summary>
     /// The login controller.
@@ -32,9 +34,7 @@
         /// <summary>
         /// The login.
         /// </summary>
-        /// <param name="credentials">
-        /// The credentials.
-        /// </param>
+        /// <param name="credentials">The credentials.</param>
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
@@ -71,6 +71,18 @@
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 principal,
                 new AuthenticationProperties { IsPersistent = true });
+
+            return this.NoContent();
+        }
+
+        [HttpDelete]
+        [Authorize(Policy = "default")]
+        public async Task<IActionResult> Logoff()
+        {
+            var user = this.GetUserAccessDetails();
+            await this.authDataLayer.DeauthorizeToken(user.UserId, Convert.FromBase64String(user.Token));
+
+            await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return this.NoContent();
         }

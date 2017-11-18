@@ -54,12 +54,14 @@
         /// <summary>
         /// Get all users.
         /// </summary>
+        /// <param name="id">The user id.</param>
+        /// <param name="email">The user email.</param>
         /// <returns>The users.</returns>
         [HttpGet]
         [Authorize(Policy = "default", Roles = "god-post")]
-        public async Task<IEnumerable<UserModel>> GetAllUsers()
+        public async Task<IEnumerable<UserModel>> GetUser([FromQuery]int? id, [FromQuery]string email)
         {
-            var users = await this.authDataLayer.GetUser(null, null, null);
+            var users = await this.authDataLayer.GetUser(id, email, null);
             return users.Select(u => new UserModel(u));
         }
 

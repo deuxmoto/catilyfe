@@ -30,6 +30,14 @@
         Task CreateToken(int user, byte[] token, DateTime expiry);
 
         /// <summary>
+        /// Deauthorize a token.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="token">The token.</param>
+        /// <returns>An async task.</returns>
+        Task DeauthorizeToken(int user, byte[] token);
+
+        /// <summary>
         /// Sets a user based on the user model.
         /// </summary>
         /// <param name="usermodel">The user model.</param>

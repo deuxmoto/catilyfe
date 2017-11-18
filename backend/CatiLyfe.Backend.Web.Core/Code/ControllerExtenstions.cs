@@ -19,13 +19,23 @@
         }
 
         /// <summary>
+        /// Gets the current user token.
+        /// </summary>
+        /// <param name="self">The controller.</param>
+        /// <returns>The user token.</returns>
+        public static string GetUserToken(this Controller self)
+        {
+            return self.User.FindFirstValue(ClaimTypes.Hash);
+        }
+
+        /// <summary>
         /// Creates user access details for the signed in user.
         /// </summary>
         /// <param name="self">The controller.</param>
         /// <returns>The user access details.</returns>
         public static UserAccessDetails GetUserAccessDetails(this Controller self)
         {
-            return new UserAccessDetails(self.GetUserId());
+            return new UserAccessDetails(self.GetUserId(), self.GetUserToken());
         }
     }
 }

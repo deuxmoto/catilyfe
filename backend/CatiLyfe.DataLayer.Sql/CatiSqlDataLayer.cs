@@ -611,5 +611,20 @@
                     paramters.AddWithValue("revive", true);
                 });
         }
+
+        /// <summary>
+        /// Deauthorize a token.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="token">The token.</param>
+        /// <returns>An async task.</returns>
+        public Task DeauthorizeToken(int user, byte[] token)
+        {
+            return this.ExecuteNonQuery("auth.settoken", parameters => {
+                parameters.AddWithValue("userid", user);
+                parameters.AddWithValue("token", token);
+                parameters.AddWithValue("expiry", DateTime.UtcNow);
+            });
+        }
     }
 }
