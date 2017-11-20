@@ -2,10 +2,15 @@
 $bp-sm: 48rem;
 $bp-md: 64rem;
 $bp-lg: 75rem;
+$bp-form: 35rem;
 @mixin if-larger-than($bp) {
     @media screen and (min-width: $bp) {
         @content;
     }
+}
+@mixin form-width() {
+    width: $bp-form;
+    max-width: $bp-form;
 }
 
 // Colors

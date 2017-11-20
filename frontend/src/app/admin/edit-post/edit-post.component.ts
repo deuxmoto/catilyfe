@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { FormControl, FormGroup, Validators, ControlValueAccessor } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DataSource } from "@angular/cdk/collections";
 
@@ -35,14 +36,9 @@ enum Tab {
     styleUrls: [ "./edit-post.component.scss" ]
 })
 export class EditPostComponent implements OnInit {
-    public id: number;
-    public title: string;
-    public description: string;
-    public slug: string;
-    public tags: string[];
-    public whenCreated: Date;
-    public whenPublished: Date;
+    public metadataForm: FormGroup;
     public content: string;
+    public tags: string[];
 
     public state = State.Loading;
     public StateEnum = State;
@@ -69,7 +65,7 @@ export class EditPostComponent implements OnInit {
     constructor(
         private backend: BackendApiService,
         private route: ActivatedRoute,
-        private router: Router,
+        private router: Router
     ) { }
 
     public ngOnInit(): void {
@@ -79,16 +75,27 @@ export class EditPostComponent implements OnInit {
             return;
         }
 
+        this.metadataForm = new FormGroup({
+            id: new FormControl({ value: "", disabled: true }),
+            title: new FormControl(""),
+            description: new FormControl(""),
+            slug: new FormControl(""),
+            whenCreated: new FormControl({ value: "", disabled: true }),
+            whenPublished: new FormControl("")
+        });
+
         this.backend.getAdminPost(id).subscribe(
             (post) => {
                 const metadata = post.metadata;
-                this.id = metadata.id;
-                this.title = metadata.title;
-                this.description = metadata.description;
-                this.slug = metadata.slug;
+                this.metadataForm.reset({
+                    id: metadata.id,
+                    title: metadata.title,
+                    description: metadata.description,
+                    slug: metadata.slug,
+                    whenCreated: metadata.whenCreated,
+                    whenPublished: metadata.whenPublished
+                });
                 this.tags = metadata.tags;
-                this.whenCreated = metadata.whenCreated;
-                this.whenPublished = metadata.whenPublished;
                 this.content = post.markdownContent;
 
                 this.state = State.Normal;
@@ -104,15 +111,16 @@ export class EditPostComponent implements OnInit {
     }
 
     public savePost(): void {
+        const formMetadata = this.metadataForm;
         const adminPost: AdminPost = {
             metadata: {
-                id: this.id,
-                title: this.title,
-                description: this.description,
-                slug: this.slug,
-                tags: this.tags,
-                whenCreated: this.whenCreated,
-                whenPublished: this.whenPublished
+                id: formMetadata.get("id").value,
+                title: formMetadata.get("title").value,
+                description: formMetadata.get("description").value,
+                slug: formMetadata.get("slug").value,
+                whenCreated: formMetadata.get("whenCreated").value,
+                whenPublished: formMetadata.get("whenPublished").value,
+                tags: this.tags
             },
             markdownContent: this.content
         };

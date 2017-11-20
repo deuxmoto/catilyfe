@@ -105,20 +105,8 @@ $bottom-bar-height: 4rem;
     font-size: 2.5rem;
 }
 
-.edit-post-fields-inline {
-    display: flex;
-
-    .edit-post-field {
-        flex: 1;
-    }
-
-    .edit-post-field + .edit-post-field {
-        margin-left: 15px;
-    }
-}
 .edit-post-field {
     margin-bottom: 1rem;
-    width: 100%;
 }
 
 /*

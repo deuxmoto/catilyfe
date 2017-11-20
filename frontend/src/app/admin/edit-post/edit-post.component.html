@@ -24,37 +24,41 @@
         </div>
 
         <div *ngSwitchCase="TabEnum.Metadata" class="tab-body">
-            <form>
-                <mat-form-field class="edit-post-field">
-                    <input matInput placeholder="Title" name="title" [(ngModel)]="title">
-                </mat-form-field>
-                <div class="edit-post-fields-inline">
-                    <mat-form-field class="edit-post-field">
-                        <input matInput placeholder="Id" name="id" [(ngModel)]="id" disabled>
+            <form [formGroup]="metadataForm">
+
+                <h3>Display metadata</h3>
+                <div class="row">
+                    <mat-form-field class="col-xs-12 edit-post-field">
+                        <input matInput placeholder="Title" name="title" formControlName="title">
                     </mat-form-field>
-                    <mat-form-field class="edit-post-field">
-                        <input matInput placeholder="Slug" name="slug" [(ngModel)]="slug">
-                    </mat-form-field>
-                </div>
-                <div class="edit-post-fields-inline">
-                    <mat-form-field class="edit-post-field">
-                        <input matInput placeholder="When Created" name="whenCreated" [(ngModel)]="whenCreated" disabled>
-                    </mat-form-field>
-                    <mat-form-field class="edit-post-field">
-                        <input matInput placeholder="When Published" name="whenPublished" [(ngModel)]="whenPublished">
+                    <mat-form-field class="col-xs-12 edit-post-field">
+                        <textarea matInput mdTextareaAutosize placeholder="Description" name="description" formControlName="description"></textarea>
                     </mat-form-field>
                 </div>
-                <mat-form-field class="edit-post-field">
-                    <textarea matInput mdTextareaAutosize placeholder="Description" name="description" [(ngModel)]="description"></textarea>
-                </mat-form-field>
+
+                <h3>Metadata metadata</h3>
+                <div class="row">
+                    <mat-form-field class="col-xs-12 col-sm-6 edit-post-field">
+                        <input matInput placeholder="Slug" name="slug" formControlName="slug">
+                    </mat-form-field>
+                    <datetime-picker class="col-xs-12 col-sm-6 edit-post-field" namePrefix="When published" name="whenPublished" formControlName="whenPublished"></datetime-picker>
+                </div>
+
+                <h3>Read only metadata</h3>
+                <div class="row">
+                    <mat-form-field class="col-xs-12 col-sm-6 edit-post-field">
+                        <input matInput placeholder="Id" name="id" formControlName="id">
+                    </mat-form-field>
+                    <datetime-picker class="col-xs-12 col-sm-6 edit-post-field" namePrefix="When created" name="whenCreated" formControlName="whenCreated"></datetime-picker>
+                </div>
             </form>
         </div>
         <div *ngSwitchCase="TabEnum.Markdown" class="tab-body">
-            <form>
-                <mat-form-field class="edit-post-field">
+            <div class="row">
+                <mat-form-field class="col-xs-12 edit-post-field">
                     <textarea matInput matTextareaAutosize placeholder="Write dank janx" name="postContent" [(ngModel)]="content"></textarea>
                 </mat-form-field>
-            </form>
+            </div>
         </div>
         <div *ngSwitchCase="TabEnum.MarkdownPreview" class="tab-body">
             <markdown-preview [markdown]="content"></markdown-preview>

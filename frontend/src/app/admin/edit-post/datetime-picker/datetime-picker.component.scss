@@ -1,0 +1,26 @@
+.wrapper {
+    $margin-size: 0.5rem;
+
+    display: flex;
+    margin-left: -$margin-size;
+    margin-right: -$margin-size;
+
+    & > * {
+        margin: 0 $margin-size;
+    }
+}
+
+.date-picker {
+    flex: 1 1 auto;
+}
+
+.time-picker {
+    width: 2.5rem;
+    flex: none;
+}
+
+.time-colon {
+    flex: none;
+    display: flex;
+    align-items: center;
+}

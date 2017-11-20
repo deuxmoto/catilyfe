@@ -1,0 +1,19 @@
+<div class="wrapper">
+    <mat-form-field class="date-picker">
+        <input matInput [matDatepicker]="picker1" [(ngModel)]="dayMonthYear" [disabled]="isDisabled" (change)="onChange()">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <mat-placeholder>{{namePrefix}}</mat-placeholder>
+    </mat-form-field>
+    <mat-form-field class="time-picker">
+        <mat-select [(ngModel)]="hour" [disabled]="isDisabled" name="hour" (change)="onChange()">
+            <mat-option *ngFor="let curHour of availableHours" [value]="curHour">{{curHour | padtime}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="time-colon">:</span>
+    <mat-form-field class="time-picker">
+        <mat-select [(ngModel)]="minute" [disabled]="isDisabled" name="minute" (change)="onChange()">
+            <mat-option *ngFor="let curMin of availableMinutes" [value]="curMin">{{curMin | padtime}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
