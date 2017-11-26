@@ -37,6 +37,10 @@ enum Tab {
 })
 export class EditPostComponent implements OnInit {
     public metadataForm: FormGroup;
+
+    // The following fields are either not included in the above metadataForm
+    // or are duplicated, because they're being used in parts of the UI that can't
+    // read from or worth with a FormGroup easily:
     public content: string;
     public tags: string[];
 

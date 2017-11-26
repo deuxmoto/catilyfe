@@ -9,5 +9,6 @@ export interface Environment {
 }
 
 export const environment: Environment = {
-  production: false,
+    production: false,
+    offlineRoutes: null
 };
