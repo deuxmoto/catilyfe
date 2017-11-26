@@ -75,7 +75,7 @@ export class UnknownError {
 export const RedirectQueryParamName = "redirectUrl";
 
 export const BackendHostName = "caticake.azurewebsites.net";
-export const BackendProtocol = "http";
+export const BackendProtocol = "https";
 
 const BackendEndpoint = `${BackendProtocol}://${BackendHostName}`;
 
