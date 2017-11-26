@@ -74,7 +74,10 @@ export class UnknownError {
 
 export const RedirectQueryParamName = "redirectUrl";
 
-const BackendEndpoint = "http://caticake.azurewebsites.net";
+export const BackendHostName = "caticake.azurewebsites.net";
+export const BackendProtocol = "http";
+
+const BackendEndpoint = `${BackendProtocol}://${BackendHostName}`;
 
 const convertDateStringsToObjects = <T>(obj: T): T => {
     let anyObj = <any>obj;

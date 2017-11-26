@@ -4,9 +4,10 @@ import {
 } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import { BackendApiService } from "./backend-api.service";
+import { OfflineInterceptor } from "./offline.interceptor";
 
 @NgModule({
     imports: [ CommonModule, HttpClientModule ],
@@ -25,7 +26,12 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
-                BackendApiService
+                BackendApiService,
+                {
+                    provide: HTTP_INTERCEPTORS,
+                    useClass: OfflineInterceptor,
+                    multi: true
+                }
             ]
         };
     }
