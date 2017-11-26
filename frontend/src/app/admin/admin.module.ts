@@ -1,7 +1,9 @@
 import { NgModule } from "@angular/core";
-import { MatButtonModule, MatCardModule, MatDatepickerModule, MatNativeDateModule,
-    MatFormFieldModule,
-    MatInputModule, MatOptionModule, MatSelectModule, MatTableModule } from "@angular/material";
+import {
+    MatButtonModule, MatCardModule, MatDatepickerModule,
+    MatNativeDateModule, MatFormFieldModule, MatChipsModule,
+    MatInputModule, MatOptionModule, MatSelectModule, MatTableModule
+} from "@angular/material";
 import { Route, RouterModule } from "@angular/router";
 
 import { AdminComponent } from "./admin.component";
@@ -28,6 +30,7 @@ const adminRoutes: Route[] = [
         RouterModule.forChild(adminRoutes),
         MatButtonModule,
         MatCardModule,
+        MatChipsModule,
         MatDatepickerModule,
         MatNativeDateModule,
         MatFormFieldModule,

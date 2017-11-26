@@ -75,13 +75,15 @@ export class EditPostComponent implements OnInit {
             return;
         }
 
+        // Create the form controls
         this.metadataForm = new FormGroup({
             id: new FormControl({ value: "", disabled: true }),
             title: new FormControl(""),
             description: new FormControl(""),
             slug: new FormControl(""),
             whenCreated: new FormControl({ value: "", disabled: true }),
-            whenPublished: new FormControl("")
+            whenPublished: new FormControl(""),
+            newTag: new FormControl("")
         });
 
         this.backend.getAdminPost(id).subscribe(
@@ -140,6 +142,17 @@ export class EditPostComponent implements OnInit {
 
     public setCurrentTab(tab: Tab): void {
         this.currentTab = tab;
+    }
+
+    public addTag(keypress?: KeyboardEvent):void {
+        // Only add tag for Enter key
+        if (keypress && keypress.keyCode !== 13) {
+            return;
+        }
+
+        const newTagTextBox = this.metadataForm.get("newTag");
+        this.tags.push(newTagTextBox.value);
+        newTagTextBox.reset("");
     }
 
     private handleNetworkError(error: any): void {

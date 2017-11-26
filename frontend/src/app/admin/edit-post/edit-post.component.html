@@ -11,7 +11,6 @@
 
 <div class="edit-post responsive-container" [ngSwitch]="state">
 
-
     <div *ngSwitchDefault [ngSwitch]="currentTab">
 
         <div class="tab-group">
@@ -26,39 +25,45 @@
         <div *ngSwitchCase="TabEnum.Metadata" class="tab-body">
             <form [formGroup]="metadataForm">
 
-                <h3>Display metadata</h3>
-                <div class="row">
-                    <mat-form-field class="col-xs-12 edit-post-field">
-                        <input matInput placeholder="Title" name="title" formControlName="title">
+                <h3>Basic</h3>
+                <mat-form-field class="edit-post-field">
+                    <input matInput placeholder="Title" formControlName="title">
+                </mat-form-field>
+                <mat-form-field class="edit-post-field">
+                    <textarea matInput mdTextareaAutosize placeholder="Description" name="description" formControlName="description"></textarea>
+                </mat-form-field>
+                <div class="tags-container row edit-post-field">
+                    <mat-form-field class="col-xs-12 col-sm-8" floatPlaceholder="always">
+                        <mat-chip-list placeholder="Tags">
+                            <mat-basic-chip *ngFor="let tag of tags" removable="true" (remove)="tags.splice(tags.indexOf(tag), 1)">
+                                {{tag}}
+                                <span matChipRemove class="fa fa-times"></span>
+                            </mat-basic-chip>
+                        </mat-chip-list>
                     </mat-form-field>
-                    <mat-form-field class="col-xs-12 edit-post-field">
-                        <textarea matInput mdTextareaAutosize placeholder="Description" name="description" formControlName="description"></textarea>
+                    <mat-form-field class="col-xs-12 col-sm-4" floatPlaceholder="auto">
+                        <input matInput placeholder="New tag..." formControlName="newTag" (keypress)="addTag($event)">
                     </mat-form-field>
                 </div>
 
-                <h3>Metadata metadata</h3>
-                <div class="row">
-                    <mat-form-field class="col-xs-12 col-sm-6 edit-post-field">
-                        <input matInput placeholder="Slug" name="slug" formControlName="slug">
-                    </mat-form-field>
-                    <datetime-picker class="col-xs-12 col-sm-6 edit-post-field" namePrefix="When published" name="whenPublished" formControlName="whenPublished"></datetime-picker>
-                </div>
+                <h3>Publishing</h3>
+                <mat-form-field class="edit-post-field">
+                    <input matInput placeholder="Slug" name="slug" formControlName="slug">
+                </mat-form-field>
+                <datetime-picker class="edit-post-field" namePrefix="When published" name="whenPublished" formControlName="whenPublished"></datetime-picker>
 
-                <h3>Read only metadata</h3>
-                <div class="row">
-                    <mat-form-field class="col-xs-12 col-sm-6 edit-post-field">
-                        <input matInput placeholder="Id" name="id" formControlName="id">
-                    </mat-form-field>
-                    <datetime-picker class="col-xs-12 col-sm-6 edit-post-field" namePrefix="When created" name="whenCreated" formControlName="whenCreated"></datetime-picker>
-                </div>
+                <h3>Read only</h3>
+                <mat-form-field class="edit-post-field">
+                    <input matInput placeholder="Id" name="id" formControlName="id">
+                </mat-form-field>
+                <datetime-picker class="edit-post-field" namePrefix="When created" name="whenCreated" formControlName="whenCreated"></datetime-picker>
+
             </form>
         </div>
         <div *ngSwitchCase="TabEnum.Markdown" class="tab-body">
-            <div class="row">
-                <mat-form-field class="col-xs-12 edit-post-field">
-                    <textarea matInput matTextareaAutosize placeholder="Write dank janx" name="postContent" [(ngModel)]="content"></textarea>
-                </mat-form-field>
-            </div>
+            <mat-form-field class="edit-post-field">
+                <textarea matInput matTextareaAutosize placeholder="Write dank janx" name="postContent" [(ngModel)]="content"></textarea>
+            </mat-form-field>
         </div>
         <div *ngSwitchCase="TabEnum.MarkdownPreview" class="tab-body">
             <markdown-preview [markdown]="content"></markdown-preview>

@@ -104,9 +104,19 @@ $bottom-bar-height: 4rem;
 .edit-post-title {
     font-size: 2.5rem;
 }
-
 .edit-post-field {
+    width: 100%;
     margin-bottom: 1rem;
+}
+.tags-container {
+    align-items: flex-end;
+}
+.mat-basic-chip {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+    margin-right: 0.5rem;
+    padding: 5px 10px;
+    max-width: 100%;
 }
 
 /*
