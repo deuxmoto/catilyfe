@@ -34,13 +34,14 @@
                     <mat-form-field class="col-xs-12 col-sm-8" floatPlaceholder="always">
                         <mat-chip-list placeholder="Tags">
                             <mat-basic-chip *ngFor="let tag of tags" removable="true" (remove)="tags.splice(tags.indexOf(tag), 1)">
-                                {{tag}}
-                                <span matChipRemove class="fa fa-times"></span>
+                                <span class="basic-chip-text">{{tag}}</span>
+                                <span matChipRemove class="fa fa-times basic-chip-remove"></span>
                             </mat-basic-chip>
                         </mat-chip-list>
                     </mat-form-field>
                     <mat-form-field class="col-xs-12 col-sm-4" floatPlaceholder="auto">
-                        <input matInput placeholder="New tag..." formControlName="newTag" (keypress)="addTag($event)">
+                        <input #newTagInput matInput placeholder="New tag..." formControlName="newTag" (keypress)="addTag($event)">
+                        <button matSuffix mat-button [ngStyle]="{ 'display': newTagInput.value.length == 0 ? 'none' : 'initial' }" (click)="addTag()">Add</button>
                     </mat-form-field>
                 </div>
 
