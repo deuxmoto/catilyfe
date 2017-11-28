@@ -132,6 +132,14 @@ $bottom-bar-height: 4rem;
         flex: none;
     }
 }
+.slide-toggle-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    & > mat-slide-toggle {
+        margin-right: 1.5rem;
+    }
+}
 
 /*
  * Bottom bar styling

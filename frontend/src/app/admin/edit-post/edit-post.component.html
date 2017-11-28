@@ -12,10 +12,7 @@
     <div *ngSwitchDefault [ngSwitch]="currentTab">
 
         <div class="tab-group">
-            <button mat-button
-                *ngFor="let tab of tabs"
-                [ngClass]="{ active: currentTab == tab.value }"
-                (click)="setCurrentTab(tab.value)">
+            <button mat-button *ngFor="let tab of tabs" [ngClass]="{ active: currentTab == tab.value }" (click)="setCurrentTab(tab.value)">
                 {{tab.text}}
             </button>
         </div>
@@ -50,6 +47,10 @@
                     <input matInput placeholder="Slug" name="slug" formControlName="slug">
                 </mat-form-field>
                 <datetime-picker class="edit-post-field" namePrefix="When published" name="whenPublished" formControlName="whenPublished"></datetime-picker>
+                <div class="edit-post-field slide-toggle-container">
+                    <mat-slide-toggle color="primary" formControlName="isReserved">Is reserved</mat-slide-toggle>
+                    <mat-slide-toggle color="primary" formControlName="isPublished">Is published</mat-slide-toggle>
+                </div>
 
                 <h3>Read only</h3>
                 <mat-form-field class="edit-post-field">

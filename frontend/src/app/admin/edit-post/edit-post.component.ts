@@ -87,6 +87,8 @@ export class EditPostComponent implements OnInit {
             slug: new FormControl(""),
             whenCreated: new FormControl({ value: "", disabled: true }),
             whenPublished: new FormControl(""),
+            isPublished: new FormControl(""),
+            isReserved: new FormControl(""),
             newTag: new FormControl("")
         });
 
@@ -99,7 +101,9 @@ export class EditPostComponent implements OnInit {
                     description: metadata.description,
                     slug: metadata.slug,
                     whenCreated: metadata.whenCreated,
-                    whenPublished: metadata.whenPublished
+                    whenPublished: metadata.whenPublished,
+                    isPublished: metadata.isPublished,
+                    isReserved: metadata.isReserved
                 });
                 this.tags = metadata.tags;
                 this.content = post.markdownContent;
@@ -126,7 +130,9 @@ export class EditPostComponent implements OnInit {
                 slug: formMetadata.get("slug").value,
                 whenCreated: formMetadata.get("whenCreated").value,
                 whenPublished: formMetadata.get("whenPublished").value,
-                tags: this.tags
+                tags: this.tags,
+                isReserved: formMetadata.get("isReserved").value,
+                isPublished: formMetadata.get("isPublished").value
             },
             markdownContent: this.content
         };

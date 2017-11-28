@@ -16,6 +16,8 @@ export interface AdminPostMetadata {
     whenPublished: Date;
     description: string;
     tags: string[];
+    isReserved: boolean;
+    isPublished: boolean;
 }
 
 export interface AdminPost {

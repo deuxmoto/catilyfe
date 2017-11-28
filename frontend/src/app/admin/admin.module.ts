@@ -2,7 +2,8 @@ import { NgModule } from "@angular/core";
 import {
     MatButtonModule, MatCardModule, MatDatepickerModule,
     MatNativeDateModule, MatFormFieldModule, MatChipsModule,
-    MatInputModule, MatOptionModule, MatSelectModule, MatTableModule
+    MatInputModule, MatOptionModule, MatSelectModule, MatSlideToggleModule,
+    MatTableModule
 } from "@angular/material";
 import { Route, RouterModule } from "@angular/router";
 
@@ -37,8 +38,8 @@ const adminRoutes: Route[] = [
         MatInputModule,
         MatOptionModule,
         MatSelectModule,
+        MatSlideToggleModule,
         MatTableModule,
-
         SharedModule
     ],
     declarations: [
