@@ -79,12 +79,12 @@
         /// <summary>
         /// Gets if the post is published.
         /// </summary>
-        public bool IsPublished { get; }
+        public bool IsPublished { get; set; }
 
         /// <summary>
         /// Gets if the post is deleted.
         /// </summary>
-        public bool IsDeleted { get; }
+        public bool IsDeleted { get; set; }
 
         /// <summary>
         /// The tags for the post.

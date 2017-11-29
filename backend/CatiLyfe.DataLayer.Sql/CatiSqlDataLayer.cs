@@ -205,6 +205,9 @@
                                       parmeters.AddWithValue("description", post.MetaData.Description);
                                       parmeters.AddWithValue("userid", userAccessDetails.UserId);
                                       parmeters.AddWithValue("goeslive", post.MetaData.GoesLive);
+                                      parmeters.AddWithValue("ispublished", post.MetaData.IsPublished);
+                                      parmeters.AddWithValue("isreserved", post.MetaData.IsReserved);
+
                                       var contentList = parmeters.AddWithValue(
                                           "content",
                                           CatiSqlDataLayer.GetPostContentRecord(post.PostContent));

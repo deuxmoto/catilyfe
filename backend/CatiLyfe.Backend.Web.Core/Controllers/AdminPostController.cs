@@ -42,14 +42,14 @@
         }
 
         [HttpGet]
-        public async Task<IEnumerable<AdminMetaData>> GetMetadata([FromQuery]int? top, [FromQuery]int? skip, [FromQuery]DateTime? startDate, [FromQuery]DateTime? endDate, [FromQuery]bool includeReserved, [FromQuery]bool includeDeleted, [FromQuery]IEnumerable<string> tags)
+        public async Task<IEnumerable<AdminMetaData>> GetMetadata([FromQuery]int? top, [FromQuery]int? skip, [FromQuery]DateTime? startDate, [FromQuery]DateTime? endDate, [FromQuery]bool includeUnpublished, [FromQuery]bool includeDeleted, [FromQuery]IEnumerable<string> tags)
         {
             var metas = await this.catiDatalayer.GetPostMetadata(
                 top,
                 skip,
                 startDate,
                 endDate,
-                includeReserved,
+                includeUnpublished,
                 includeDeleted,
                 tags ?? Enumerable.Empty<string>());
 

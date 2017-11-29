@@ -6,6 +6,8 @@
    ,@description   NVARCHAR(256)
    ,@goeslive      DATETIME2
    ,@userid        INT
+   ,@ispublished   BIT
+   ,@isreserved    BIT
    ,@content       cati.postcontentlist READONLY
    ,@tags          cati.tagslist        READONLY
 AS
@@ -32,7 +34,7 @@ AS
     END
 
     MERGE INTO cati.postmeta m
-    USING (SELECT @slug AS slug, @title AS title, @description AS description, @goeslive AS goeslive, @id AS id) AS src
+    USING (SELECT @slug AS slug, @title AS title, @description AS description, @goeslive AS goeslive, @id AS id, @ispublished AS ispublished, @isreserved AS isreserved) AS src
        ON m.id = src.id
     WHEN MATCHED THEN
         UPDATE SET
@@ -40,6 +42,8 @@ AS
            ,m.title = src.title
            ,m.description = src.description
            ,m.goeslive = src.goeslive
+           ,m.ispublished = src.ispublished
+           ,m.isreserved = src.isreserved
     WHEN NOT MATCHED THEN
         INSERT
         (
@@ -48,6 +52,8 @@ AS
            ,description
            ,goeslive
            ,created
+           ,ispublished
+           ,isreserved
         )
         VALUES
         (
@@ -56,6 +62,8 @@ AS
            ,src.description
            ,src.goeslive
            ,GETUTCDATE()
+           ,@ispublished
+           ,@isreserved
         );
 
     IF(@id IS NULL)
@@ -156,6 +164,8 @@ AS
 
     EXECUTE @error = cati.getposts @error_message = @error_message
                                   ,@id = @id
+                                  ,@includeUnpublished = 1
+                                  ,@includeDeleted = 1
 
     END TRY
     BEGIN CATCH
