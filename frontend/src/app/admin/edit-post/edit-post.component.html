@@ -37,7 +37,7 @@
                         </mat-chip-list>
                     </mat-form-field>
                     <mat-form-field class="col-xs-12 col-sm-4" floatPlaceholder="auto">
-                        <input #newTagInput matInput placeholder="New tag..." formControlName="newTag" (keypress)="addTag($event)">
+                        <input #newTagInput matInput placeholder="New tag..." formControlName="newTag">
                         <button matSuffix mat-button [ngStyle]="{ 'display': newTagInput.value.length == 0 ? 'none' : 'initial' }" (click)="addTag()">Add</button>
                     </mat-form-field>
                 </div>
