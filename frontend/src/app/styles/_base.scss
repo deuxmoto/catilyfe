@@ -18,6 +18,12 @@ a {
     }
 }
 
+button {
+    box-shadow: none;
+    border: none;
+    background-color: initial;
+}
+
 * {
     box-sizing: border-box;
 }

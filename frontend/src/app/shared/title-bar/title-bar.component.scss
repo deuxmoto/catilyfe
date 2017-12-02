@@ -1,79 +1,101 @@
 @import "../../styles/helpers";
 
-$light-foreground: rgb(10, 10, 10);
-$light-background: white;
-
-$dark-foreground: white;
-$dark-background: rgb(10, 10, 10);
-$dark-foreground-translucent: rgba(255, 255, 255, 0.9);
-$dark-background-translucent: rgba(10, 10, 10, 0.9);
+$dark: rgb(10, 10, 10);
+$light: rgb(245, 245, 245);
 
 $transition-animation: 200ms ease;
 
 :host {
     z-index: 100;
-}
 
-/*
- * Title bar top component
- *
- * Defaults to light theme, has dark theme for when menu is showing
- */
-.title-bar-container {
-    background-color: $light-background;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-
-    display: flex;
     position: fixed;
     width: 100%;
     height: $title-bar-height;
     top: 0px;
     left: 0px;
+}
+
+.title-bar-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
     transition: $transition-animation;
-}
-.title-bar-dark-theme .title-bar-container {
-    background-color: $dark-background-translucent;
-    box-shadow: none;
-    border-bottom: none;
-}
 
-.title-bar-center {
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.title-bar-right {
-    position: absolute;
-    right: 0px;
-    top: 0px;
+    .theme-light & {
+        background-color: white;
+        box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    .theme-dark & {
+        background-color: $dark;
+        box-shadow: none;
+        border-bottom: fade-out($light, 0.5);
+    }
+    .transparent & {
+        background-color: transparent;
+        box-shadow: none;
+        border-bottom: 0px;
+    }
+    .menu-open & {
+        background-color: fade-out($dark, 0.1);
+        box-shadow: none;
+        border-bottom: none;
+    }
 }
 
 .title-bar-item {
-    height: calc(#{$title-bar-height} - 1px); //account for title-bar-container's bottom border
+    height: $title-bar-height;
     padding: 0 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
-    color: $light-foreground;
-
+    cursor: pointer;
     transition: $transition-animation;
 
-    &:hover {
-        cursor: pointer;
-        background-color: darken($light-background, 10%);
+    .theme-light & {
+        color: $dark;
+
+        &:hover {
+            background-color: darken($light, 10%);
+        }
+    }
+    .theme-dark & {
+        color: $light;
+
+        &:hover {
+            background-color: lighten($dark, 10%);
+        }
+    }
+    .transparent & {
+        &:hover {
+            background-color: transparent;
+        }
+    }
+    .menu-open & {
+        color: $light;
+
+        &:hover {
+            color: $dark;
+            background-color: fade-out($light, 0.1);
+        }
     }
 }
-.title-bar-dark-theme .title-bar-item {
-    color: $dark-foreground;
 
-    &:hover {
-        background-color: $dark-foreground-translucent;
-        color: $dark-background;
+.title-bar-leftcenter {
+    margin-right: auto;
+
+    @include if-larger-than-mobile() {
+        margin-left: auto;
     }
 }
 
+.title-bar-right {
+    margin-left: auto;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
 .branding {
     @include title-styles();
 }
@@ -88,7 +110,9 @@ $transition-animation: 200ms ease;
     width: 100%;
     height: calc(100% - #{$title-bar-height});
     top: $title-bar-height;
-    background-color: $dark-background-translucent;
+    background-color: fade-out($dark, 0.1);
+    padding: 2rem 0;
+    overflow-y: auto;
 
     display: flex;
     justify-content: center;
@@ -96,6 +120,7 @@ $transition-animation: 200ms ease;
 }
 
 .title-bar-menu-items {
+    max-height: 100%;
     width: 100%;
     padding-bottom: 2rem;
 
@@ -107,7 +132,7 @@ $transition-animation: 200ms ease;
 .title-bar-menu-item {
     width: 100%;
     height: 6rem;
-    color: $dark-foreground;
+    color: $light;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +140,7 @@ $transition-animation: 200ms ease;
     @include title-styles();
 
     &:hover {
-        background-color: $dark-foreground-translucent;
-        color: $dark-background;
+        background-color: fade-out($light, 0.1);
+        color: $dark;
     }
 }

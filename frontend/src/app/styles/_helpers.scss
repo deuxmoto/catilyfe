@@ -8,6 +8,11 @@ $bp-form: 35rem;
         @content;
     }
 }
+@mixin if-larger-than-mobile() {
+    @media screen and (min-width: $bp-sm) {
+        @content;
+    }
+}
 @mixin form-width() {
     width: $bp-form;
     max-width: $bp-form;

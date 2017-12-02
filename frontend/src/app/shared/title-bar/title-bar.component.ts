@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import {
   trigger,
@@ -31,6 +31,12 @@ interface MenuItem {
     ]
 })
 export class TitleBarComponent implements OnInit {
+    @Input()
+    public transparent = false;
+
+    @Input()
+    public theme: "light" | "dark" = "light";
+
     public menuItems: MenuItem[];
     public menuIsOpen = false;
 
@@ -40,7 +46,7 @@ export class TitleBarComponent implements OnInit {
         this.menuItems = [
             {
                 text: "Home",
-                linkUrl: "/home"
+                linkUrl: ""
             },
             {
                 text: "About",
@@ -55,10 +61,6 @@ export class TitleBarComponent implements OnInit {
                 linkUrl: "/admin"
             }
         ];
-    }
-
-    gotoHome(): void {
-        this.router.navigate([""]);
     }
 
     toggleMenu(): void {

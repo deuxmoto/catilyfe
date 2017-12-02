@@ -1,18 +1,21 @@
-<div [ngClass]="{'title-bar-dark-theme': menuIsOpen}">
+<div [class.theme-dark]="theme === 'dark'"
+    [class.theme-light]="theme === 'light'"
+    [class.transparent]="transparent"
+    [class.menu-open]="menuIsOpen">
     <div class="title-bar-container">
-        <div class="title-bar-center">
-            <a class="title-bar-item branding" (click)="gotoHome()">#Cati Lyfe</a>
+        <div class="title-bar-leftcenter">
+            <a class="title-bar-item branding" routerLink="">Deux Moto</a>
         </div>
         <div class="title-bar-right">
-            <a class="title-bar-item" (click)="toggleMenu()">
-            <span class="fa fa-bars" *ngIf="!menuIsOpen"></span>
-            <span class="fa fa-times" *ngIf="menuIsOpen"></span>
-        </a>
+            <button class="title-bar-item" (click)="toggleMenu()">
+                <span class="fa fa-bars" *ngIf="!menuIsOpen"></span>
+                <span class="fa fa-times" *ngIf="menuIsOpen"></span>
+            </button>
         </div>
     </div>
     <div class="title-bar-menu" *ngIf="menuIsOpen" [@menuEnterAnimation]>
         <ul class="title-bar-menu-items remove-list-style">
-            <li *ngFor="let menuItem of menuItems" >
+            <li *ngFor="let menuItem of menuItems">
                 <a routerLink="{{menuItem.linkUrl}}" class="title-bar-menu-item" (click)="closeMenu()">{{menuItem.text}}</a>
             </li>
         </ul>
