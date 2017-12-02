@@ -23,6 +23,10 @@ const adminRoutes: Route[] = [
     {
         path: "admin/editpost/:id",
         component: EditPostComponent
+    },
+    {
+        path: "admin/newpost",
+        component: EditPostComponent
     }
 ];
 

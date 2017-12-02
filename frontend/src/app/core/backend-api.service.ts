@@ -9,10 +9,11 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 
 export interface AdminPostMetadata {
-    id: number;
+    id?: number;
+    whenCreated?: Date;
+    revision?: number;
     slug: string;
     title: string;
-    whenCreated: Date;
     whenPublished: Date;
     description: string;
     tags: string[];
@@ -49,7 +50,7 @@ export class NotFoundError {
 export class UnauthorizedError {
 }
 
-export class UnknownError {
+export class OtherError {
     public originalError: any;
     public errorMessage: string;
 
@@ -61,8 +62,15 @@ export class UnknownError {
             if (typeof error === "string") {
                 this.errorMessage = error;
             }
-            else if (error instanceof Response) {
-                this.errorMessage = `[Http Status Code ${error.status}] ${error.statusText}`
+            else if (error instanceof HttpErrorResponse) {
+                const innerError = error.error;
+                if (innerError.message) {
+                    // Caticake error
+                    this.errorMessage = `[Error ${innerError.message}] ${JSON.stringify(innerError.details)}`;
+                }
+                else {
+                    this.errorMessage = `[Http Status Code ${error.status}] ${error.statusText}`
+                }
             }
             else if (error instanceof Error) {
                 this.errorMessage = `[Error ${error.name}] ${error.message}`
@@ -71,6 +79,10 @@ export class UnknownError {
                 this.errorMessage = "Generic error message."
             }
         }
+    }
+
+    public toString(): string {
+        return this.errorMessage;
     }
 }
 
@@ -192,7 +204,7 @@ export class BackendApiService {
             }
         }
 
-        const unknownError = new UnknownError(error);
+        const unknownError = new OtherError(error);
         console.error(`${unknownError.errorMessage} %o`, error);
         return Observable.throw(unknownError);
     }

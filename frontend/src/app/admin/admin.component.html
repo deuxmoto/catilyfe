@@ -3,7 +3,10 @@
 <div class="admin-cards responsive-container">
 
     <mat-card class="posts-table admin-card">
-        <mat-card-title>Created Posts</mat-card-title>
+        <mat-card-title>
+            Created Posts
+            <a class="new-post" routerLink="newpost"><i class="fa fa-plus"></i> New post</a>
+        </mat-card-title>
         <mat-table class="" #table [dataSource]="dataSource" matSort>
 
             <!-- ID Column -->

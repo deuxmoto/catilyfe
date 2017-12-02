@@ -45,6 +45,20 @@ $bottom-bar-height: 4rem;
         margin-left: -1rem;
     }
 }
+.top-bar-error {
+    background-color: red;
+    color: white;
+    padding: 1rem 0;
+
+    .top-bar-error-inner {
+        position: relative;
+    }
+
+    .top-bar-error-close {
+        font-size: 11px;
+        cursor: pointer;
+    }
+}
 
 /*
  * Tab group styling

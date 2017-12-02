@@ -3,7 +3,16 @@
         <a class="top-bar-back" (click)="closeEditPost()">
             <span class="fa fa-arrow-left"></span>
         </a>
-        <h2 class="top-bar-title">Edit Post</h2>
+        <h2 class="top-bar-title">
+            <span *ngIf="newPost">New Post</span>
+            <span *ngIf="!newPost">Edit Post</span>
+        </h2>
+    </div>
+    <div class="top-bar-error" *ngIf="lastError">
+        <div class="top-bar-error-inner responsive-container">
+            <button class="top-bar-error-close fa fa-times" (click)="closeErrorMessage()"></button>
+            {{lastError}}
+        </div>
     </div>
 </div>
 
@@ -52,11 +61,13 @@
                     <mat-slide-toggle color="primary" formControlName="isPublished">Is published</mat-slide-toggle>
                 </div>
 
-                <h3>Read only</h3>
-                <mat-form-field class="edit-post-field">
-                    <input matInput placeholder="Id" name="id" formControlName="id">
-                </mat-form-field>
-                <datetime-picker class="edit-post-field" namePrefix="When created" name="whenCreated" formControlName="whenCreated"></datetime-picker>
+                <div *ngIf="!newPost">
+                    <h3>Read only</h3>
+                    <mat-form-field class="edit-post-field">
+                        <input matInput placeholder="Id" name="id" formControlName="id">
+                    </mat-form-field>
+                    <datetime-picker class="edit-post-field" namePrefix="When created" name="whenCreated" formControlName="whenCreated"></datetime-picker>
+                </div>
 
             </form>
         </div>
@@ -73,11 +84,6 @@
 
     <div *ngSwitchCase="StateEnum.Loading">
         Loading...
-    </div>
-
-    <div class="error-message" *ngSwitchCase="StateEnum.Error">
-        An error occurred, yo:
-        <br> {{lastErrorMessage}}
     </div>
 
 </div>
