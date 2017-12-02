@@ -207,6 +207,7 @@
                                       parmeters.AddWithValue("goeslive", post.MetaData.GoesLive);
                                       parmeters.AddWithValue("ispublished", post.MetaData.IsPublished);
                                       parmeters.AddWithValue("isreserved", post.MetaData.IsReserved);
+                                      parmeters.AddWithValue("revision", post.MetaData.Revision);
 
                                       var contentList = parmeters.AddWithValue(
                                           "content",
@@ -368,6 +369,10 @@
                     throw new ItemNotFoundException(message ?? "Item not found");
                 case 50002:
                     throw new InvalidArgumentException(message ?? "Invalid arguments provided.");
+                case 50003:
+                    throw new DuplicateItemException(message ?? "Duplicate item");
+                case 50004:
+                    throw new RevisionMismatchException(message ?? "Revision id mismatch");
                 default:
                     if (retvalue > 50000)
                     {

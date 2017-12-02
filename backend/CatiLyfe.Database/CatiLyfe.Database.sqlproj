@@ -119,6 +119,7 @@
     <Build Include="Schemas\cati\Tables\postaudit.sql" />
     <Build Include="Schemas\cati\Index\cl_postaudit_postid.sql" />
     <Build Include="Schemas\cati\Index\ncl_postaudit_userid.sql" />
+    <Build Include="Schemas\cati\Tables\Constraints\revision_default.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />

@@ -9,4 +9,5 @@
    ,ispublished BIT             NOT NULL
    ,isdeleted   BIT             NOT NULL
    ,isreserved  BIT             NOT NULL
+   ,revision    INT             NOT NULL
 )

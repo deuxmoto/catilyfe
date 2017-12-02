@@ -74,6 +74,7 @@ AS
        ,p.ispublished
        ,p.isreserved
        ,p.isdeleted
+       ,p.revision
     FROM cati.postmeta p
     JOIN @selectedIds id
       ON id.id = p.id

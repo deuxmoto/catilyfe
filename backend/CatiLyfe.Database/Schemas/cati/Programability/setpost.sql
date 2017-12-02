@@ -8,12 +8,15 @@
    ,@userid        INT
    ,@ispublished   BIT
    ,@isreserved    BIT
+   ,@revision      INT
    ,@content       cati.postcontentlist READONLY
    ,@tags          cati.tagslist        READONLY
 AS
     SET NOCOUNT ON
 
-    DECLARE @invalidArgs INT = 50002
+    DECLARE @notFound           INT = 50001
+    DECLARE @invalidArgs        INT = 50002
+    DECLARE @revisionConflict   INT = 50004
 
     DECLARE @auditModify NVARCHAR(64) = 'Modified'
     DECLARE @auditCreate NVARCHAR(64) = 'Created'
@@ -33,6 +36,20 @@ AS
         GOTO ErrorHandler
     END
 
+    IF(@id IS NOT NULL AND NOT EXISTS (SELECT TOP 1 1 FROM cati.postmeta WHERE id = @id))
+    BEGIN
+        SET @error = @notFound
+        SET @error_message = N'Post with id ''' + CAST(@id AS NVARCHAR(10)) + ''' does not exist'
+        GOTO ErrorHandler
+    END
+
+    IF(@id IS NOT NULL AND NOT EXISTS (SELECT TOP 1 1 FROM cati.postmeta WHERE id = @id AND revision = @revision))
+    BEGIN
+        SET @error = @revisionConflict
+        SET @error_message = N'The revision id does not match.'
+        GOTO ErrorHandler
+    END
+
     MERGE INTO cati.postmeta m
     USING (SELECT @slug AS slug, @title AS title, @description AS description, @goeslive AS goeslive, @id AS id, @ispublished AS ispublished, @isreserved AS isreserved) AS src
        ON m.id = src.id
@@ -44,6 +61,7 @@ AS
            ,m.goeslive = src.goeslive
            ,m.ispublished = src.ispublished
            ,m.isreserved = src.isreserved
+           ,m.revision = m.revision + 1
     WHEN NOT MATCHED THEN
         INSERT
         (

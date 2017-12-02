@@ -52,6 +52,7 @@ AS
        ,ispublished BIT             NOT NULL
        ,isreserved  BIT             NOT NULL
        ,isdeleted   BIT             NOT NULL
+       ,revision    INT             NOT NULL
     )
 
     INSERT INTO @selected
@@ -65,6 +66,7 @@ AS
        ,m.ispublished
        ,m.isreserved
        ,m.isdeleted
+       ,m.revision
     FROM cati.postmeta m
     WHERE m.goeslive BETWEEN @startdate AND @enddate
       AND (isdeleted = 0 OR @includeDeleted = 0)

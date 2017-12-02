@@ -8,7 +8,6 @@
     using CatiLyfe.Backend.Web.Core.Code;
     using CatiLyfe.Backend.Web.Models.Admin;
     using CatiLyfe.DataLayer;
-    using CatiLyfe.DataLayer.Models;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

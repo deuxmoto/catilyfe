@@ -22,7 +22,8 @@ namespace CatiLyfe.DataLayer.Sql
                 goeslive: new DateTimeOffset((DateTime)reader["goeslive"]),
                 isReserved: (bool)reader["isreserved"],
                 isPublished: (bool)reader["ispublished"],
-                isDeleted: (bool)reader["isdeleted"]);
+                isDeleted: (bool)reader["isdeleted"],
+                revision: (int)reader["revision"]);
         }
 
         /// <summary>

@@ -21,9 +21,10 @@
         /// <param name="isReserved">Gets if the post is reserved.</param>
         /// <param name="isPublished">Gets if the post is published.</param>
         /// <param name="isDeleted">Gets if the post is deleted.</param>
+        /// <parma name="revision">The revision id.</parma>
         /// <param name="tags">The tags.</param>
         /// <param name="history">The post audit history.</param>
-        public PostMeta(int id, string slug, string title, string description, DateTimeOffset whencreated, DateTimeOffset goeslive, bool isReserved, bool isPublished, bool isDeleted, IEnumerable<string> tags = null, IEnumerable<PostAuditHistory> history = null)
+        public PostMeta(int id, string slug, string title, string description, DateTimeOffset whencreated, DateTimeOffset goeslive, bool isReserved, bool isPublished, bool isDeleted, int revision, IEnumerable<string> tags = null, IEnumerable<PostAuditHistory> history = null)
         {
             this.Id = id;
             this.Slug = slug;
@@ -34,6 +35,7 @@
             this.IsReserved = isReserved;
             this.IsPublished = isPublished;
             this.IsDeleted = isDeleted;
+            this.Revision = revision;
             this.Tags = tags ?? Enumerable.Empty<string>();
             this.History = history ?? Enumerable.Empty<PostAuditHistory>();
         }
@@ -82,6 +84,11 @@
         /// Gets if the post is deleted.
         /// </summary>
         public bool IsDeleted { get; }
+
+        /// <summary>
+        /// Gets the post revision.
+        /// </summary>
+        public int Revision { get; }
 
         /// <summary>
         /// The tags associated with the post.

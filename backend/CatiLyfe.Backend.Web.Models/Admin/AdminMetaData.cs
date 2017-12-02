@@ -31,6 +31,7 @@
             this.IsReserved = meta.IsReserved;
             this.IsPublished = meta.IsPublished;
             this.IsDeleted = meta.IsDeleted;
+            this.Revision = meta.Revision;
             this.Tags = meta.Tags;
             this.History = meta.History.Select(h => new AdminAuditHistory(h)).ToList();
         }
@@ -87,6 +88,11 @@
         public bool IsDeleted { get; set; }
 
         /// <summary>
+        /// Gets or sets the post revision id.
+        /// </summary>
+        public int Revision { get; set; }
+
+        /// <summary>
         /// The tags for the post.
         /// </summary>
         [Required]
@@ -113,6 +119,7 @@
                 isReserved: this.IsReserved,
                 isPublished: this.IsPublished,
                 isDeleted: this.IsDeleted,
+                revision: this.Revision,
                 tags: this.Tags ?? Enumerable.Empty<string>(),
                 history: this.History?.Select(h => h.ToPostAuditHistory()) ?? Enumerable.Empty<PostAuditHistory>());
         }
