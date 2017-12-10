@@ -30,7 +30,7 @@
             <!-- WhenCreated Column -->
             <ng-container matColumnDef="postWhenCreated">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> When Created </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.whenCreated}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.whenCreated | date}} </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

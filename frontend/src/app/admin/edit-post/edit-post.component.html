@@ -16,9 +16,9 @@
     </div>
 </div>
 
-<div class="edit-post responsive-container" [ngSwitch]="state">
+<div class="edit-post" [ngSwitch]="state">
 
-    <div *ngSwitchDefault [ngSwitch]="currentTab">
+    <div class="edit-post-inner responsive-container" *ngSwitchDefault [ngSwitch]="currentTab">
 
         <div class="tab-group">
             <button mat-button *ngFor="let tab of tabs" [ngClass]="{ active: currentTab == tab.value }" (click)="setCurrentTab(tab.value)">
@@ -72,9 +72,7 @@
             </form>
         </div>
         <div *ngSwitchCase="TabEnum.Markdown" class="tab-body">
-            <mat-form-field class="edit-post-field">
-                <textarea matInput matTextareaAutosize placeholder="Write dank janx" name="postContent" [(ngModel)]="content"></textarea>
-            </mat-form-field>
+            <textarea class="post-content" placeholder="Write dank janx" name="postContent" [(ngModel)]="content"></textarea>
         </div>
         <div *ngSwitchCase="TabEnum.MarkdownPreview" class="tab-body">
             <markdown-preview [markdown]="content"></markdown-preview>
@@ -82,7 +80,7 @@
     </div>
 
 
-    <div *ngSwitchCase="StateEnum.Loading">
+    <div *ngSwitchCase="StateEnum.Loading" class="loading responsive-container">
         Loading...
     </div>
 

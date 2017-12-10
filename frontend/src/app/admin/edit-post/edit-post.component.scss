@@ -1,10 +1,9 @@
 @import "../../styles/helpers";
 
-$top-bar-height: 4rem;
-$bottom-bar-height: 4rem;
+$bar-height: 4rem;
 
 :host {
-    min-height: 100vh;
+    height: 100vh;
     position: relative;
 
     display: flex;
@@ -15,24 +14,18 @@ $bottom-bar-height: 4rem;
  * Top bar styling
  */
 .top-bar {
-    position: fixed;
-    z-index: 10;
-    top: 0px;
-    width: 100%;
+    flex: none;
     background-color: white;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .top-bar-inner {
-    height: $top-bar-height;
+    height: $bar-height;
     display: flex;
     align-items: center;
 }
 .top-bar-title {
     font-size: 2rem;
     font-weight: bold;
-    overflow-x: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 .top-bar-back {
     font-size: 1.5rem;
@@ -65,15 +58,10 @@ $bottom-bar-height: 4rem;
  */
 .tab-group {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-
-    @include if-larger-than($bp-lg) {
-        margin-bottom: 2rem;
-    }
 
     button {
         flex: none;
@@ -103,7 +91,7 @@ $bottom-bar-height: 4rem;
     padding: 1rem;
 
     @include if-larger-than($bp-lg) {
-        padding: 0;
+        padding: 1rem 0 1rem;
     }
 }
 
@@ -111,9 +99,25 @@ $bottom-bar-height: 4rem;
  * Edit post main styling
  */
 .edit-post {
-    margin-top: $top-bar-height+1rem;
-    margin-bottom: $bottom-bar-height+2rem;
     max-width: 100vw;
+    flex: 1 1 auto;
+
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.edit-post-inner {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
+    .tab-group {
+        flex: none;
+    }
+    .tab-body {
+        flex: 1 1 auto;
+    }
 }
 .edit-post-title {
     font-size: 2.5rem;
@@ -154,23 +158,33 @@ $bottom-bar-height: 4rem;
         margin-right: 1.5rem;
     }
 }
+.loading {
+    padding: 2rem 0;
+}
+.post-content {
+    width: 100%;
+    height: 100%;
+    border: rgba(0, 0, 0, 0.1) 1px solid;
+    padding: 10px;
+
+    &:focus {
+        border-color: rgba(0, 0, 0, 0.3);
+    }
+}
 
 /*
  * Bottom bar styling
  */
 .bottom-bar {
+    margin-top: auto;
     background-color: white;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    position: fixed;
-    bottom: 0px;
-    width: 100%;
-    z-index: 10;
 }
 .bottom-bar-inner {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    height: $bottom-bar-height;
+    height: $bar-height;
 }
 .bottom-bar-item {
     & + & {
