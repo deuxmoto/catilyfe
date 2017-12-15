@@ -71,8 +71,8 @@
 
             </form>
         </div>
-        <div *ngSwitchCase="TabEnum.Markdown" class="tab-body">
-            <textarea class="post-content" placeholder="Write dank janx" name="postContent" [(ngModel)]="content"></textarea>
+        <div *ngSwitchCase="TabEnum.Markdown" class="tab-body post-content">
+            <textarea class="post-content__textarea" placeholder="Write dank janx" name="postContent" [(ngModel)]="content"></textarea>
         </div>
         <div *ngSwitchCase="TabEnum.MarkdownPreview" class="tab-body">
             <markdown-preview [markdown]="content"></markdown-preview>
