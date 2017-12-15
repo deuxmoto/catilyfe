@@ -52,6 +52,10 @@ export class OtherError extends BaseError {
     }
 }
 
+export function isError(obj: any): boolean {
+    return obj instanceof BaseError;
+}
+
 export function parseError(error: any): BaseError {
     if (error instanceof HttpErrorResponse) {
         switch (error.status) {

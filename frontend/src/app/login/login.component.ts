@@ -6,7 +6,7 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
-import { BackendApiService, RedirectQueryParamName } from "../core/backend-api.service";
+import { AuthBackendApi, RedirectQueryParamName} from "../core/backend-api/auth.backend-api";
 
 @Component({
     selector: "app-login",
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     private redirectUrl: string;
 
     constructor(
-        private backend: BackendApiService,
+        private authBackendApi: AuthBackendApi,
         private route: ActivatedRoute,
         private router: Router,
         private fb: FormBuilder
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     public onSubmit(): void {
         let email = this.loginForm.get("email").value;
         let password = this.loginForm.get("password").value;
-        this.backend.loginUser(email, password).subscribe(
+        this.authBackendApi.login(email, password).subscribe(
             () => {
                 let redirectUrl = this.redirectUrl ? this.redirectUrl : "";
                 this.router.navigateByUrl(redirectUrl);
@@ -47,9 +47,5 @@ export class LoginComponent implements OnInit {
                 console.error(error);
             }
         );
-    }
-
-    public onReset(): void {
-        this.loginForm.reset();
     }
 }

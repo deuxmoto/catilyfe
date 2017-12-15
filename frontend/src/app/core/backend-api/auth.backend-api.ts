@@ -19,6 +19,8 @@ export interface User {
     roles: UserRole[]
 }
 
+export import RedirectQueryParamName = Constants.RedirectQueryParamName;
+
 @Injectable()
 export class AuthBackendApi {
     private _loggedInUser = new ReplaySubject<User>(1);
@@ -41,16 +43,22 @@ export class AuthBackendApi {
             })
             .do((result) => {
                 // Refresh logged in user if login was successful
-                if (!(result instanceof Errors.BaseError)) {
+                if (!Errors.isError(result)) {
                     this._refreshLoggedInUser();
                 }
             });
     }
 
     public logout(): Observable<void> {
-        return this.http.delete<void>(`${Constants.Endpoint}/login`)
-            .do(() => {
-
+        return this.http.delete<void>(`${Constants.Endpoint}/login`, { withCredentials: true })
+            .catch((error) => {
+                return Observable.throw(Errors.parseError(error));
+            })
+            .do((result) => {
+                // If logout was successful, set logged in user to null
+                if (!Errors.isError(result)) {
+                    this._loggedInUser.next(null);
+                }
             });
     }
 
@@ -59,7 +67,7 @@ export class AuthBackendApi {
     }
 
     private _refreshLoggedInUser(): void {
-        this.http.get<User>(`${Constants.Endpoint}/admin/user/me`)
+        this.http.get<User>(`${Constants.Endpoint}/admin/user/me`, { withCredentials: true })
             .subscribe(
                 (user) => {
                     this._loggedInUser.next(user);
