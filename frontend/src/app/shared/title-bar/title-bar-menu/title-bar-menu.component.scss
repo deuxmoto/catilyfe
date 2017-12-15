@@ -1,0 +1,103 @@
+@import "../../../styles/helpers";
+
+$dark: rgb(10, 10, 10);
+$light: rgb(245, 245, 245);
+
+.title-bar-menu {
+    &__flyout {
+        position: fixed;
+        width: calc(100% - 50px);
+        max-width: 400px;
+        height: 100%;
+        top: 0px;
+        right: -100%;
+        background-color: $light;
+        transition: 200ms;
+        box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
+
+        display: flex;
+        flex-direction: column;
+
+        &--open {
+            right: 0%;
+        }
+    }
+
+    &__header {
+        width: 100%;
+        display: flex;
+        flex: none;
+    }
+    &__header-left {
+        margin-right: auto;
+    }
+    &__header-right {
+        margin-left: auto;
+    }
+    &__header-item {
+        height: $title-bar-height;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__items {
+        max-height: calc(100% - $title-bar-height);
+        width: 100%;
+        padding-bottom: 2rem;
+        overflow-y: auto;
+        flex: 1 1 auto;
+    }
+    &__item {
+        width: 100%;
+        height: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 200ms;
+        font-size: 1.5rem;
+        cursor: pointer;
+        @include lobster-font();
+        color: $dark;
+
+        &:hover {
+            background-color: darken($light, 10%);
+        }
+    }
+
+    &__user-info {
+        display: flex;
+        flex-direction: column;
+    }
+    &__user-info-action {
+        position: relative;
+        font-size: 0.7rem;
+        color: #00d1b2;
+
+        & + & {
+            margin-left: 10px;
+        }
+
+        & + &:before {
+            content: "|";
+            position: absolute;
+            font-size: 1px;
+            left: -9px;
+            color: $dark;
+        }
+    }
+
+    &__close-icon {
+        font-size: 1.5rem;
+    }
+
+    &__background {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
