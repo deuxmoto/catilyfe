@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CatiLyfe.Database", "backend\CatiLyfe.Database\CatiLyfe.Database.sqlproj", "{15401C53-BE29-41A4-B260-D033F94AA1E3}"
 EndProject

@@ -72,6 +72,7 @@
     <Folder Include="Schemas\auth\Programability\Stored Procedures" />
     <Folder Include="Schemas\auth\Tables\Indexs" />
     <Folder Include="Schemas\auth\Programability\Types" />
+    <Folder Include="Schemas\cati\Catalogs" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\cati\cati.sql" />
@@ -120,6 +121,10 @@
     <Build Include="Schemas\cati\Index\cl_postaudit_postid.sql" />
     <Build Include="Schemas\cati\Index\ncl_postaudit_userid.sql" />
     <Build Include="Schemas\cati\Tables\Constraints\revision_default.sql" />
+    <Build Include="Schemas\cati\Catalogs\post_content_full_text_catalog.sql" />
+    <Build Include="Schemas\cati\Index\full_text_postcontent.sql" />
+    <Build Include="Schemas\cati\Tables\Constraints\post_uniqueid_default.sql" />
+    <Build Include="Schemas\cati\Index\ncl_postcontent_uniqueid.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CatiLyfe.Database.publish.xml" />

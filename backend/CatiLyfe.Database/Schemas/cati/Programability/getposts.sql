@@ -18,8 +18,6 @@ AS
     DECLARE @error INT = 0
     SET @top =          ISNULL(@top, 10)
     SET @skip =         ISNULL(@skip, 0)
-    SET @startdate =    ISNULL(@startdate, '1900-1-1')
-    SET @enddate =      ISNULL(@enddate, '2400-12-20') -- TODO: Fix this in the year 2400
     DECLARE @emptyTags  BIT = 0
 
     DECLARE @tagids TABLE
@@ -68,15 +66,15 @@ AS
        ,m.isdeleted
        ,m.revision
     FROM cati.postmeta m
-    WHERE m.goeslive BETWEEN @startdate AND @enddate
-      AND (isdeleted = 0 OR @includeDeleted = 0)
+    WHERE ((m.goeslive BETWEEN @startdate AND @enddate) OR @startdate IS NULL)
+      AND (isdeleted = 0 OR @includeDeleted = 1)
       AND (ispublished = 1 OR @includeUnpublished = 1)
-      AND (EXISTS (SELECT TOP 1 1 
+      AND ((EXISTS (SELECT TOP 1 1 
                   FROM cati.posttags pt
                   JOIN @tagids ids
                     ON pt.tag = ids.id
                   WHERE m.id = pt.post
-                 ) OR @emptyTags = 1)
+                 )) OR @emptyTags = 1)
       AND (id = @id OR @id IS NULL)
       AND (slug = @slug OR @slug IS NULL)
     ORDER BY m.goeslive DESC

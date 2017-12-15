@@ -67,6 +67,8 @@ namespace CatiLyfe.Backend.Web.Core
                         //config.Cookie.Domain = "caticake.azurewebsites.net";
                         config.Cookie.Name = "CatiCookie";
                         config.Cookie.SameSite = SameSiteMode.None;
+                        config.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                        config.Cookie.Path = "";
                         config.Events.OnRedirectToLogin = options =>
                             {
                                 options.Response.StatusCode = 401;
@@ -103,6 +105,7 @@ namespace CatiLyfe.Backend.Web.Core
                     {
                         // config.Filters.Add(new AuthorizationFilter(authDataLayer));
                         config.Filters.Add(new CatiExceptionFilter());
+                        config.Filters.Add(new ValidationFilter());
                     });
 
             // Add the documentation

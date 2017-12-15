@@ -8,7 +8,6 @@
     using System.Threading.Tasks;
 
     using CatiLyfe.DataLayer.Models;
-    using CatiLyfe.DataLayer.Sql.Models;
     using CatiLyfe.Common.Exceptions;
 
     using Microsoft.SqlServer.Server;

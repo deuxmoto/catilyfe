@@ -19,5 +19,9 @@ namespace CatiLyfe.Common.Exceptions
         /// Gets the short error message for http.
         /// </summary>
         public string ShortMessage { get; }
+
+        public object Payload { get; protected set; }
+
+        public object Value => this.Payload ?? this.Message;
     }
 }

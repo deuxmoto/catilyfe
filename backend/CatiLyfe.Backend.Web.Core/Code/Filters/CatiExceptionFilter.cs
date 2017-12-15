@@ -21,7 +21,7 @@
         {
             var catiException = context.Exception as CatiFailureException ?? new DeveloperIsAnIdiotException(context.Exception);
 
-            var result = new JsonResult(new { Message = catiException.ShortMessage, Details = catiException.Message, StackTrace = context.Exception.StackTrace })
+            var result = new JsonResult(new { Message = catiException.ShortMessage, Details = catiException.Value, StackTrace = context.Exception.StackTrace })
                              {
                                  StatusCode =
                                      catiException

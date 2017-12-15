@@ -29,7 +29,7 @@ AS
     SET TRANSACTION ISOLATION LEVEL READ COMMITTED
     BEGIN TRANSACTION
 
-    IF(EXISTS (SELECT TOP 1 1 FROM cati.postmeta WHERE slug = @slug AND (@id IS NOT NULL AND @id <> id)) OR @slug IS NULL)
+    IF(EXISTS (SELECT TOP 1 1 FROM cati.postmeta WHERE slug = @slug AND (@id IS NULL OR @id <> id)) OR @slug IS NULL)
     BEGIN
         SET @error = @invalidArgs
         SET @error_message = N'The slug ''' + ISNULL(@slug, 'NULL') + ''' is not available.'

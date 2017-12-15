@@ -45,6 +45,7 @@
         /// The post title.
         /// </summary>
         [Required]
+        [MinLength(4, ErrorMessage ="Title must be more than 4")]
         public string Title { get; set; }
 
         /// <summary>
@@ -64,6 +65,7 @@
         /// </summary>
         [Required]
         [MaxLength(128, ErrorMessage = "Slug must not be longer than 128.")]
+        [MinLength(4, ErrorMessage = "Slug must be more than 4")]
         public string Slug { get; set; }
 
         /// <summary>
