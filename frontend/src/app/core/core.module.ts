@@ -6,11 +6,15 @@ import {
 import { CommonModule } from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
+import { AuthBackendApi } from "./backend-api/auth.backend-api";
 import { BackendApiService } from "./backend-api.service";
 import { OfflineInterceptor } from "./offline/offline.interceptor";
 import { environment } from "../../environments/environment";
 
-const coreProviders: Provider[] = [ BackendApiService ];
+const coreProviders: Provider[] = [
+    AuthBackendApi,
+    BackendApiService
+];
 if (environment.offlineRouting) {
     coreProviders.push({
         provide: HTTP_INTERCEPTORS,
@@ -21,7 +25,7 @@ if (environment.offlineRouting) {
 
 @NgModule({
     imports: [ CommonModule, HttpClientModule ],
-    providers: [ BackendApiService ]
+    providers: coreProviders
 })
 export class CoreModule {
 

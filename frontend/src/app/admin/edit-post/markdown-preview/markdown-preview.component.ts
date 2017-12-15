@@ -9,8 +9,7 @@ enum State {
 
 @Component({
     selector: "markdown-preview",
-    templateUrl: "./markdown-preview.component.html",
-    styleUrls: ["./markdown-preview.component.scss"]
+    templateUrl: "./markdown-preview.component.html"
 })
 export class MarkdownPreviewComponent implements OnInit {
     public StateEnum = State;

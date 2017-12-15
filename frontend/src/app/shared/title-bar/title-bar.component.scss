@@ -84,63 +84,16 @@ $transition-animation: 200ms ease;
 
 .title-bar-leftcenter {
     margin-right: auto;
-
-    @include if-larger-than-mobile() {
-        margin-left: auto;
-    }
 }
 
 .title-bar-right {
-    margin-left: auto;
     position: absolute;
     right: 0px;
     top: 0px;
+
+    display: flex;
+    flex-wrap: nowrap;
 }
 .branding {
     @include title-styles();
-}
-
-/*
- * Menu pop over component
- *
- * Always in dark theme
- */
-.title-bar-menu {
-    position: fixed;
-    width: 100%;
-    height: calc(100% - #{$title-bar-height});
-    top: $title-bar-height;
-    background-color: fade-out($dark, 0.1);
-    padding: 2rem 0;
-    overflow-y: auto;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.title-bar-menu-items {
-    max-height: 100%;
-    width: 100%;
-    padding-bottom: 2rem;
-
-    li {
-        width: 100%;
-    }
-}
-
-.title-bar-menu-item {
-    width: 100%;
-    height: 6rem;
-    color: $light;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: $transition-animation;
-    @include title-styles();
-
-    &:hover {
-        background-color: fade-out($light, 0.1);
-        color: $dark;
-    }
 }

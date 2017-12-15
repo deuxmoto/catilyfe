@@ -32,7 +32,6 @@ export class DateTimePickerComponent implements OnInit, ControlValueAccessor {
     private _onChange: (date: Date) => void;
 
     public ngOnInit(): void {
-        this.writeValue(new Date());
     }
 
     public onChange(): void {

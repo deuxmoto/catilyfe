@@ -8,11 +8,16 @@ import "rxjs/add/observable/throw";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 
+import * as Errors from "./backend-api/errors";
+
+export * from "./backend-api/errors";
+
 export interface AdminPostMetadata {
-    id: number;
+    id?: number;
+    whenCreated?: Date;
+    revision?: number;
     slug: string;
     title: string;
-    whenCreated: Date;
     whenPublished: Date;
     description: string;
     tags: string[];
@@ -43,36 +48,6 @@ export interface MarkdownPreview {
     content: string;
 }
 
-export class NotFoundError {
-}
-
-export class UnauthorizedError {
-}
-
-export class UnknownError {
-    public originalError: any;
-    public errorMessage: string;
-
-    constructor(error?: any) {
-        if (error) {
-            this.originalError = error;
-
-            // Try to parse error message
-            if (typeof error === "string") {
-                this.errorMessage = error;
-            }
-            else if (error instanceof Response) {
-                this.errorMessage = `[Http Status Code ${error.status}] ${error.statusText}`
-            }
-            else if (error instanceof Error) {
-                this.errorMessage = `[Error ${error.name}] ${error.message}`
-            }
-            else {
-                this.errorMessage = "Generic error message."
-            }
-        }
-    }
-}
 
 export const RedirectQueryParamName = "redirectUrl";
 
@@ -180,7 +155,7 @@ export class BackendApiService {
         if (error instanceof HttpErrorResponse) {
             switch (error.status) {
                 case 404:
-                    return Observable.throw(new NotFoundError());
+                    return Observable.throw(new Errors.NotFoundError());
                 case 401:
                     const redirectUrl = this.router.url;
                     this.router.navigate(["/login"], {
@@ -188,11 +163,11 @@ export class BackendApiService {
                             [RedirectQueryParamName]: redirectUrl
                         }
                     });
-                    return Observable.throw(new UnauthorizedError());
+                    return Observable.throw(new Errors.UnauthorizedError());
             }
         }
 
-        const unknownError = new UnknownError(error);
+        const unknownError = new Errors.OtherError(error);
         console.error(`${unknownError.errorMessage} %o`, error);
         return Observable.throw(unknownError);
     }
