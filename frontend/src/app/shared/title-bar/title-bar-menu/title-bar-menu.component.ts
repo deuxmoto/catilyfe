@@ -67,6 +67,10 @@ export class TitleBarMenuComponent implements OnInit {
         });
     }
 
+    public isUserAdmin(): boolean {
+        return this.loggedInUser && this.loggedInUser.roles.indexOf("god-post") !== -1;
+    }
+
     public closeMenu(): void {
         this.titleBarService.closeMenu();
     }

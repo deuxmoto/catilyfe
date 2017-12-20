@@ -23,6 +23,7 @@ $light: rgb(245, 245, 245);
         }
     }
 
+    // Menu header
     &__header {
         width: 100%;
         display: flex;
@@ -30,18 +31,43 @@ $light: rgb(245, 245, 245);
     }
     &__header-left {
         margin-right: auto;
+        overflow-x: auto;
+        flex: 1 1 auto;
     }
     &__header-right {
         margin-left: auto;
+        flex: none;
     }
     &__header-item {
         height: $title-bar-height;
+    }
+
+    // Menu header items
+    &__user-info {
+        display: flex;
+        align-items: center;
+        padding-left: 2rem;
+        overflow-x: auto;
+    }
+    &__user-info-name {
+        white-space: nowrap;
+    }
+    &__user-info-action {
+        color: green;
+        text-decoration: underline;
+        font-size: 0.8rem;
+        margin-left: 10px;
+    }
+
+    &__close-icon {
+        font-size: 1.5rem;
         padding: 0 2rem;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
+    // Menu items
     &__items {
         max-height: calc(100% - $title-bar-height);
         width: 100%;
@@ -64,32 +90,6 @@ $light: rgb(245, 245, 245);
         &:hover {
             background-color: darken($light, 10%);
         }
-    }
-
-    &__user-info {
-        display: flex;
-        flex-direction: column;
-    }
-    &__user-info-action {
-        position: relative;
-        font-size: 0.7rem;
-        color: #00d1b2;
-
-        & + & {
-            margin-left: 10px;
-        }
-
-        & + &:before {
-            content: "|";
-            position: absolute;
-            font-size: 1px;
-            left: -9px;
-            color: $dark;
-        }
-    }
-
-    &__close-icon {
-        font-size: 1.5rem;
     }
 
     &__background {

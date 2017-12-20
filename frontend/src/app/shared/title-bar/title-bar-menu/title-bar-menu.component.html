@@ -2,14 +2,10 @@
 <div class="title-bar-menu__flyout" [ngClass]="{ 'title-bar-menu__flyout--open': menuIsOpen }">
     <div class="title-bar-menu__header">
         <div class="title-bar-menu__header-left">
-            <div class="title-bar-menu__header-item" *ngIf="loggedInUser">
-                <div class="title-bar-menu__user-info">
-                    <span>{{loggedInUser.name}}</span>
-                    <div>
-                        <a class="title-bar-menu__user-info-action" routerLink="/admin">Admin</a>
-                        <button class="title-bar-menu__user-info-action" (click)="logout()">Logout</button>
-                    </div>
-                </div>
+            <div class="title-bar-menu__header-item title-bar-menu__user-info" *ngIf="loggedInUser">
+                <span class="title-bar-menu__user-info-name">{{loggedInUser.name}}</span>
+                <a class="title-bar-menu__user-info-action" *ngIf="isUserAdmin()" routerLink="/admin">Admin</a>
+                <button class="title-bar-menu__user-info-action" (click)="logout()">Logout</button>
             </div>
         </div>
         <div class="title-bar-menu__header-right">
