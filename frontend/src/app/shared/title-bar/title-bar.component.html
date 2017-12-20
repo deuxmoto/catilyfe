@@ -1,11 +1,15 @@
-<div [class.theme-dark]="theme === 'dark'" [class.theme-light]="theme === 'light'" [class.transparent]="transparent">
+<div class="title-bar-container"
+    [class.-theme-dark]="theme === 'dark'"
+    [class.-theme-light]="theme === 'light'"
+    [class.-theme-transparent-light]="theme === 'transparent-light'"
+    [class.-theme-transparent-dark]="theme === 'transparent-dark'">
 
-    <div class="title-bar-container">
-        <div class="title-bar-leftcenter">
-            <a class="title-bar-item branding" routerLink="">Deux Moto</a>
+    <div class="title-bar-container__top-bar">
+        <div class="title-bar-container__top-bar-left">
+            <a class="title-bar-container__item title-bar-container__branding" routerLink="">Deux Moto</a>
         </div>
-        <div class="title-bar-right">
-            <button class="title-bar-item" (click)="openMenu()">
+        <div class="title-bar-container__top-bar-right">
+            <button class="title-bar-container__item" (click)="openMenu()">
                 <span class="fa fa-bars"></span>
             </button>
         </div>

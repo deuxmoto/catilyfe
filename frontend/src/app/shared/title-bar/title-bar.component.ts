@@ -16,6 +16,8 @@ interface MenuItem {
     linkUrl: string;
 }
 
+export type Theme = "light" | "dark" | "transparent-light" | "transparent-dark";
+
 @Component({
     selector: "title-bar",
     templateUrl: "./title-bar.component.html",
@@ -35,10 +37,7 @@ interface MenuItem {
 })
 export class TitleBarComponent implements OnInit {
     @Input()
-    public transparent = false;
-
-    @Input()
-    public theme: "light" | "dark" = "light";
+    public theme: Theme = "light";
 
     public loggedInUser: User;
 
