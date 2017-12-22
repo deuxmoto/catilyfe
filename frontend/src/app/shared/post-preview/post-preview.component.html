@@ -1,0 +1,12 @@
+<a class="post-preview" *ngFor="let postMetadata of multiplePostMetadata | async" [routerLink]="getPostLink(postMetadata)">
+    <div class="post-preview__image" [ngStyle]="{ 'background-image': getPostImageUrl(postMetadata) }"></div>
+    <div class="post-preview__info post-info">
+        <div class="post-info__middle">
+            <h3 class="post-info__title">{{postMetadata.title}}</h3>
+            <div class="post-info__description">{{postMetadata.description}}</div>
+        </div>
+        <div class="post-info__bottom">
+            <div class="post-info__when-published">{{postMetadata.whenPublished | date:"MMMM d, y - h:mma"}}</div>
+        </div>
+    </div>
+</a>

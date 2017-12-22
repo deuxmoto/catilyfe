@@ -7,13 +7,15 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import { AuthBackendApi } from "./backend-api/auth.backend-api";
+import { PostsBackendApi } from "./backend-api/posts.backend-api";
 import { BackendApiService } from "./backend-api.service";
 import { OfflineInterceptor } from "./offline/offline.interceptor";
 import { environment } from "../../environments/environment";
 
 const coreProviders: Provider[] = [
     AuthBackendApi,
-    BackendApiService
+    BackendApiService,
+    PostsBackendApi
 ];
 if (environment.offlineRouting) {
     coreProviders.push({

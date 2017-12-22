@@ -1,0 +1,81 @@
+@import "../../styles/helpers";
+
+.post-preview {
+    padding: 1rem 0;
+    width: 100%;
+    height: 150px;
+    display: flex;
+    color: inherit;
+    overflow: hidden;
+
+    @include if-larger-than-mobile() {
+        height: 250px;
+    }
+
+    & + & {
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    &__image {
+        width: 100px;
+        height: 100%;
+        flex: none;
+
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        @include if-larger-than-mobile() {
+            width: 200px;
+        }
+    }
+
+    &__info {
+        flex: 1 1 auto;
+    }
+}
+
+.post-info {
+    padding: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    &__middle {
+        flex: 1 1 0%;
+        overflow: hidden;
+    }
+
+    &__bottom {
+        flex: none;
+        margin-top: auto;
+        padding-top: 5px;
+        box-shadow: 0 0 10px 10px white;
+    }
+
+    &__title {
+        @include lobster-font();
+        margin: 0;
+        font-size: 1.5rem;
+        overflow: hidden;
+
+        @include if-larger-than-mobile() {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    &__description {
+        display: none; // hide description on mobile
+
+        @include if-larger-than-mobile() {
+            display: initial;
+        }
+    }
+
+    &__when-published {
+        font-size: 0.8rem;
+    }
+}

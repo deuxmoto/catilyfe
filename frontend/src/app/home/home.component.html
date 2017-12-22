@@ -10,21 +10,7 @@
 </div>
 
 <div class="recent-posts">
-    <mat-card class="post-preview responsive-container" *ngFor="let post of recentPosts | async" (click)="navigateToPost(post.slug)">
-        <div class="post-preview-header">
-            <h3 class="post-preview-title">{{post.title}}</h3>
-            <h4 class="post-preview-subtitle">{{post.whenPublished | date:"MMMM d, y - h:mma"}}</h4>
-            <ul class="post-preview-tags remove-list-style">
-                <li *ngFor="let tag of post.tags">
-                    <a class="post-preview-tag" href="" (click)="navigateToTag(tag)">#{{tag}}</a>
-                </li>
-            </ul>
-        </div>
-        <div class="post-preview-body">
-            <p class="post-preview-description">{{post.description}}</p>
-        </div>
-
-    </mat-card>
+    <post-preview class="responsive-container" previewCount="10"></post-preview>
 </div>
 
 <footer></footer>

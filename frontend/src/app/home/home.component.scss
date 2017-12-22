@@ -9,7 +9,6 @@
     align-items: center;
     justify-content: center;
     max-width: 100%;
-    margin-bottom: 40px;
 
     background-image: url("../../assets/catilyfe-hero-image.jpg");
     background-repeat: no-repeat;
@@ -59,8 +58,7 @@
  */
 .recent-posts {
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    justify-content: center;
     width: 100%;
     padding: 0 1rem;
 }

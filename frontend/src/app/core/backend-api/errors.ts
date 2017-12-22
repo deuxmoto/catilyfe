@@ -1,5 +1,9 @@
 import { HttpErrorResponse } from "@angular/common/http";
 
+import { Observable } from "rxjs/Observable";
+import { ErrorObservable } from "rxjs/observable/ErrorObservable";
+import "rxjs/add/observable/throw";
+
 export abstract class BaseError {
     public originalError: any;
     public errorMessage: string;
@@ -67,4 +71,8 @@ export function parseError(error: any): BaseError {
     }
 
     return new OtherError(error);
+}
+
+export function parseAndThrowError(error: any): ErrorObservable {
+    return Observable.throw(parseError(error));
 }
