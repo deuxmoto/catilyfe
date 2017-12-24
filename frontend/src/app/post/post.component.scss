@@ -20,13 +20,6 @@
 
 .post-container {
     margin: 0 20px;
-    width: 100%;
-
-    @include if-larger-than($bp-sm) {
-        $large-screen-post-width: 960px;
-        min-width: $large-screen-post-width;
-        max-width: $large-screen-post-width;
-    }
 }
 
 .post-loading {

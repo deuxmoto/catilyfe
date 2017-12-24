@@ -1,7 +1,7 @@
 <title-bar></title-bar>
 
 <div class="post-section" [ngSwitch]="state">
-    <div class="post-container markdown-body" [innerHtml]="postHtml" *ngSwitchCase="StateEnum.Normal"></div>
+    <div class="post-container markdown-body responsive-container" [innerHtml]="postHtml" *ngSwitchCase="StateEnum.Normal"></div>
     <div class="post-loading" *ngSwitchCase="StateEnum.Loading">
         <span class="post-loading-text">Loading post...</span>
     </div>

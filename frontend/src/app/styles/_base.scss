@@ -36,19 +36,9 @@ button {
     margin-left: auto;
     margin-right: auto;
 
-    @include if-larger-than($bp-sm) {
-        width: 40rem;
-        max-width: 40rem;
-    }
-
-    @include if-larger-than($bp-md) {
+    @include if-larger-than-mobile() {
         width: 50rem;
         max-width: 50rem;
-    }
-
-    @include if-larger-than($bp-lg) {
-        width: 70rem;
-        max-width: 70rem;
     }
 }
 
