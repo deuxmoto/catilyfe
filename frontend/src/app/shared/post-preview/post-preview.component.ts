@@ -32,6 +32,6 @@ export class PostPreviewComponent implements OnInit {
     }
 
     public getPostImageUrl(postMetadata: PostMetadata): string {
-        return "url(../../assets/sadcati.png)";
+        return "url(../../assets/placeholder.svg)";
     }
 }
