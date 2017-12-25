@@ -1,12 +1,20 @@
-<a class="post-preview" *ngFor="let postMetadata of multiplePostMetadata | async" [routerLink]="getPostLink(postMetadata)">
-    <div class="post-preview__image" [ngStyle]="{ 'background-image': getPostImageUrl(postMetadata) }"></div>
+<div class="post-preview" *ngFor="let post of posts | async">
+    <a class="post-preview__image" *ngIf="post.previewImageUri" [routerLink]="post.postUri" [ngStyle]="{ 'background-image': post.previewImageUri }"></a>
     <div class="post-preview__info post-info">
-        <div class="post-info__middle">
-            <h3 class="post-info__title">{{postMetadata.title}}</h3>
-            <div class="post-info__description">{{postMetadata.description}}</div>
-        </div>
-        <div class="post-info__bottom">
-            <div class="post-info__when-published">{{postMetadata.whenPublished | date:"MMMM d, y - h:mma"}}</div>
+        <a class="post-info__title" [routerLink]="post.postUri">{{post.metadata.title}}</a>
+        <div class="post-info__date-author">
+            <span>By: Someone</span>
+            <span> | </span>
+            <span>{{post.metadata.whenPublished | date:"MMMM d, y - h:mma"}}</span>
         </div>
     </div>
-</a>
+    <div class="post-preview__body post-body">
+        <div class="post-body__text markdown-body" [innerHtml]="post.rawHtmlThenIGuess"></div>
+        <div class="post-body__readmore">
+            <div class="post-body__readmore-line"></div>
+            <a class="post-body__readmore-text" [routerLink]="post.postUri">
+                Read more >
+            </a>
+        </div>
+    </div>
+</div>

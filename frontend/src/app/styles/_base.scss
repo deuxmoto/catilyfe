@@ -8,13 +8,12 @@ body {
 }
 
 a {
-    $tag-color: #00d1b2;
-    color: $tag-color;
+    color: $color-primary;
     text-decoration: none;
     transition: 100ms;
 
     &:hover {
-        color: darken($tag-color, 30%)
+        color: darken($color-primary, 30%)
     }
 }
 

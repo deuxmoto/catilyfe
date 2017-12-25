@@ -43,6 +43,17 @@ export class PostsBackendApi {
             });
     }
 
+    public getPosts(top = 5): Observable<Post[]> {
+        return this.http.get<Post[]>(`${Constants.Endpoint}/post?top=${top}`)
+            .map((posts) => {
+                posts.forEach((post) => {
+                    parseDateObjects(post.metadata);
+                });
+
+                return posts;
+            });
+    }
+
     public getPost(slug: string): Observable<Post> {
         return this.http.get<Post>(`${Constants.Endpoint}/post/${slug}`)
             .map((post) => {
