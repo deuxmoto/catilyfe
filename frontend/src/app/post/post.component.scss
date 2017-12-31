@@ -1,4 +1,5 @@
 @import "../styles/helpers";
+@import "../styles/base";
 
 :host {
     min-height: 100vh;
@@ -7,45 +8,41 @@
     flex-direction: column;
 }
 
-.post-section {
+.post {
     margin-top: $title-bar-height + 1rem;
     flex: 1 1 0%;
     width: 100%;
     padding: 20px;
 
     display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.post-container {
-    margin: 0 20px;
-}
-
-.post-loading {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
     justify-content: center;
-    align-items: center;
+
+    &__inner {
+        @extend .responsive-container;
+    }
 }
 
-.post-invalid {
-    flex: 1 1 0%;
-    width: 100%;
-    font-size: 20px;
+.post-content {
+    position: relative;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    &__admin-tools {
+        position: absolute;
+        top: 0%;
+        right: 0%;
 
-.post-section-tags{
-    @extend .post-container;
-    a{
-        display: inline-block;
-        word-wrap: none;
-        margin: 0.1em;
+        @include if-larger-than-mobile() {
+            right: unset;
+            left: 100%;
+        }
+    }
+
+    &__admin-tool {
+        padding: 1rem;
+        color: black;
+        font-size: 1.5rem;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
     }
 }

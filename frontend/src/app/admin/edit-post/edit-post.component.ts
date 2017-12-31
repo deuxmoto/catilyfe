@@ -1,3 +1,4 @@
+import { Location } from "@angular/common";
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, Validators, ControlValueAccessor } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -39,7 +40,7 @@ export class EditPostComponent implements OnInit {
 
     // The following fields are either not included in the above metadataForm
     // or are duplicated, because they're being used in parts of the UI that can't
-    // read from or worth with a FormGroup easily:
+    // read from or work with a FormGroup easily:
     public content = "";
     public tags: string[] = [];
     public petersStupidRevisionIdShit: number;
@@ -70,7 +71,8 @@ export class EditPostComponent implements OnInit {
     constructor(
         private backend: BackendApiService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private location: Location
     ) { }
 
     public ngOnInit(): void {
@@ -123,7 +125,7 @@ export class EditPostComponent implements OnInit {
     }
 
     public closeEditPost(): void {
-        this.router.navigate([ "../../" ], { relativeTo: this.route });
+        this.location.back();
     }
 
     public savePost(): void {
@@ -150,6 +152,7 @@ export class EditPostComponent implements OnInit {
 
         this.state = State.Saving;
         this.savingText = "Saving...";
+        this.lastError = "";
         this.backend.setAdminPost(adminPost).subscribe(
             () => {
                 this.savingText = "Saved! Yeeee";

@@ -8,7 +8,7 @@ import {
 } from "@angular/animations";
 
 import { TitleBarService } from "../title-bar.service";
-import { AuthBackendApi, User } from "../../../core/backend-api/auth.backend-api";
+import { AuthBackendApi, User, isUserAdmin } from "../../../core/backend-api/auth.backend-api";
 
 interface MenuItem {
     text: string;
@@ -68,7 +68,7 @@ export class TitleBarMenuComponent implements OnInit {
     }
 
     public isUserAdmin(): boolean {
-        return this.loggedInUser && this.loggedInUser.roles.indexOf("god-post") !== -1;
+        return isUserAdmin(this.loggedInUser);
     }
 
     public closeMenu(): void {

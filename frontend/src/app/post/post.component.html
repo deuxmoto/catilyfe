@@ -1,9 +1,16 @@
 <title-bar></title-bar>
 
-<div class="post-section" [ngSwitch]="state">
-    <div class="post-container markdown-body responsive-container" [innerHtml]="postHtml" *ngSwitchCase="StateEnum.Normal"></div>
-    <div class="post-loading" *ngSwitchCase="StateEnum.Loading">
-        <span class="post-loading-text">Loading post...</span>
+<div class="post" [ngSwitch]="state">
+    <div class="post__inner">
+        <div class="post-content" *ngSwitchCase="'normal'">
+            <div class="markdown-body" [innerHtml]="postHtml"></div>
+            <div class="post-content__admin-tools" *ngIf="isUserAdmin">
+                <a class="post-content__admin-tool fa fa-pencil" [routerLink]="editPostUrl"></a>
+            </div>
+        </div>
+        <div *ngSwitchCase="'loading'">
+            Loading post...
+        </div>
     </div>
 </div>
 

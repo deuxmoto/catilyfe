@@ -21,6 +21,10 @@ export interface User {
 
 export import RedirectQueryParamName = Constants.RedirectQueryParamName;
 
+export function isUserAdmin(user: User): boolean {
+    return user ? user.roles.indexOf("god-post") !== -1 : false;
+}
+
 @Injectable()
 export class AuthBackendApi {
     private _loggedInUser = new ReplaySubject<User>(1);

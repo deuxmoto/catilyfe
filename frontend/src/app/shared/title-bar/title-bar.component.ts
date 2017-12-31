@@ -56,10 +56,4 @@ export class TitleBarComponent implements OnInit {
     public openMenu(): void {
         this.titleBarService.openMenu();
     }
-
-    public logout(): void {
-        this.authBackendApi.logout().subscribe(() => {
-
-        });
-    }
 }

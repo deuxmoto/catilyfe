@@ -5,12 +5,11 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
-import { BackendApiService, PostMetadata, NotFoundError } from "../core/backend-api.service";
+import { NotFoundError } from "../core/backend-api/errors";
+import { AuthBackendApi, isUserAdmin } from "../core/backend-api/auth.backend-api";
+import { Post, PostsBackendApi } from "../core/backend-api/posts.backend-api";
 
-enum State {
-    Loading,
-    Normal
-}
+type State = "normal" | "loading";
 
 @Component({
     selector: "app-post",
@@ -18,27 +17,36 @@ enum State {
     styleUrls: [ "./post.component.scss" ]
 })
 export class PostComponent implements OnInit {
-    public StateEnum = State;
-    public state = State.Loading;
-    public postHtml: string;
-    public tags: Array<string>;
+    public state: State = "loading";
+    public post: Post;
+
+    public isUserAdmin: boolean;
 
     constructor(
-        private backend: BackendApiService,
+        private authBackend: AuthBackendApi,
+        private postsBackend: PostsBackendApi,
         private route: ActivatedRoute,
         private router: Router
     ) { }
 
-    ngOnInit() {
+    public get postHtml(): string {
+        return this.post && this.post.rawHtmlThenIGuess;
+    }
+
+    public get editPostUrl(): string {
+        const postId = this.post && this.post.metadata.id;
+        return postId && `/admin/editpost/${postId}`;
+    }
+
+    public ngOnInit() {
         this.route.paramMap.subscribe((paramMap) => {
-            this.state = State.Loading;
+            this.state = "loading";
 
             const slug = paramMap.get("slug");
-            this.backend.getPost(slug).subscribe(
+            this.postsBackend.getPost(slug).subscribe(
                 (post) => {
-                    this.postHtml = post.rawHtmlThenIGuess;
-                    this.tags = post.metadata.tags;
-                    this.state = State.Normal;
+                    this.post = post;
+                    this.state = "normal";
                 },
                 (error) => {
                     if (error instanceof NotFoundError) {
@@ -52,6 +60,10 @@ export class PostComponent implements OnInit {
                     }
                 }
             );
+        });
+
+        this.authBackend.getLoggedInUser().subscribe((user) => {
+            this.isUserAdmin = isUserAdmin(user);
         });
     }
 }
