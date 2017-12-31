@@ -30,8 +30,8 @@ export class AuthBackendApi {
     private _loggedInUser = new ReplaySubject<User>(1);
 
     constructor(
-        protected http: HttpClient,
-        protected router: Router
+        private http: HttpClient,
+        private router: Router
     ) {
         this._refreshLoggedInUser();
     }
@@ -68,6 +68,15 @@ export class AuthBackendApi {
 
     public getLoggedInUser(): Observable<User> {
         return this._loggedInUser.asObservable();
+    }
+
+    public gotoLoginPage(): void {
+        const currentUrl = this.router.url;
+        this.router.navigate(["/login"], {
+            queryParams: {
+                [RedirectQueryParamName]: currentUrl
+            }
+        });
     }
 
     private _refreshLoggedInUser(): void {

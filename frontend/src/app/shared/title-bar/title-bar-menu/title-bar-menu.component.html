@@ -1,18 +1,10 @@
 <div class="title-bar-menu__background" *ngIf="menuIsOpen" (click)="closeMenu()" [@menuBackgroundEnterAnimation]></div>
+
 <div class="title-bar-menu__flyout" [ngClass]="{ 'title-bar-menu__flyout--open': menuIsOpen }">
     <div class="title-bar-menu__header">
-        <div class="title-bar-menu__header-left">
-            <div class="title-bar-menu__header-item title-bar-menu__user-info" *ngIf="loggedInUser">
-                <span class="title-bar-menu__user-info-name">{{loggedInUser.name}}</span>
-                <a class="title-bar-menu__user-info-action" *ngIf="isUserAdmin()" routerLink="/admin">Admin</a>
-                <button class="title-bar-menu__user-info-action" (click)="logout()">Logout</button>
-            </div>
-        </div>
-        <div class="title-bar-menu__header-right">
-            <button class="title-bar-menu__header-item title-bar-menu__close-icon" (click)="closeMenu()">
-                <span class="fa fa-times"></span>
-            </button>
-        </div>
+        <button class="title-bar-menu__close-icon" (click)="closeMenu()">
+            <span class="fa fa-times"></span>
+        </button>
     </div>
 
     <div class="title-bar-menu__items">
@@ -21,5 +13,16 @@
                 <a class="title-bar-menu__item" routerLink="{{menuItem.linkUrl}}" (click)="closeMenu()">{{menuItem.text}}</a>
             </li>
         </ul>
+    </div>
+
+    <div class="title-bar-menu__footer user-info">
+        <div class="user-info__logged-in" *ngIf="loggedInUser">
+            <span class="user-info__name">{{loggedInUser.name}}</span>
+            <a class="user-info__action" *ngIf="isUserAdmin()" routerLink="/admin">Admin</a>
+            <button class="user-info__action" (click)="logout()">Logout</button>
+        </div>
+        <div class="user-info__logged-out" *ngIf="!loggedInUser">
+            Admin? <a class="user-info__login" (click)="login()">Login</a>
+        </div>
     </div>
 </div>

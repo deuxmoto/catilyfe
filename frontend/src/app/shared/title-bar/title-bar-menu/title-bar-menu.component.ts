@@ -75,6 +75,10 @@ export class TitleBarMenuComponent implements OnInit {
         this.titleBarService.closeMenu();
     }
 
+    public login(): void {
+        this.authBackendApi.gotoLoginPage();
+    }
+
     public logout(): void {
         this.authBackendApi.logout().subscribe(() => {
             console.log("Successfully logged out");

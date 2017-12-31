@@ -1,7 +1,7 @@
 @import "../../../styles/helpers";
 
-$dark: rgb(10, 10, 10);
-$light: rgb(245, 245, 245);
+$dark: black;
+$light: white;
 
 .title-bar-menu {
     &__flyout {
@@ -29,37 +29,9 @@ $light: rgb(245, 245, 245);
         display: flex;
         flex: none;
     }
-    &__header-left {
-        margin-right: auto;
-        overflow-x: auto;
-        flex: 1 1 auto;
-    }
-    &__header-right {
-        margin-left: auto;
-        flex: none;
-    }
-    &__header-item {
-        height: $title-bar-height;
-    }
-
-    // Menu header items
-    &__user-info {
-        display: flex;
-        align-items: center;
-        padding-left: 2rem;
-        overflow-x: auto;
-    }
-    &__user-info-name {
-        white-space: nowrap;
-    }
-    &__user-info-action {
-        color: green;
-        text-decoration: underline;
-        font-size: 0.8rem;
-        margin-left: 10px;
-    }
-
     &__close-icon {
+        margin-left: auto;
+        height: $title-bar-height;
         font-size: 1.5rem;
         padding: 0 2rem;
         display: flex;
@@ -69,9 +41,7 @@ $light: rgb(245, 245, 245);
 
     // Menu items
     &__items {
-        max-height: calc(100% - $title-bar-height);
         width: 100%;
-        padding-bottom: 2rem;
         overflow-y: auto;
         flex: 1 1 auto;
     }
@@ -92,6 +62,12 @@ $light: rgb(245, 245, 245);
         }
     }
 
+    // Footer
+    &__footer {
+        flex: none;
+        margin-top: auto;
+    }
+
     &__background {
         position: fixed;
         top: 0px;
@@ -99,5 +75,42 @@ $light: rgb(245, 245, 245);
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+.user-info {
+    padding: 0 2rem;
+
+    &__logged-in {
+        overflow-x: auto;
+        height: $title-bar-height;
+        display: flex;
+        align-items: center;
+    }
+
+    &__name {
+        white-space: nowrap;
+    }
+
+    &__action {
+        color: green;
+        text-decoration: underline;
+        font-size: 0.8rem;
+        margin-left: 10px;
+    }
+
+    &__logged-out {
+        height: $title-bar-height;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        color: rgb(150, 150, 150);
+    }
+
+    &__login {
+        color: rgb(150, 150, 150);
+        text-decoration: underline;
+        cursor: pointer;
     }
 }
