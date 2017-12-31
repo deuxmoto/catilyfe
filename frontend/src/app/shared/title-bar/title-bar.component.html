@@ -6,7 +6,7 @@
 
     <div class="title-bar-container__top-bar">
         <div class="title-bar-container__top-bar-left">
-            <a class="title-bar-container__item title-bar-container__branding" routerLink="">Deux Moto</a>
+            <a class="title-bar-container__item title-bar-container__branding" routerLink="" *ngIf="showBranding" [@fadeInOutAnimation]>Deux Moto</a>
         </div>
         <div class="title-bar-container__top-bar-right">
             <button class="title-bar-container__item" (click)="openMenu()">

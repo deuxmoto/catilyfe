@@ -23,7 +23,7 @@ export type Theme = "light" | "dark" | "transparent-light" | "transparent-dark";
     templateUrl: "./title-bar.component.html",
     styleUrls: [ "./title-bar.component.scss" ],
     animations: [
-        trigger("menuBackgroundEnterAnimation", [
+        trigger("fadeInOutAnimation", [
             state("in", style({ opacity: 1 })),
             transition("void => *", [
                 style({ opacity: 0 }),
@@ -38,6 +38,9 @@ export type Theme = "light" | "dark" | "transparent-light" | "transparent-dark";
 export class TitleBarComponent implements OnInit {
     @Input()
     public theme: Theme = "light";
+
+    @Input()
+    public showBranding = true;
 
     public loggedInUser: User;
 

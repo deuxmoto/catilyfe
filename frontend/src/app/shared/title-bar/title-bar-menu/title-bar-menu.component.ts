@@ -20,7 +20,7 @@ interface MenuItem {
     templateUrl: "./title-bar-menu.component.html",
     styleUrls: [ "./title-bar-menu.component.scss" ],
     animations: [
-        trigger("menuBackgroundEnterAnimation", [
+        trigger("fadeInOutAnimation", [
             state("in", style({ opacity: 1 })),
             transition("void => *", [
                 style({ opacity: 0 }),

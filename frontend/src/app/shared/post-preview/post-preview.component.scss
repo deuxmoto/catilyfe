@@ -26,7 +26,7 @@
 .post-info {
     &__title {
         @include lobster-font();
-        font-size: 1.5rem;
+        @include font-size-lg();
         color: black;
         display: block;
         word-wrap: break-word;
@@ -34,20 +34,12 @@
         &:hover {
             color: $color-primary;
         }
-
-        @include if-larger-than-mobile() {
-            font-size: 2rem;
-        }
     }
 
     &__date-author {
+        font-size: 0.8rem;
         color: rgb(100, 100, 100);
         font-weight: bold;
-        font-size: 0.8rem;
-    }
-
-    &__when-published {
-        font-size: 0.8rem;
     }
 }
 

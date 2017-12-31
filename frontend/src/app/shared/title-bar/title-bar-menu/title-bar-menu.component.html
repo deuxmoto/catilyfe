@@ -1,4 +1,4 @@
-<div class="title-bar-menu__background" *ngIf="menuIsOpen" (click)="closeMenu()" [@menuBackgroundEnterAnimation]></div>
+<div class="title-bar-menu__background" *ngIf="menuIsOpen" (click)="closeMenu()" [@fadeInOutAnimation]></div>
 
 <div class="title-bar-menu__flyout" [ngClass]="{ 'title-bar-menu__flyout--open': menuIsOpen }">
     <div class="title-bar-menu__header">

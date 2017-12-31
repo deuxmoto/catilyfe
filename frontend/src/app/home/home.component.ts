@@ -18,7 +18,9 @@ const scrollDebounceIntervalMs = 200;
 })
 export class HomeComponent implements OnInit {
     public recentPosts: Observable<PostMetadata[]>;
+
     public titleBarTheme: string = "transparent-light";
+    public showingTitleBarBranding = false;
 
     constructor(
         private backend: BackendApiService,
@@ -44,6 +46,8 @@ export class HomeComponent implements OnInit {
     }
 
     public onScroll(): void {
-        this.titleBarTheme = window.scrollY < 5 ? "transparent-light" : "light";
+        const mostOfIntroOffscreen = window.scrollY > 400;
+        this.titleBarTheme = mostOfIntroOffscreen ? "light" : "transparent-light";
+        this.showingTitleBarBranding = mostOfIntroOffscreen;
     }
 }

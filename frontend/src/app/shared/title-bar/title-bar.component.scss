@@ -1,7 +1,7 @@
 @import "../../styles/helpers";
 
-$dark: rgb(10, 10, 10);
-$light: rgb(245, 245, 245);
+$dark: black;
+$light: white;
 
 $transition-animation: 200ms ease;
 
@@ -10,7 +10,6 @@ $transition-animation: 200ms ease;
 
     position: fixed;
     width: 100%;
-    height: $title-bar-height;
     top: 0px;
     left: 0px;
 }
@@ -48,14 +47,18 @@ $transition-animation: 200ms ease;
     }
 
     &__item {
+        @include font-size-md();
         height: $title-bar-height;
-        padding: 0 2rem;
+        padding: 0 1.5rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 1.5rem;
         cursor: pointer;
         transition: $transition-animation;
+
+        @include if-larger-than-mobile() {
+            padding: 0 2.25rem;
+        }
 
         .-theme-light & {
             color: $dark;
@@ -89,6 +92,6 @@ $transition-animation: 200ms ease;
 
     &__branding {
         @include lobster-font();
-        font-size: 2rem;
+        @include font-size-lg();
     }
 }
